@@ -41,5 +41,6 @@ public class Proliferacioncelulasv10App extends SingleFrameApplication {
     public static void main(String[] args) {
         launch(Proliferacioncelulasv10App.class, args);
         System.out.print("hola");
+        //otra vaina
     }
 }
