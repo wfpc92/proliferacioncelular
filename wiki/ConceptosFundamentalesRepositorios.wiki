@@ -1,4 +1,3 @@
-#labels Phase-Support
 #Conceptos fundamentales de repositorios.
 
 <g:plusone></g:plusone>
