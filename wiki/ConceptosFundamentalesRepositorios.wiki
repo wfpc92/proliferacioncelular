@@ -1,4 +1,4 @@
-#Conceptos fundamentales de repositorios.
+#summary Conceptos fundamentales de repositorios.
 
 <g:plusone></g:plusone>
 
@@ -105,6 +105,6 @@ La estructura habitual de un repositorio de Subversion es:
 
 = Fuente =
 
-http://es.wikipedia.org/wiki/Subversion_(software)
-http://es.wikipedia.org/wiki/Control_de_versiones
-http://definicion.de/wiki/#ixzz29nUBrwcE
+  * http://es.wikipedia.org/wiki/Subversion_(software)
+  * http://es.wikipedia.org/wiki/Control_de_versiones
+  * http://definicion.de/wiki/#ixzz29nUBrwcE
