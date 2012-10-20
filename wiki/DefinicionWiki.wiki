@@ -1,6 +1,6 @@
 #summary One-sentence summary of this page.
 #labels Phase-Support
-
+[[ConceptosRepositorio]]
 = Definición WIKI=
 
 Wiki es un concepto que se utiliza en el ámbito de Internet para nombrar a las páginas web cuyos contenidos pueden ser editados por múltiples usuarios a través de cualquier navegador. Dichas páginas, por lo tanto, se desarrollan a partir de la colaboración de los internautas, quienes pueden agregar, modificar o eliminar información.
