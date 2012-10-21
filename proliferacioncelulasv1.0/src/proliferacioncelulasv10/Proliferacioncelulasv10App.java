@@ -7,6 +7,7 @@ package proliferacioncelulasv10;
 
 import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
+import java.sql.*;
 
 /**
  * The main class of the application.
