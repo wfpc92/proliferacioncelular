@@ -6,24 +6,24 @@ package procel;
 
 public class Celula {
     
-    int long_lado;
-    int num_lados;
+    int longLado;  
+    int numLado;
     
 
-    public int getLong_lado() {
-        return long_lado;
+    public int getLongLado() {
+        return longLado;
     }
 
-    public void setLong_lado(int long_lado) {
-        this.long_lado = long_lado;
+    public void setLongLado(int longLado) {
+        this.longLado = longLado;
     }
 
-    public int getNum_lados() {
-        return num_lados;
+    public int getNumLado() {
+        return numLado;
     }
 
-    public void setNum_lados(int num_lados) {
-        this.num_lados = num_lados;
+    public void setNumLado(int numLado) {
+        this.numLado = numLado;
     }
     
     
