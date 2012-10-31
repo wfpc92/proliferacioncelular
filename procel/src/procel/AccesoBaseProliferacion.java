@@ -14,14 +14,14 @@ public class AccesoBaseProliferacion {
     
     public AccesoBaseProliferacion(){
        try{
-        Class.forName( "com.mysql.jdbc.Driver" );
+        Class.forName( "org.sqlite.JDBC" );
        }catch(Exception e){}
 
      }
     
     private void conectar(){
         try{
-        conn = DriverManager.getConnection( "jdbc:odbc:Database" ) ;
+        conn = DriverManager.getConnection( "jdbc:sqlite:mydatabase" ) ;
         } catch (SQLException e){}
     }
     
