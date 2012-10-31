@@ -6,15 +6,20 @@ package procel;
 
 public class Celula {
     
-    int longLado;  
+    float longLado;  
     int numLado;
     
+    Celula(){}
+    Celula(float longLado,int numLado){
+        this.longLado=longLado;
+        this.numLado=numLado;  
+    }
 
-    public int getLongLado() {
+    public float getLongLado() {
         return longLado;
     }
 
-    public void setLongLado(int longLado) {
+    public void setLongLado(float longLado) {
         this.longLado = longLado;
     }
 
@@ -26,5 +31,5 @@ public class Celula {
         this.numLado = numLado;
     }
     
-    
+       
 }
