@@ -16,13 +16,12 @@ import javax.swing.JPanel;
 public class DibujadorCelula extends JPanel {
     Celula celula = null;
     
-    public DibujadorCelula (Celula c){
+    public DibujadorCelula (){
         super();
-        celula = c;
     }
-    public void paintComponent(Graphics g){
-        super.paintComponents(g);
-        
+    public void visualizar(Graphics g, Celula c){
+        super.paintComponent(g);
+        celula = c;
         Polygon poligono = new Polygon();
         int npoints = 0;
         npoints = asignarPuntos();
@@ -32,6 +31,7 @@ public class DibujadorCelula extends JPanel {
                                 (int) (100 + 50 * Math.sin(i * 2 * Math.PI / npoints)));
         
         g.drawPolygon(poligono);
+        //g.fillPolygon(poligono); paa ponerle fondo
     }
     
     private int asignarPuntos() {
