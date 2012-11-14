@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 public class ProliferacionCelular extends javax.swing.JFrame implements ActionListener{
 
     DibujadorCelula jPanel1;
+    //integracion activa
     /**
      * Creates new form ProliferacionCelular
      */
