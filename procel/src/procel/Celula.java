@@ -4,15 +4,26 @@
  */
 package procel;
 
+import java.util.ArrayList;
+
 public class Celula {
     
     float longLado;  
     int numLado;
-    
+    ArrayList<Celula> vecinos;
+
+    public ArrayList<Celula> getVecinos() {
+        return vecinos;
+    }
+
+    public void setVecinos(ArrayList<Celula> vecinos) {
+        this.vecinos = vecinos;
+    }
     Celula(){}
     Celula(float longLado,int numLado){
         this.longLado=longLado;
-        this.numLado=numLado;  
+        this.numLado=numLado; 
+        vecinos=new ArrayList<Celula>();
     }
 
     public float getLongLado() {
