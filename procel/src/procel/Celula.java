@@ -10,20 +10,16 @@ public class Celula {
     
     float longLado;  
     int numLado;
-    ArrayList<Celula> vecinos;
-
-    public ArrayList<Celula> getVecinos() {
-        return vecinos;
+    
+    
+    public Celula(){
+        longLado=0;
+        numLado=0;
+          
     }
-
-    public void setVecinos(ArrayList<Celula> vecinos) {
-        this.vecinos = vecinos;
-    }
-    Celula(){}
     Celula(float longLado,int numLado){
         this.longLado=longLado;
         this.numLado=numLado; 
-        vecinos=new ArrayList<Celula>();
     }
 
     public float getLongLado() {
