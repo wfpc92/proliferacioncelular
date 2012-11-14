@@ -81,7 +81,64 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu3 = new javax.swing.JMenu();
+        itemNuevoTejido = new javax.swing.JMenuItem();
+        itemEditarTejido = new javax.swing.JMenuItem();
+        itemGuardarTejido = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        itemCerrar = new javax.swing.JMenuItem();
+        itemSalir = new javax.swing.JMenuItem();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jMenu3.setText("Archivo");
+
+        itemNuevoTejido.setText("Nuevo tejido");
+        itemNuevoTejido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemNuevoTejidoActionPerformed(evt);
+            }
+        });
+        jMenu3.add(itemNuevoTejido);
+
+        itemEditarTejido.setText("Editar tejido");
+        itemEditarTejido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemEditarTejidoActionPerformed(evt);
+            }
+        });
+        jMenu3.add(itemEditarTejido);
+
+        itemGuardarTejido.setText("Guardar tejido");
+        itemGuardarTejido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemGuardarTejidoActionPerformed(evt);
+            }
+        });
+        jMenu3.add(itemGuardarTejido);
+        jMenu3.add(jSeparator1);
+
+        itemCerrar.setText("Cerrar");
+        itemCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemCerrarActionPerformed(evt);
+            }
+        });
+        jMenu3.add(itemCerrar);
+
+        itemSalir.setText("Salir");
+        itemSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemSalirActionPerformed(evt);
+            }
+        });
+        jMenu3.add(itemSalir);
+
+        jMenuBar2.add(jMenu3);
+
+        setJMenuBar(jMenuBar2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -91,11 +148,35 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 363, Short.MAX_VALUE)
+            .addGap(0, 342, Short.MAX_VALUE)
         );
+
+        getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void itemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSalirActionPerformed
+        //verifica que no haya un tejido abierto y confirma si desea guardar 
+        //luego lo cierra y sale del sistema.
+    }//GEN-LAST:event_itemSalirActionPerformed
+
+    private void itemNuevoTejidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNuevoTejidoActionPerformed
+        //aqui se llama al controlador para crear el nuevo tejido
+    }//GEN-LAST:event_itemNuevoTejidoActionPerformed
+
+    private void itemEditarTejidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEditarTejidoActionPerformed
+        // aqui se carga un tejido y se muestra luego
+    }//GEN-LAST:event_itemEditarTejidoActionPerformed
+
+    private void itemGuardarTejidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemGuardarTejidoActionPerformed
+        //aqui se guarda el tejido en la base de datos
+    }//GEN-LAST:event_itemGuardarTejidoActionPerformed
+
+    private void itemCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCerrarActionPerformed
+        //se cierra y se pregunta si debe guardar o no un tejido abierto, solo
+        //esta activo el menu si y solo si hay un tejido abierto
+    }//GEN-LAST:event_itemCerrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -139,5 +220,14 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem itemCerrar;
+    private javax.swing.JMenuItem itemEditarTejido;
+    private javax.swing.JMenuItem itemGuardarTejido;
+    private javax.swing.JMenuItem itemNuevoTejido;
+    private javax.swing.JMenuItem itemSalir;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
     // End of variables declaration//GEN-END:variables
 }
