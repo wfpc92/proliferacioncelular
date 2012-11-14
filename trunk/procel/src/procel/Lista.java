@@ -1,22 +1,15 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package procel;
-
-/**
- *
- * @author yohanna
- */
 public class Lista <T> {
-    private Nodo_Lista<Integer> ventana;
-    private Nodo_Lista<Integer> cabeza;
    
 	
-	Lista(){
+    private NodoLista<Integer> ventana;
+    private NodoLista<Integer> cabeza;
+   
+	
+    Lista(){
 		cabeza=null;
 	    ventana=null;	
-	}
+    }
 	 
      public boolean EsVacio(){
 		if (ventana==null){
@@ -27,14 +20,14 @@ public class Lista <T> {
 		}
      }
 	
-      public Nodo_Lista<Integer> crear_nodo(Integer valor_nodo){
-			Nodo_Lista<Integer> temp= new Nodo_Lista<Integer>(valor_nodo);
+      public NodoLista<Integer> crear_nodo(Integer valor_nodo){
+			NodoLista<Integer> temp= new NodoLista<Integer>(valor_nodo);
 		    return temp;
-	  }
+        }
       //Agrega un valor a la derecha de la ventana
       public void anexarLista(int x){
        
-    	Nodo_Lista<Integer> valor;
+    	NodoLista<Integer> valor;
       	valor=crear_nodo(x);
     	if(EsVacio()){
     		cabeza=valor;
@@ -72,8 +65,8 @@ public class Lista <T> {
       
      //Agrega un elemento a la izquierda de la ventana
     public void insertarLista(int x){
-    	  Nodo_Lista<Integer> p=cabeza;
-		  Nodo_Lista<Integer> valor=crear_nodo(x);
+    	  NodoLista<Integer> p=cabeza;
+		  NodoLista<Integer> valor=crear_nodo(x);
     	  if(EsVacio()){
     		  cabeza=valor;
     		  ventana=cabeza;
@@ -114,7 +107,7 @@ public class Lista <T> {
     			}
     		}
     		else{
-    			Nodo_Lista<Integer> q=cabeza;
+    			NodoLista<Integer> q=cabeza;
 				while(q.Get_ste()!=ventana){
 					q=q.Get_ste();
 				}
@@ -138,7 +131,7 @@ public class Lista <T> {
     
     //Muestra los elementos de la lista y el elemento que se encuentra en la ventana
     public void mostrarLista(){
-    	Nodo_Lista<Integer> q=cabeza;
+    	NodoLista<Integer> q=cabeza;
     	if(!EsVacio()){
     		System.out.println("\n " );
     		while(q!=null){
@@ -149,7 +142,7 @@ public class Lista <T> {
     }
     public boolean Buscar(int buscado,Lista<T> lst){
 		
-		Nodo_Lista<Integer> p=cabeza;
+		NodoLista<Integer> p=cabeza;
 		lst.primeroLista();
 		if(lst.EsVacio()){
 			return false;
@@ -173,7 +166,7 @@ public class Lista <T> {
 	}
     //Ubica la ventana en el ultimo elemento de la lista
     public void ultimoLista(){
-    	Nodo_Lista<Integer> p=cabeza;
+    	NodoLista<Integer> p=cabeza;
     	while(p.Get_ste()!=null){
     		p=p.Get_ste();
     	}
@@ -215,21 +208,19 @@ public class Lista <T> {
     	}
     }
 
-	public Nodo_Lista<Integer> getVentana() {
+	public NodoLista<Integer> getVentana() {
 		return ventana;
 	}
 
-	public void setVentana(Nodo_Lista<Integer> ventana) {
+	public void setVentana(NodoLista<Integer> ventana) {
 		this.ventana = ventana;
 	}
 
-	public Nodo_Lista<Integer> getCabeza() {
+	public NodoLista<Integer> getCabeza() {
 		return cabeza;
 	}
 
-	public void setCabeza(Nodo_Lista<Integer> cabeza) {
+	public void setCabeza(NodoLista<Integer> cabeza) {
 		this.cabeza = cabeza;
 	}
-    
-   
 }
