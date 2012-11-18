@@ -1,0 +1,10 @@
+#labels Phase-Deploy
+#Mostrar la estructura del DAO y su importancia de implementacion
+
+= Estructura del DAO =
+
+||  Clase  ||  Descripción  ||
+||  DriverManager  ||  Para cargar un driver  ||
+||  Connection  ||  Para establecer conexiones con las bases de datos  ||
+||  Statement  ||  Para Ejecutar sentencias SQL y enviarlas a las BBDD  ||
+||  ResultSet  ||  Para almacenar el resultado de la consulta  ||
