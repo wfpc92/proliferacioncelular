@@ -5,7 +5,7 @@
 
 = Estructura del DAO =
 
-||  Clase  ||  Descripción  ||
+||  *Clase*  ||  *Descripción*  ||
 ||  DriverManager  ||  Para cargar un driver  ||
 ||  Connection  ||  Para establecer conexiones con las bases de datos  ||
 ||  Statement  ||  Para Ejecutar sentencias SQL y enviarlas a las BBDD  ||
