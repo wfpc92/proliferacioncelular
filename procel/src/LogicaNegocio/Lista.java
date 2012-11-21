@@ -1,4 +1,4 @@
-package procel;
+package LogicaNegocio;
 public class Lista <T> {
    
 	

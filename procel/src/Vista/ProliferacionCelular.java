@@ -2,7 +2,8 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package procel;
+package Vista; 
+import LogicaNegocio.*;
 
 import java.awt.event.ActionListener;
 
@@ -12,66 +13,15 @@ import java.awt.event.ActionListener;
  */
 public class ProliferacionCelular extends javax.swing.JFrame implements ActionListener{
 
-    DibujadorCelula jPanel1;
-    //integracion activa
     /**
      * Creates new form ProliferacionCelular
      */
     public ProliferacionCelular() {
         initComponents();
-        inicializarComponentes();
         
-        //panel de celula
     }
     
-    private void inicializarComponentes(){
-        
-      javax.swing.JButton btnGenerarPoblacionInicial = new javax.swing.JButton();
-      jPanel1 = new DibujadorCelula();
-        
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        btnGenerarPoblacionInicial.setText("Generar Poblacion Inicial");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 333, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 258, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnGenerarPoblacionInicial))
-                .addContainerGap(251, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnGenerarPoblacionInicial)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(60, Short.MAX_VALUE))
-        );
-        
-        btnGenerarPoblacionInicial.addActionListener(this);
-        pack();
-    }// </editor-fold
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -184,7 +134,7 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
     
     public void actionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        jPanel1.visualizar(this.getGraphics(), new Celula(23,4));
+        
     }
     
     public static void main(String args[]) {

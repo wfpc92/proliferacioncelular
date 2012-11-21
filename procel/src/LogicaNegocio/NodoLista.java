@@ -1,4 +1,4 @@
-package procel;
+package LogicaNegocio;
 public class NodoLista <T>{
 	private T contenido;
 	private NodoLista<T> ste;
