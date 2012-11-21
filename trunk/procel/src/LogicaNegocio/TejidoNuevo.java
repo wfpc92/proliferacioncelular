@@ -1,4 +1,4 @@
-package procel;
+package LogicaNegocio;
 
 import java.util.ArrayList;
 

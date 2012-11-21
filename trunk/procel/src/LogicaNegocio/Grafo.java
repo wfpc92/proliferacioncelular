@@ -1,4 +1,6 @@
-package procel;
+package LogicaNegocio;
+
+
 public class Grafo<T>{
 	private ListaVertice<T> lista_vertices=new ListaVertice<>();
 	private ListaArco<T> lista_arcos=new ListaArco<>();

@@ -1,4 +1,4 @@
-package procel;
+package LogicaNegocio;
 
 public class Tejido<T> {
     private Grafo<T> TejidoG;
