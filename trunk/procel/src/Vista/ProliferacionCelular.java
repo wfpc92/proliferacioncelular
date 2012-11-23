@@ -1,27 +1,51 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package Vista; 
-import LogicaNegocio.*;
+package Vista;
 
+import DAO.AccesoBaseProliferacion;
+import LogicaNegocio.Celula;
+import LogicaNegocio.Tejido;
 import java.awt.event.ActionListener;
+import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author ingesis
- */
+
 public class ProliferacionCelular extends javax.swing.JFrame implements ActionListener{
 
+    DibujadorCelula jPanel1;
+    //integracion activa
+        
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) throws InterruptedException {
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new ProliferacionCelular().setVisible(true);
+            }
+        });
+    }
+    
+    
     /**
      * Creates new form ProliferacionCelular
      */
     public ProliferacionCelular() {
+        super("Proliferacion Celular");
+        setTemaSistemaOperativoActual();
         initComponents();
-        
+        setExtendedState(MAXIMIZED_BOTH);
     }
     
+    private void limpiarPanelPrincipal(){
+        pnlPrincipal.removeAll();
+    }
+    public void mostrarTablaBaseDatos(DefaultTableModel modelo){
+        limpiarPanelPrincipal();
+        pnlPrincipal.add((new TablaBaseDatos(modelo)).getContentPane());
+    }
     
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,6 +56,8 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
     private void initComponents() {
 
         jPopupMenu1 = new javax.swing.JPopupMenu();
+        pnlPrincipal = new javax.swing.JPanel();
+        pnlHerramientas = new javax.swing.JPanel();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         itemNuevoTejido = new javax.swing.JMenuItem();
@@ -40,8 +66,38 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         itemCerrar = new javax.swing.JMenuItem();
         itemSalir = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        pnlPrincipal.setBackground(new java.awt.Color(204, 255, 51));
+
+        javax.swing.GroupLayout pnlPrincipalLayout = new javax.swing.GroupLayout(pnlPrincipal);
+        pnlPrincipal.setLayout(pnlPrincipalLayout);
+        pnlPrincipalLayout.setHorizontalGroup(
+            pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1026, Short.MAX_VALUE)
+        );
+        pnlPrincipalLayout.setVerticalGroup(
+            pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        pnlHerramientas.setBackground(new java.awt.Color(255, 153, 153));
+
+        javax.swing.GroupLayout pnlHerramientasLayout = new javax.swing.GroupLayout(pnlHerramientas);
+        pnlHerramientas.setLayout(pnlHerramientasLayout);
+        pnlHerramientasLayout.setHorizontalGroup(
+            pnlHerramientasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 340, Short.MAX_VALUE)
+        );
+        pnlHerramientasLayout.setVerticalGroup(
+            pnlHerramientasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 530, Short.MAX_VALUE)
+        );
 
         jMenu3.setText("Archivo");
 
@@ -88,17 +144,51 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
 
         jMenuBar2.add(jMenu3);
 
+        jMenu1.setText("Base de Datos");
+
+        jMenuItem1.setText("Tabla Tejido");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Tabla Celula");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
+        jMenuItem3.setText("Tabla Vecinos");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem3);
+
+        jMenuBar2.add(jMenu1);
+
         setJMenuBar(jMenuBar2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 604, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnlHerramientas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 342, Short.MAX_VALUE)
+            .addComponent(pnlHerramientas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         getAccessibleContext().setAccessibleDescription("");
@@ -113,6 +203,7 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
 
     private void itemNuevoTejidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNuevoTejidoActionPerformed
         //aqui se llama al controlador para crear el nuevo tejido
+        
     }//GEN-LAST:event_itemNuevoTejidoActionPerformed
 
     private void itemEditarTejidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEditarTejidoActionPerformed
@@ -128,28 +219,49 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
         //esta activo el menu si y solo si hay un tejido abierto
     }//GEN-LAST:event_itemCerrarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        mostrarTablaBaseDatos(AccesoBaseProliferacion.getAccesoDatos().seleccionarRegistro(new Tejido()));
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        mostrarTablaBaseDatos(AccesoBaseProliferacion.getAccesoDatos().seleccionarRegistro(new Celula()));
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        //mostrarTablaBaseDatos(AccesoBaseProliferacion.getAccesoDatos().seleccionarRegistro(new Vecinos()));
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
     
     public void actionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        
+        //jPanel1.visualizar(this.getGraphics(), new Celula(23,4));
     }
     
-    public static void main(String args[]) {
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem itemCerrar;
+    private javax.swing.JMenuItem itemEditarTejido;
+    private javax.swing.JMenuItem itemGuardarTejido;
+    private javax.swing.JMenuItem itemNuevoTejido;
+    private javax.swing.JMenuItem itemSalir;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPanel pnlHerramientas;
+    private javax.swing.JPanel pnlPrincipal;
+    // End of variables declaration//GEN-END:variables
+
+    private void setTemaSistemaOperativoActual() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(ProliferacionCelular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
@@ -160,24 +272,5 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
             java.util.logging.Logger.getLogger(ProliferacionCelular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new ProliferacionCelular().setVisible(true);
-            }
-        });
     }
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem itemCerrar;
-    private javax.swing.JMenuItem itemEditarTejido;
-    private javax.swing.JMenuItem itemGuardarTejido;
-    private javax.swing.JMenuItem itemNuevoTejido;
-    private javax.swing.JMenuItem itemSalir;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenuBar jMenuBar2;
-    private javax.swing.JPopupMenu jPopupMenu1;
-    private javax.swing.JPopupMenu.Separator jSeparator1;
-    // End of variables declaration//GEN-END:variables
 }
