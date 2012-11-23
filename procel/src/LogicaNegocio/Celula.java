@@ -4,29 +4,27 @@
  */
 package LogicaNegocio; 
 
-import java.util.ArrayList;
-
 public class Celula {
-    
-    float longLado;  
-    int numLado;
-    
+    private int id;
+    private double longLado;  
+    private int numLado;    
     
     public Celula(){
         longLado=0;
-        numLado=0;
-          
+        numLado=0;   
     }
-    Celula(float longLado,int numLado){
+    
+    public Celula(int id, double longLado,int numLado){
+        this.id = id;
         this.longLado=longLado;
         this.numLado=numLado; 
     }
 
-    public float getLongLado() {
+    public double getLongLado() {
         return longLado;
     }
 
-    public void setLongLado(float longLado) {
+    public void setLongLado(double longLado) {
         this.longLado = longLado;
     }
 
@@ -36,6 +34,20 @@ public class Celula {
 
     public void setNumLado(int numLado) {
         this.numLado = numLado;
+    }
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
     }
     
        
