@@ -4,114 +4,277 @@
  */
 package DAO;
 import LogicaNegocio.*;
-/**
- *
- * @author yohanna
- */
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+
 public class AccesoBaseProliferacion {
-    private Connection conn;
-    
-    public AccesoBaseProliferacion(){
-       try{
-        Class.forName( "org.sqlite.JDBC" );
-       }catch(Exception e){}
 
-     }
-    
-    private void conectar(){
-        try{
-        conn = DriverManager.getConnection( "jdbc:sqlite:mydatabase.sqlite" ) ;
-        } catch (SQLException e){}
-    }
-    
-    private void desconectar(){
-        try{
-        conn.close();
-        } catch (SQLException e){}
-    }
-    
-    boolean addCelula (Celula ce){
-     try
-     {
-      // Load the database driver
-      
-      // Get a connection to the database
-      this.conectar();
-      Statement stmt = conn.createStatement() ;
+    private static AccesoBaseProliferacion accesoDatos;
+    private static Connection conn;
 
-     // Execute the query
-      String datos="'"+String.valueOf(ce.getLongLado())+"','"+String.valueOf(ce.getNumLado())+"'";
-      ResultSet rs = stmt.executeQuery( "INSERT INTO CELULA (LONGLADO,NUMLADO) VALUES ("+datos+")" ) ;
-      // Loop through the result set
-      
-      // Close the result set, statement and the connection
-      rs.close() ;
-      stmt.close() ;
-      this.desconectar();
-     }
-     
-  catch( SQLException se )
-     {
-      System.out.println( "SQL Exception:" + se.getMessage() ) ;
-     }
-        return true;
-    }
-    boolean getCelula (Celula ce){
-     try
-     {
-      // Load the database driver
-      
-      // Get a connection to the database
-      this.conectar();
-      Statement stmt = conn.createStatement() ;
-
-     // Execute the query
-      ResultSet rs = stmt.executeQuery( "SELECT * FROM CELULA;");
-      while (rs.next()) {
-            System.out.println("IdCelula= "+rs.getString("IDCELULA"));
-            System.out.println("Longitud de los lados = "+rs.getString("LONGLADO"));
-            System.out.println("Numero de lados = "+rs.getString("NUMLADO"));
-            System.out.println("IdTejido = "+rs.getString("IDTEJIDO"));
+    //<editor-fold defaultstate="collapsed" desc=" Implementacion Patron Singleton ">
+    private synchronized static void createInstance() {
+        if (accesoDatos == null) {
+            accesoDatos = new AccesoBaseProliferacion();
         }
-      // Loop through the result set
-      
-      // Close the result set, statement and the connection
-      rs.close() ;
-      stmt.close() ;
-      this.desconectar();
-     }
-     
-  catch( SQLException se )
-     {
-      System.out.println( "SQL Exception:" + se.getMessage() ) ;
-     }
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        throw new CloneNotSupportedException();
+    }
+
+    public static AccesoBaseProliferacion getAccesoDatos() {
+        createInstance();
+        return accesoDatos;
+    }
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc=" Constructor Privado de Clase ">
+    private AccesoBaseProliferacion() {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            conn = DriverManager.getConnection("jdbc:sqlite:mydatabase.sqlite");
+            conn.setAutoCommit(false);
+            Statement stmt = conn.createStatement();
+            stmt.execute(""
+                    + "CREATE TABLE IF NOT EXISTS TEJIDO ("
+                    + "IDTEJIDO INTEGER PRYMARY KEY"
+                    + ")");
+            conn.commit();
+            stmt.execute(""
+                    + "CREATE TABLE IF NOT EXISTS CELULA ("
+                    + "IDCELULA INTEGER PRIMARY KEY, "
+                    + "NUMLADO INTEGER(2), "
+                    + "LONGLADO FLOAT, "
+                    + "IDTEJIDO INTEGER REFERENCES TEJIDO(IDTEJIDO)"
+                    + ")");
+            conn.commit();
+            stmt.close();
+            conn.close();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AccesoBaseProliferacion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AccesoBaseProliferacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    //</editor-fold>
+
+    //hace la conexion con una base de datos
+    public boolean conectar() {
+        try {
+            conn = DriverManager.getConnection("jdbc:sqlite:mydatabase.sqlite");
+        } catch (SQLException e) {
+            return false;
+        }
         return true;
     }
-    boolean addTejido (int idTejido){
-     try
-     {
-      // Load the database driver
-      
-      // Get a connection to the database
-      this.conectar();
-      Statement stmt = conn.createStatement() ;
 
-     // Execute the query
-      String cadena=String.valueOf(idTejido);
-      ResultSet rs = stmt.executeQuery( "INSERT INTO TEJIDO VALUES("+cadena+")");
-      // Loop through the result set
-      
-      // Close the result set, statement and the connection
-      rs.close() ;
-      stmt.close() ;
-      this.desconectar();
-     }
-     
-  catch( SQLException se )
-     {
-      System.out.println( "SQL Exception:" + se.getMessage() ) ;
-     }
-        return true;
+    //Desconecta la base de datos.
+    public void desconectar() {
+        if (conn != null) {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+            }
+            conn = null;
+        }
+    }
+
+    //Funciones que realizan funciones del lenguaje de definicion de datos.
+    public boolean insertarRegistro(Object... o) {
+        Object retorno = intentarEjecutarSentenciaSQL("INSERT", o);
+        return retorno != null ? (boolean) retorno : false;
+    }
+
+    public DefaultTableModel seleccionarRegistro(Object... o) {
+        return (DefaultTableModel) intentarEjecutarSentenciaSQL("SELECT", o);
+    }
+
+    public boolean eliminarRegistro(Object... o) {
+        Object retorno = intentarEjecutarSentenciaSQL("DELETE", o);
+        return retorno != null ? (boolean) retorno : false;
+    }
+
+    public boolean modificarRegistro(Object... o) {
+        Object retorno = intentarEjecutarSentenciaSQL("UPDATE", o);
+        return retorno != null ? (boolean) retorno : false;
+    }
+
+    //intenta realizar una sentencia SQL, sino la ejecuta retorna un objecto
+    //segun el tipo de sentencia.
+    private Object intentarEjecutarSentenciaSQL(String strTipo, Object... o) {
+        Object resultado = null;
+        try {
+            // Hacer la conexion con la base de datos
+            if (this.conectar()) {
+                try (Statement stmt = conn.createStatement()) {
+                    resultado = ejecutarSentenciaSQL(strTipo, stmt, o);
+                }
+                this.desconectar();
+            } else {
+                throw new SQLException("NO SE PUDO ABRIR BASE DE DATOS");
+            }
+        } catch (SQLException se) {
+            JOptionPane.showMessageDialog(new JFrame(), se.getMessage());
+            if ("INSERT".equals(strTipo) || "DELETE".equals(strTipo) || "UPDATE".equals(strTipo)) {
+                resultado = Boolean.valueOf("false");
+            }
+            if ("SELECT".equals(strTipo)) {
+                resultado = null;
+            }
+        }
+        return resultado;
+    }
+
+    //ejecuta una sentencia SQL segun el tipo de instruccion DML
+    private Object ejecutarSentenciaSQL(String strTipo, Statement stmt, Object... o)
+            throws SQLException {
+        String sql = armarSentenciaSQL(strTipo, o);
+        switch (strTipo) {
+            case "INSERT":
+            case "UPDATE":
+            case "DELETE":
+                try {
+                    stmt.executeUpdate(sql);
+                    return true;
+                } catch (SQLException se) {
+                    throw new SQLException(
+                            "Error en tabla "
+                            + o[0].getClass().getSimpleName()
+                            + "\nDetailMessage: " + se.getMessage()
+                            + "\nQuery: " + sql);
+                }
+            case "SELECT":
+                try {
+                    return generarTabla(stmt.executeQuery(sql));
+                } catch (SQLException se) {
+                    throw new SQLException(
+                            "Error en tabla "
+                            + o[0].getClass().getSimpleName()
+                            + "\nDetailMessage: " + se.getMessage()
+                            + "\nQuery: " + sql);
+                }
+        }
+        return null;
+    }
+
+    //Determina a que tabla va la consulta y el tipo de consulta
+    //extrae datos y retorna una cadena-consulta-SQL
+    private String armarSentenciaSQL(String strTipo, Object[] o)
+            throws SQLException {
+        String strTabla = null;
+        String strId = null;
+        Tejido t = null;
+        Celula c = null;
+
+        try {
+            strTabla = o[0].getClass().getSimpleName();
+            if ("Tejido".equals(strTabla)) {
+                t = (Tejido) o[0];
+            } else if ("Celula".equals(strTabla)) {
+                c = (Celula) o[0];
+            }
+            if (t == null && c == null) {
+                throw new SQLException("NO Existe Tabla con ese tipo de objeto.");
+            }
+        } catch (Exception e) {
+            throw new SQLException("Requiere un objeto, para ejecutar sentencia");
+        }
+
+        try {
+            if ("Celula".equals(strTabla) && "UPDATE".equals(strTipo)) {
+                strId = String.valueOf(((Celula) o[1]).getId());
+            }
+            if ("Tejido".equals(strTabla) && "UPDATE".equals(strTipo)) {
+                strId = String.valueOf(((Tejido) o[1]).getId());
+            }
+
+        } catch (Exception e) {
+            throw new SQLException("UDPATE Tabla celula requiere (int).");
+        }
+
+        //SE EVALUA EL TIPO DE SENTENCIA DML QUE SE PIDE
+        switch (strTipo) {
+            case "INSERT":
+                switch (strTabla) {
+                    case "Tejido":
+                        return "INSERT INTO TEJIDO "
+                                + "VALUES ("
+                                + t.getId()
+                                + ")";
+                    case "Celula":
+                        return "INSERT INTO CELULA "
+                                + "VALUES("
+                                + c.getId() + ","
+                                + c.getNumLado() + ","
+                                + c.getLongLado() + ","
+                                + strId
+                                + ")";
+                }
+                break;
+            case "UPDATE":
+                switch (strTabla) {
+                    case "Tejido":
+                        System.out.print(t.getId());
+                        return "UPDATE TEJIDO "
+                                + "SET IDTEJIDO = "
+                                + strId
+                                + " WHERE IDTEJIDO = "
+                                + t.getId();
+                    case "Celula":
+                        return "UPDATE CELULA "
+                                + "SET IDCELULA = "
+                                + strId
+                                + " WHERE IDCELULA = "
+                                + c.getId();
+                }
+                break;
+            case "DELETE":
+                switch (strTabla) {
+                    case "Tejido":
+                        return "DELETE FROM TEJIDO "
+                                + "WHERE "
+                                + "IDTEJIDO = " + t.getId();
+                    case "Celula":
+                        return "DELETE FROM CELULA "
+                                + "WHERE "
+                                + "IDCELULA = " + c.getId();
+                }
+                break;
+            case "SELECT":
+                switch (strTabla) {
+                    case "Tejido":
+                        return "SELECT * FROM TEJIDO";
+                    case "Celula":
+                        return "SELECT * FROM CELULA";
+                }
+                break;
+        }
+        return null;
+    }
+
+    private DefaultTableModel generarTabla(ResultSet rs) throws SQLException {
+        DefaultTableModel modelo = new DefaultTableModel();
+        ResultSetMetaData rsMd = rs.getMetaData();
+        int cantidadColumnas = rsMd.getColumnCount();
+        //Establecer como cabezeras el nombre de las columnas
+        for (int i = 1; i <= cantidadColumnas; i++) {
+            modelo.addColumn(rsMd.getColumnLabel(i));
+        }
+        //Creando las filas para el JTable
+        while (rs.next()) {
+            Object[] fila = new Object[cantidadColumnas];
+            for (int i = 0; i < cantidadColumnas; i++) {
+                fila[i] = rs.getObject(i + 1);
+            }
+            modelo.addRow(fila);
+        }
+        return modelo;
     }
 }
