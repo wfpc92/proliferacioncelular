@@ -3,7 +3,11 @@ package Vista;
 import DAO.AccesoBaseProliferacion;
 import LogicaNegocio.Celula;
 import LogicaNegocio.Tejido;
+import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
@@ -39,6 +43,7 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
     
     private void limpiarPanelPrincipal(){
         pnlPrincipal.removeAll();
+        pnlPrincipal.setLayout(new BorderLayout());
     }
     public void mostrarTablaBaseDatos(DefaultTableModel modelo){
         limpiarPanelPrincipal();
@@ -70,10 +75,11 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        pnlPrincipal.setBackground(new java.awt.Color(204, 255, 51));
+        pnlPrincipal.setBackground(new java.awt.Color(51, 255, 51));
 
         javax.swing.GroupLayout pnlPrincipalLayout = new javax.swing.GroupLayout(pnlPrincipal);
         pnlPrincipal.setLayout(pnlPrincipalLayout);
@@ -170,6 +176,14 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
         });
         jMenu1.add(jMenuItem3);
 
+        jMenuItem4.setText("Shell");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem4);
+
         jMenuBar2.add(jMenu1);
 
         setJMenuBar(jMenuBar2);
@@ -182,13 +196,13 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
                 .addContainerGap()
                 .addComponent(pnlHerramientas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(pnlPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 1026, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnlHerramientas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(pnlPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
         );
 
         getAccessibleContext().setAccessibleDescription("");
@@ -228,8 +242,16 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        //mostrarTablaBaseDatos(AccesoBaseProliferacion.getAccesoDatos().seleccionarRegistro(new Vecinos()));
+        try {
+            mostrarTablaBaseDatos((DefaultTableModel)AccesoBaseProliferacion.getAccesoDatos().ejecutar("select * from lado"));
+        } catch (SQLException ex) {
+            Logger.getLogger(ProliferacionCelular.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        mostrarShell();
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
     
     public void actionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
@@ -248,6 +270,7 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPanel pnlHerramientas;
@@ -272,5 +295,12 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
             java.util.logging.Logger.getLogger(ProliferacionCelular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+    }
+
+    private void mostrarShell() {
+        limpiarPanelPrincipal();
+        ShellSQLITE vista = new ShellSQLITE();
+        pnlPrincipal.add(vista.getContentPane());
+        
     }
 }
