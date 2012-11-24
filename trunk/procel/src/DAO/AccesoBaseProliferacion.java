@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package DAO;
+
 import LogicaNegocio.*;
 import java.sql.*;
 import java.util.logging.Level;
@@ -11,11 +12,29 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-
 public class AccesoBaseProliferacion {
 
     private static AccesoBaseProliferacion accesoDatos;
     private static Connection conn;
+    //<editor-fold defaultstate="collapsed" desc=" DDL de la base de datos ">
+    public static String crearCelula =
+            "CREATE TABLE IF NOT EXISTS CELULA("
+            + "IDCELULA INTEGER PRIMARY KEY, "
+            + "IDTEJIDO INTEGER REFERENCES TEJIDO(IDTEJIDO))";
+    public static String crearTejido =
+            "CREATE TABLE IF NOT EXISTS TEJIDO("
+            + "IDTEJIDO INTEGER PRYMARY KEY, "
+            + "NOMBRE VARCHAR(15))";
+    public static String crearLado =
+            "CREATE TABLE IF NOT EXISTS LADO( "
+            + "IDCELULAVECINO INTEGER NOT NULL, "
+            + "IDLADO INTEGER NOT NULL, "
+            + "LONGITUD FLOAT(4) NOT NULL, "
+            + "IDCELULA INTEGER NULL, "
+            + "CONSTRAINT PK_LADO PRIMARY KEY (IDLADO,IDCELULA), "
+            + "CONSTRAINT FK_LADO_VECINO FOREIGN KEY (IDCELULAVECINO) REFERENCES CELULA(IDCELULA), "
+            + "CONSTRAINT FK_LADO_CELULA FOREIGN KEY (IDCELULA) REFERENCES CELULA(IDCELULA))";
+    //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc=" Implementacion Patron Singleton ">
     private synchronized static void createInstance() {
@@ -41,25 +60,14 @@ public class AccesoBaseProliferacion {
             Class.forName("org.sqlite.JDBC");
             conn = DriverManager.getConnection("jdbc:sqlite:mydatabase.sqlite");
             conn.setAutoCommit(false);
-            Statement stmt = conn.createStatement();
-            stmt.execute(""
-                    + "CREATE TABLE IF NOT EXISTS TEJIDO ("
-                    + "IDTEJIDO INTEGER PRYMARY KEY"
-                    + ")");
-            conn.commit();
-            stmt.execute(""
-                    + "CREATE TABLE IF NOT EXISTS CELULA ("
-                    + "IDCELULA INTEGER PRIMARY KEY, "
-                    + "NUMLADO INTEGER(2), "
-                    + "LONGLADO FLOAT, "
-                    + "IDTEJIDO INTEGER REFERENCES TEJIDO(IDTEJIDO)"
-                    + ")");
-            conn.commit();
-            stmt.close();
+            try (Statement stmt = conn.createStatement()) {
+                stmt.execute(crearTejido);
+                stmt.execute(crearCelula);
+                stmt.execute(crearLado);
+                conn.commit();
+            }
             conn.close();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AccesoBaseProliferacion.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AccesoBaseProliferacion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -108,7 +116,7 @@ public class AccesoBaseProliferacion {
 
     //intenta realizar una sentencia SQL, sino la ejecuta retorna un objecto
     //segun el tipo de sentencia.
-    private Object intentarEjecutarSentenciaSQL(String strTipo, Object... o) {
+    public Object intentarEjecutarSentenciaSQL(String strTipo, Object... o) {
         Object resultado = null;
         try {
             // Hacer la conexion con la base de datos
@@ -175,10 +183,13 @@ public class AccesoBaseProliferacion {
 
         try {
             strTabla = o[0].getClass().getSimpleName();
-            if ("Tejido".equals(strTabla)) {
-                t = (Tejido) o[0];
-            } else if ("Celula".equals(strTabla)) {
-                c = (Celula) o[0];
+            switch (strTabla) {
+                case "Tejido":
+                    t = (Tejido) o[0];
+                    break;
+                case "Celula":
+                    c = (Celula) o[0];
+                    break;
             }
             if (t == null && c == null) {
                 throw new SQLException("NO Existe Tabla con ese tipo de objeto.");
@@ -259,7 +270,7 @@ public class AccesoBaseProliferacion {
         return null;
     }
 
-    private DefaultTableModel generarTabla(ResultSet rs) throws SQLException {
+    public DefaultTableModel generarTabla(ResultSet rs) throws SQLException {
         DefaultTableModel modelo = new DefaultTableModel();
         ResultSetMetaData rsMd = rs.getMetaData();
         int cantidadColumnas = rsMd.getColumnCount();
@@ -276,5 +287,27 @@ public class AccesoBaseProliferacion {
             modelo.addRow(fila);
         }
         return modelo;
+    }
+
+    public Object ejecutar(String sql)
+            throws SQLException {
+        try {
+            // Hacer la conexion con la base de datos
+            if (this.conectar()) {
+                try (Statement stmt = conn.createStatement()) {
+                    if (stmt.execute(sql)) {
+                        return generarTabla(stmt.getResultSet());
+                    } else {
+                        throw new SQLException("no se puede ejecutar sql");
+                    }
+                } catch (SQLException e) {
+                    throw e;
+                }
+            } else {
+                throw new SQLException("NO SE PUDO ABRIR BASE DE DATOS");
+            }
+        } catch (SQLException se) {
+            throw se;
+        }
     }
 }
