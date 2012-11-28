@@ -44,7 +44,7 @@ public class ArcoTest {
         System.out.println("getVi");
         Arco instance = new Arco(1,2,3);
         int expResult = 1;
-        int result = instance.getVi();
+        long result = instance.getVi();
         assertEquals(expResult, result);
     }
 
@@ -68,7 +68,7 @@ public class ArcoTest {
         System.out.println("getVj");
         Arco instance = new Arco(6,7,9);
         int expResult = 7;
-        int result = instance.getVj();
+        long result = instance.getVj();
         assertEquals(expResult, result);
     }
 
