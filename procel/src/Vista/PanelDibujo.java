@@ -14,10 +14,7 @@ import java.util.Random;
 import java.util.Vector;
 import javax.swing.JTextField;
 
-/**
- *
- * @author JHONATAN
- */
+
 public class PanelDibujo extends javax.swing.JFrame {
 
     int MAXCELULAS = 500;
@@ -61,30 +58,81 @@ public class PanelDibujo extends javax.swing.JFrame {
         gr.AgregarVertice(5, 5);
         gr.AgregarVertice(6, 6);
         gr.AgregarVertice(7, 7);
+        gr.AgregarVertice(8, 8);
+        gr.AgregarVertice(9, 9);
+        gr.AgregarVertice(10, 10);
+        gr.AgregarVertice(11, 11);
+        gr.AgregarVertice(12, 12);
+        gr.AgregarVertice(13, 13);
+        gr.AgregarVertice(14, 14);
+        gr.AgregarVertice(15, 15);
+        gr.AgregarVertice(16, 16);
+        gr.AgregarVertice(17, 17);
+        gr.AgregarVertice(18, 18);
+        gr.AgregarVertice(19, 19);
+        gr.AgregarVertice(20, 20);
+        gr.AgregarVertice(21, 21);
+        gr.AgregarVertice(22, 22);
+        gr.AgregarVertice(23, 23);
+        gr.AgregarVertice(24, 24);
+        gr.AgregarVertice(25, 25);
+        gr.AgregarVertice(26, 26);
+        
         gr.AgregarArco(0, 1, 0);
         gr.AgregarArco(0, 2, 0);
         gr.AgregarArco(0, 3, 0);
         gr.AgregarArco(0, 4, 0);
         gr.AgregarArco(0, 5, 0);
-        gr.AgregarArco(1, 5, 0);
         gr.AgregarArco(1, 2, 0);
-        gr.AgregarArco(1, 6, 0);
         gr.AgregarArco(2, 3, 0);
-        gr.AgregarArco(2, 1, 0);
-        gr.AgregarArco(3, 2, 0);
         gr.AgregarArco(3, 4, 0);
-        gr.AgregarArco(3, 8, 0);
+        gr.AgregarArco(4, 5, 0);
+        gr.AgregarArco(1, 5, 0);
+        gr.AgregarArco(1, 6, 0);
+        gr.AgregarArco(1, 7, 0);
+        gr.AgregarArco(2, 8,0);
+        gr.AgregarArco(2, 9,0);
+        gr.AgregarArco(2, 10,0);
+        gr.AgregarArco(2, 11,0);
+        gr.AgregarArco(3, 12, 0);
+        gr.AgregarArco(3, 13, 0);
+        gr.AgregarArco(3, 14, 0);
+        gr.AgregarArco(3, 15, 0);
+        gr.AgregarArco(4, 16, 0);
+        gr.AgregarArco(4, 17, 0);
+        gr.AgregarArco(5, 18, 0);
+        gr.AgregarArco(5, 19, 0);
+        gr.AgregarArco(5, 20, 0);
+        gr.AgregarArco(5, 21, 0);
+        gr.AgregarArco(6, 7, 0);
+        gr.AgregarArco(7, 8, 0);
+        gr.AgregarArco(8, 9, 0);
+        gr.AgregarArco(9, 10, 0);
+        gr.AgregarArco(10, 11, 0);
+        gr.AgregarArco(11, 12, 0);
+        gr.AgregarArco(12, 13, 0);
+        gr.AgregarArco(13, 14, 0);
+          gr.AgregarArco(14, 15, 0);
+        gr.AgregarArco(15, 16, 0);
+         gr.AgregarArco(16, 17, 0);
+        gr.AgregarArco(18, 19, 0);
+         gr.AgregarArco(19, 20, 0);
+        gr.AgregarArco(6, 22, 0);
+         gr.AgregarArco(6, 23, 0);
+        gr.AgregarArco(7, 24, 0);
+         gr.AgregarArco(7, 25, 0);
+        //gr.AgregarArco(18, 19, 0);
+        
+      
 
         int numeroVecinos = 0;
         numeroVecinos = averiguarVecinos(0, gr);
-        //int xv = this.getWidth() / 2;
-        //int yv = this.getHeight() / 2;
         int xv = this.r.width/ 2;
         int yv = this.r.height / 2;
         xvs.add(xv);
         yvs.add(yv);
-        double radio = 40;
-        float angulo = 360 / 15;
+        double radio =60;
+        float angulo = 360/15;
         for (int i = 1; i <= numeroVecinos; i++) {
             xv = (int) (xvs.get(0) + radio * Math.cos(i * angulo));
             yv = (int) (yvs.get(0) - radio * Math.sin(i * angulo));
@@ -105,7 +153,19 @@ public class PanelDibujo extends javax.swing.JFrame {
         }
 
         int j = 1;
-        while (j < 3) {
+        angulo=360/70;
+        while (j < 19) { //Cambiar tamaño
+            angulo=100;
+            radio=60;
+           if(j==4){
+               radio=100;
+                
+            }
+           if(j==5){
+               //radio=90;
+               angulo=360/30;
+           }
+    
             int i = 0;
             int a = 0;
             numeroVecinos = averiguarVecinos(j, gr);
@@ -130,9 +190,7 @@ public class PanelDibujo extends javax.swing.JFrame {
                 yv = (int) (yvs.get(j) - radio * Math.sin(a * angulo));
                 boolean valido;
                 valido = evaluarPunto(j, xv, yv, radio);
-                // System.out.println("al");
                 if (valido) {
-                    //System.out.println("Dib");
                     xvs.add(xv);
                     yvs.add(yv);
                     i++;
@@ -140,8 +198,6 @@ public class PanelDibujo extends javax.swing.JFrame {
                 a++;
             }
             int k;
-            //System.out.println(xvs.size());
-            //System.out.println(dibujados);
             int it = 0;
             for (k = dibujados; k < xvs.size(); k++) {
                 g.drawLine(xvs.get(j) + 2, yvs.get(j) + 2, xvs.get(k) + 2, yvs.get(k) + 2);
@@ -150,16 +206,13 @@ public class PanelDibujo extends javax.swing.JFrame {
                 g.setColor(Color.BLACK);
                 g.drawOval(xvs.get(k), yvs.get(k), ancho, alto);
                 g.setColor(Color.BLACK);
-                // g.drawString(""+k, xvs.get(k), yvs.get(k)+alto-5);
+                g.drawString("" + k, xvs.get(k), yvs.get(k) + alto - 5);
                 it++;
 
             }
             dibujados = dibujados + it;
             j++;
         }
-
-
-
     }
 
     int averiguarVecinos(int vert, Grafo gr) {
@@ -169,12 +222,9 @@ public class PanelDibujo extends javax.swing.JFrame {
         while (j < l.size()) {
             if (l.get(j).getVi() == vert || l.get(j).getVj() == vert) {
                 contador++;
-                //System.out.println(l.get(j).getVi()+"\t"+ l.get(j).getVj());
             }
             j++;
         }
-
-        //System.out.println("Otro"+contador);
         return contador;
     }
 
@@ -189,10 +239,11 @@ public class PanelDibujo extends javax.swing.JFrame {
             double cuady = Math.pow(restay, 2);
             double sumacuad = cuadx + cuady;
             distancia = Math.sqrt(sumacuad);
-            if (distancia < radio) {
+            if (distancia < (radio+10)) {
                 return false;
             }
         }
+        
         return true;
     }
 
@@ -212,7 +263,6 @@ public class PanelDibujo extends javax.swing.JFrame {
             }
             k++;
         }
-        System.out.println(contador);
         return contador;
     }
 
