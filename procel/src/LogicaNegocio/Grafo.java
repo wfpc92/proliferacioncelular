@@ -6,7 +6,7 @@ public class Grafo<T>{
 	private ArrayList<Vertice<T>> listaVertices=new ArrayList<Vertice<T>>();
 	private ArrayList<Arco> listaArcos=new ArrayList<Arco>();
 	//public int costo1;
-	 public Grafo(){
+	 Grafo(){
              this.listaVertices=new ArrayList<Vertice<T>>();
              this.listaArcos=new ArrayList<Arco>();
 	}
@@ -27,14 +27,14 @@ public class Grafo<T>{
 		this.listaArcos = listaArcos;
 	}
 	
-	public void AgregarVertice(T celula,int sub){
+	public void AgregarVertice(T celula,long sub){
 		Vertice<T> obj=new Vertice<T>();
 		obj.setInfo(celula);
 		obj.setSubindice(sub);
 		listaVertices.add(obj);
 	}
 	
-	public void AgregarArco(int vi,int vj, int costo){
+	public void AgregarArco(long vi,long vj, int costo){
 		Arco obj_arco=new Arco(vi,vj,costo);
 		if(this.BuscarVertice(vi)&& this.BuscarVertice(vj)){
 			this.listaArcos.add(obj_arco);
@@ -44,7 +44,7 @@ public class Grafo<T>{
 		}	
 	}
 	
-        public boolean BuscarVertice(int subindice){
+        public boolean BuscarVertice(long subindice){
                 if(this.listaVertices.isEmpty()){
                         return false;
                 }
@@ -159,35 +159,4 @@ public class Grafo<T>{
                 System.out.println("La marca del vertice no ha sido encontrada");
                 return false;
 	}
-	
-	/*public void DesmarcarGrafo(Grafo<T> g){
-		g.getLista_vertices().Primero();
-		while(!g.getLista_vertices().finLista()){
-			g.getLista_vertices().getVentana().getVertice().setMarca(false);
-			g.getLista_vertices().Siguiente_lista(); 
-		}
-		g.getLista_vertices().ultimoLista();
-		g.getLista_vertices().getVentana().getVertice().setMarca(false);
-	}*/
-	
-	/*public int SiguienteVertice(Grafo<T> g,int costo[],int num_elem){
-		
-		int i,menor=-1;
-		for(i=0;i<num_elem;i++){
-			if(!g.MarcadoVertice(g, i+1) && costo[i]!=-1){
-				if(menor==-1 || costo[menor]>costo[i]){
-					menor=i;
-				}
-			}
-		}
-		if(menor==-1){
-			return -1;
-		}
-		else{
-			return menor+1;
-		}
-	}*/
-	
-
-	
 }

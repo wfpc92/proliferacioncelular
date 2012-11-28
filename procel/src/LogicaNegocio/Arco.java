@@ -9,11 +9,11 @@ package LogicaNegocio;
  * @author yohanna
  */
 public class Arco {
-         private int vi;
-	private int vj;
-	private int costo;
+        private long vi;
+		private long vj;
+		private int costo;
         
-	Arco(int v1,int v2,int c){
+	Arco(long v1,long v2,int c){
 		vi=v1;
 		vj=v2;
 	    costo=c;
@@ -21,13 +21,13 @@ public class Arco {
         public void imprimir(){
             System.out.println("  Desde: "+this.vi+"  Hasta: "+this.vj+"  Costo: "+costo);
         }
-	public int getVi() {
+	public long getVi() {
 		return vi;
 	}
 	public void setVi(int vi) {
 		this.vi = vi;
 	}
-	public int getVj() {
+	public long getVj() {
 		return vj;
 	}
 	public void setVj(int vj) {
