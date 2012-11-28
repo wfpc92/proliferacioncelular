@@ -8,23 +8,24 @@ package LogicaNegocio;
  *
  * @author yohanna
  */
-public class Vertice {
-    private int info;
+public class Vertice<T> {
+        private T info;
 	private boolean marca;
 	private int subindice;
 	
 	Vertice(){
-		marca=false;
+		this.marca=false;
+                this.subindice=0;
 	}
-	Vertice(int x){
+	Vertice(T x){
 		info=x;
 		marca=false;
 	}
 	
-	public int getInfo() {
+	public T getInfo() {
 		return info;
 	}
-	public void setInfo(int info) {
+	public void setInfo(T info) {
 		this.info = info;
 	}
 	public boolean getMarca() {
