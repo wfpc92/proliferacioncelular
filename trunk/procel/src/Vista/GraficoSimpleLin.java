@@ -61,12 +61,14 @@ public class GraficoSimpleLin extends java.awt.Frame {
                 generalmente solo necesitaremos cambiar los primeros 3 parametros lo demas puede quedarse asi
                 
                 */
-        JFreeChart chart = ChartFactory.createXYLineChart        ("Titulo del grafico",
+        JFreeChart chart1 = ChartFactory.createXYLineChart        ("Titulo del grafico",
         "Eje X","Eje Y",juegoDatos,PlotOrientation.VERTICAL,
         false,
         false,
         true                // Show legend
         );
+        
+        JFreeChart chart = ChartFactory.createBarChart(null, null, null, null, PlotOrientation.HORIZONTAL, true, true, false);
         //donde guardaremos la imagen?? pues en un bufer jeje
         BufferedImage image = chart.createBufferedImage(400,400);
         
