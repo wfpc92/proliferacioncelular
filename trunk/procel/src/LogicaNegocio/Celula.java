@@ -4,8 +4,10 @@
  */
 package LogicaNegocio; 
 
+import java.util.ArrayList;
+
 public class Celula {
-    private int id;
+    private long id;
     private double longLado;  
     private int numLado;    
     
@@ -14,10 +16,11 @@ public class Celula {
         numLado=0;   
     }
     
-    public Celula(int id, double longLado,int numLado){
+    public Celula(long id, double longLado,int numLado){
         this.id = id;
         this.longLado=longLado;
         this.numLado=numLado; 
+        System.out.println("se creo la cel:"+id+"numero de Lados: "+numLado);
     }
 
     public double getLongLado() {
@@ -39,7 +42,7 @@ public class Celula {
     /**
      * @return the id
      */
-    public int getId() {
+    public long getId() {
         return id;
     }
 

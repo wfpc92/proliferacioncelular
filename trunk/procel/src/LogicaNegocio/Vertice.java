@@ -9,9 +9,9 @@ package LogicaNegocio;
  * @author yohanna
  */
 public class Vertice<T> {
-        private T info;
+    private T info;
 	private boolean marca;
-	private int subindice;
+	private long subindice;
 	
 	Vertice(){
 		this.marca=false;
@@ -34,10 +34,10 @@ public class Vertice<T> {
 	public void setMarca(boolean marca) {
 		this.marca = marca;
 	}
-	public int getSubindice() {
+	public long getSubindice() {
 		return subindice;
 	}
-	public void setSubindice(int subindice) {
+	public void setSubindice(long subindice) {
 		this.subindice = subindice;
 	}
 }
