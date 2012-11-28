@@ -13,4 +13,4 @@ Familiarizarse con estos estandares, esto beneficia la comunicación y el colect
 
   * http://www.oracle.com/technetwork/java/codeconventions-150003.pdf
 
-
+=== Como hacer un instalador de aplicacion ===
