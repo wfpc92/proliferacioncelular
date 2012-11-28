@@ -4,6 +4,8 @@ import DAO.AccesoBaseProliferacion;
 import LogicaNegocio.Celula;
 import LogicaNegocio.Tejido;
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -43,11 +45,59 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
     
     private void limpiarPanelPrincipal(){
         pnlPrincipal.removeAll();
-        pnlPrincipal.setLayout(new BorderLayout());
+        pnlPrincipal.repaint();
     }
+    
+    private void limpiarPanelHerramientas(){
+        pnlHerramientas.removeAll();
+        pnlHerramientas.repaint();
+    }
+    
     public void mostrarTablaBaseDatos(DefaultTableModel modelo){
         limpiarPanelPrincipal();
         pnlPrincipal.add((new TablaBaseDatos(modelo)).getContentPane());
+    }
+    
+    private void setTemaSistemaOperativoActual() {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(ProliferacionCelular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(ProliferacionCelular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(ProliferacionCelular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(ProliferacionCelular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+    }
+
+    private void mostrarShell() {
+        limpiarPanelPrincipal();
+        ShellSQLITE vista = new ShellSQLITE();
+        pnlPrincipal.add(vista.getContentPane());
+        
+    }
+
+    private void visualizarTejido() {
+        limpiarPanelPrincipal();
+        PanelDibujo panelDibujo = new PanelDibujo(pnlPrincipal.getGraphics(), pnlPrincipal.getBounds());
+        this.pnlPrincipal.add(panelDibujo.getContentPane());
+    }
+
+    private void triangularizacion() {
+       limpiarPanelPrincipal();
+    }
+    
+    private void graficaEstadistica() {
+        limpiarPanelPrincipal();
+        pnlPrincipal.add(new GraficoBarras(pnlPrincipal.getGraphics(), pnlPrincipal.getBounds()).getContentPane());
     }
     
    
@@ -60,7 +110,6 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPopupMenu1 = new javax.swing.JPopupMenu();
         pnlPrincipal = new javax.swing.JPanel();
         pnlHerramientas = new javax.swing.JPanel();
         jMenuBar2 = new javax.swing.JMenuBar();
@@ -76,29 +125,29 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        menuVisualizacionTejido = new javax.swing.JMenuItem();
+        menuTriangularizacion = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        pnlPrincipal.setBackground(new java.awt.Color(51, 255, 51));
 
         javax.swing.GroupLayout pnlPrincipalLayout = new javax.swing.GroupLayout(pnlPrincipal);
         pnlPrincipal.setLayout(pnlPrincipalLayout);
         pnlPrincipalLayout.setHorizontalGroup(
             pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1026, Short.MAX_VALUE)
+            .addGap(0, 1304, Short.MAX_VALUE)
         );
         pnlPrincipalLayout.setVerticalGroup(
             pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 530, Short.MAX_VALUE)
         );
-
-        pnlHerramientas.setBackground(new java.awt.Color(255, 153, 153));
 
         javax.swing.GroupLayout pnlHerramientasLayout = new javax.swing.GroupLayout(pnlHerramientas);
         pnlHerramientas.setLayout(pnlHerramientasLayout);
         pnlHerramientasLayout.setHorizontalGroup(
             pnlHerramientasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 340, Short.MAX_VALUE)
+            .addGap(0, 166, Short.MAX_VALUE)
         );
         pnlHerramientasLayout.setVerticalGroup(
             pnlHerramientasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -186,6 +235,37 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
 
         jMenuBar2.add(jMenu1);
 
+        jMenu2.setText("Tareas en Progreso");
+
+        menuVisualizacionTejido.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, 0));
+        menuVisualizacionTejido.setText("Visualizacion Tejido");
+        menuVisualizacionTejido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuVisualizacionTejidoActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuVisualizacionTejido);
+
+        menuTriangularizacion.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, 0));
+        menuTriangularizacion.setText("Triangularizacion");
+        menuTriangularizacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuTriangularizacionActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuTriangularizacion);
+
+        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, 0));
+        jMenuItem5.setText("Graficos de barras");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem5);
+
+        jMenuBar2.add(jMenu2);
+
         setJMenuBar(jMenuBar2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -194,15 +274,15 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pnlHerramientas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlHerramientas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(pnlPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 1026, Short.MAX_VALUE)
+                .addComponent(pnlPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnlHerramientas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(pnlPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
+            .addComponent(pnlPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         getAccessibleContext().setAccessibleDescription("");
@@ -252,6 +332,18 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         mostrarShell();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void menuVisualizacionTejidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuVisualizacionTejidoActionPerformed
+        visualizarTejido();
+    }//GEN-LAST:event_menuVisualizacionTejidoActionPerformed
+
+    private void menuTriangularizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTriangularizacionActionPerformed
+        triangularizacion();
+    }//GEN-LAST:event_menuTriangularizacionActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        graficaEstadistica();
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
     
     public void actionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
@@ -265,42 +357,18 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
     private javax.swing.JMenuItem itemNuevoTejido;
     private javax.swing.JMenuItem itemSalir;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JMenuItem menuTriangularizacion;
+    private javax.swing.JMenuItem menuVisualizacionTejido;
     private javax.swing.JPanel pnlHerramientas;
     private javax.swing.JPanel pnlPrincipal;
     // End of variables declaration//GEN-END:variables
-
-    private void setTemaSistemaOperativoActual() {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ProliferacionCelular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ProliferacionCelular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ProliferacionCelular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ProliferacionCelular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-    }
-
-    private void mostrarShell() {
-        limpiarPanelPrincipal();
-        ShellSQLITE vista = new ShellSQLITE();
-        pnlPrincipal.add(vista.getContentPane());
-        
-    }
 }
