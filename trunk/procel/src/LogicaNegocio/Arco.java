@@ -8,18 +8,19 @@ package LogicaNegocio;
  *
  * @author yohanna
  */
-public class Arco <T> {
-    private int vi;
+public class Arco {
+         private int vi;
 	private int vj;
 	private int costo;
-	
-	
+        
 	Arco(int v1,int v2,int c){
 		vi=v1;
 		vj=v2;
 	    costo=c;
 	}
-	
+        public void imprimir(){
+            System.out.println("  Desde: "+this.vi+"  Hasta: "+this.vj+"  Costo: "+costo);
+        }
 	public int getVi() {
 		return vi;
 	}
