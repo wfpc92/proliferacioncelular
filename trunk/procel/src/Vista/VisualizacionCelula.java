@@ -20,7 +20,6 @@ public class VisualizacionCelula extends javax.swing.JFrame {
     public VisualizacionCelula(Celula cel) {
         super("Visualizador de Celula");
         initComponents();
-        this.show();
         celula = cel;
     //    Container contenedor = getContentPane();
      //   contenedor.add();
