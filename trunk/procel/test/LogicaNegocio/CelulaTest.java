@@ -94,7 +94,7 @@ public class CelulaTest {
         System.out.println("getId");
         Celula instance = new Celula(123,3.4,4);
         int expResult = 123;
-        int result = instance.getId();
+        long result = instance.getId();
         assertEquals(expResult, result);
     }
 

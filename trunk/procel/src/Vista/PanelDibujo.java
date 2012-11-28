@@ -178,7 +178,10 @@ public class PanelDibujo extends javax.swing.JFrame {
             while (m < l.size()) {
                 if (l.get(m).getVi() == j) {
                     if (l.get(m).getVj() < xvs.size()) {
-                        g.drawLine(xvs.get(j) + 2, yvs.get(j) + 2, xvs.get(l.get(m).getVj()) + 2, yvs.get(l.get(m).getVj()) + 2);
+                        g.drawLine((int)(xvs.get(j) + 2), 
+                                (int)(yvs.get(j) + 2), 
+                                (int)(xvs.get((int)l.get(m).getVj()) + 2),
+                                (int)(yvs.get((int)l.get(m).getVj()) + 2));
                         g.setColor(Color.BLACK);
                     }
                 }
