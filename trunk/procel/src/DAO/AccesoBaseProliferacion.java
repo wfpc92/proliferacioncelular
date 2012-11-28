@@ -6,14 +6,13 @@ package DAO;
 
 import LogicaNegocio.*;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class AccesoBaseProliferacion {
 
+    public static final String cadenaConexionDDBB = "jdbc:sqlite:mydatabase.sqlite";
     private static AccesoBaseProliferacion accesoDatos;
     private static Connection conn;
     //<editor-fold defaultstate="collapsed" desc=" DDL de la base de datos ">
@@ -56,27 +55,35 @@ public class AccesoBaseProliferacion {
 
     //<editor-fold defaultstate="collapsed" desc=" Constructor Privado de Clase ">
     private AccesoBaseProliferacion() {
+        //JOptionPane.showMessageDialog(new JFrame(), System.getProperty("java.class.path"));
+        
         try {
             Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection("jdbc:sqlite:mydatabase.sqlite");
-            conn.setAutoCommit(false);
-            try (Statement stmt = conn.createStatement()) {
-                stmt.execute(crearTejido);
-                stmt.execute(crearCelula);
-                stmt.execute(crearLado);
-                conn.commit();
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(new JFrame(), "No se encontro el controlador de la base de datos.");
+        } finally {
+
+            if (conectar()) {
+                try (Statement stmt = conn.createStatement()) {
+                    stmt.execute(crearTejido);
+                    stmt.execute(crearCelula);
+                    stmt.execute(crearLado);
+                    conn.commit();
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(new JFrame(), "No se pudo ejecutar el ldd.");
+                } finally {
+                    desconectar();
+                }
             }
-            conn.close();
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(AccesoBaseProliferacion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     //</editor-fold>
 
     //hace la conexion con una base de datos
-    public boolean conectar() {
+    public final boolean conectar() {
         try {
-            conn = DriverManager.getConnection("jdbc:sqlite:mydatabase.sqlite");
+            conn = DriverManager.getConnection(cadenaConexionDDBB);
+            conn.setAutoCommit(false);
         } catch (SQLException e) {
             return false;
         }
@@ -84,7 +91,7 @@ public class AccesoBaseProliferacion {
     }
 
     //Desconecta la base de datos.
-    public void desconectar() {
+    public final void desconectar() {
         if (conn != null) {
             try {
                 conn.close();
