@@ -5,7 +5,10 @@
 package Vista;
 
 import LogicaNegocio.Arco;
+import LogicaNegocio.Celula;
 import LogicaNegocio.Grafo;
+import LogicaNegocio.Tejido;
+import LogicaNegocio.Vertice;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -48,9 +51,36 @@ public class PanelDibujo extends javax.swing.JFrame {
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, getWidth(), getHeight());
         g.setColor(Color.BLACK);
+        
+ 
 
         Grafo gr = new Grafo();
-        gr.AgregarVertice(0, 0);
+        
+        
+        //llamando a la funcion de Alexis
+        
+        Grafo grafoTriang;
+        Celula obCel=new Celula(0,5,5);
+        grafoTriang = new Grafo();
+        Tejido obTejido=new Tejido(1,"tejido1",obCel,50);
+        obTejido.triangularizacion();
+        grafoTriang=obTejido.getTejidoG();
+        
+        
+        ArrayList<Arco> listaArcos=new ArrayList<Arco>();
+        listaArcos=grafoTriang.getListaArcos();     //aqui tengo los arcos desde el grafo 
+        
+        ArrayList<Vertice> listaVertice=new ArrayList<Vertice>();
+        listaVertice=grafoTriang.getLista_vertices();
+       
+        for(int i=0;i<listaVertice.size();i++){
+            gr.AgregarVertice(listaVertice.get(i).getInfo(),listaVertice.get(i).getSubindice());
+        }
+        for(int i=0;i<listaArcos.size();i++){
+            gr.AgregarArco(listaArcos.get(i).getVi(), listaArcos.get(i).getVj(),0);
+        }
+       
+        /*gr.AgregarVertice(0, 0);
         gr.AgregarVertice(1, 1);
         gr.AgregarVertice(2, 2);
         gr.AgregarVertice(3, 3);
@@ -77,6 +107,22 @@ public class PanelDibujo extends javax.swing.JFrame {
         gr.AgregarVertice(24, 24);
         gr.AgregarVertice(25, 25);
         gr.AgregarVertice(26, 26);
+        
+        gr.AgregarVertice(27, 27);
+        gr.AgregarVertice(28, 28);
+        gr.AgregarVertice(29, 29);
+        gr.AgregarVertice(30, 30);
+        gr.AgregarVertice(31, 31);
+        gr.AgregarVertice(32, 32);
+        gr.AgregarVertice(33, 33);
+        gr.AgregarVertice(34, 34);
+        gr.AgregarVertice(35, 35);
+        gr.AgregarVertice(36, 36);
+        gr.AgregarVertice(37, 37);
+        gr.AgregarVertice(38, 38);
+        
+        
+        
         
         gr.AgregarArco(0, 1, 0);
         gr.AgregarArco(0, 2, 0);
@@ -122,8 +168,18 @@ public class PanelDibujo extends javax.swing.JFrame {
         gr.AgregarArco(7, 24, 0);
          gr.AgregarArco(7, 25, 0);
         //gr.AgregarArco(18, 19, 0);
-        
-      
+         
+         
+         //DESDE AQUI HICE YOOOOO
+          gr.AgregarArco(7, 26, 0);
+          gr.AgregarArco(8, 27, 0);
+          gr.AgregarArco(8, 28, 0);
+          gr.AgregarArco(8, 29, 0);
+          gr.AgregarArco(8, 30, 0);
+          gr.AgregarArco(9, 31, 0);
+          gr.AgregarArco(9, 32, 0);
+          gr.AgregarArco(9, 33, 0);*/
+           
 
         int numeroVecinos = 0;
         numeroVecinos = averiguarVecinos(0, gr);
@@ -154,7 +210,7 @@ public class PanelDibujo extends javax.swing.JFrame {
 
         int j = 1;
         angulo=360/70;
-        while (j < 19) { //Cambiar tamaño
+        while (j < 50) { //Cambiar tamaño
             angulo=100;
             radio=60;
            if(j==4){
@@ -162,8 +218,8 @@ public class PanelDibujo extends javax.swing.JFrame {
                 
             }
            if(j==5){
-               //radio=90;
-               angulo=360/30;
+               radio=150;
+               angulo=25;
            }
     
             int i = 0;
