@@ -1,19 +1,26 @@
 package Vista;
 
 import DAO.AccesoBaseProliferacion;
-import LogicaNegocio.Celula;
-import LogicaNegocio.Tejido;
+import Modelo.Celula;
+import Modelo.Tejido;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu.Separator;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 
 public class ProliferacionCelular extends javax.swing.JFrame implements ActionListener{
 
-    DibujadorCelula jPanel1;
+    Tejido tejido = null;
     //integracion activa
         
     /**
@@ -33,11 +40,20 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
     /**
      * Creates new form ProliferacionCelular
      */
-    public ProliferacionCelular() {
+    private static ProliferacionCelular procel;
+    
+    private ProliferacionCelular() {
         super("Proliferacion Celular");
         setTemaSistemaOperativoActual();
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
+    }
+    
+    public static ProliferacionCelular getInstance(){
+        if(procel == null) {
+            procel = new ProliferacionCelular();
+        }
+        return procel;
     }
     
     private void limpiarPanelPrincipal(){
@@ -84,7 +100,7 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
 
     private void visualizarTejido() {
         limpiarPanelPrincipal();
-        PanelDibujo panelDibujo = new PanelDibujo(pnlPrincipal.getGraphics(), pnlPrincipal.getBounds());
+        PanelDibujo panelDibujo = new PanelDibujo(pnlPrincipal.getGraphics(), pnlPrincipal.getBounds(), tejido);
         this.pnlPrincipal.add(panelDibujo.getContentPane());
     }
 
@@ -97,6 +113,11 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
         pnlPrincipal.add(new GraficoBarras(pnlPrincipal.getGraphics(), pnlPrincipal.getBounds()).getContentPane());
     }
     
+    private void generarTejido(Tejido tejido){
+        tejido.triangularizacion();
+        limpiarPanelPrincipal();
+        this.pnlPrincipal.add(new PanelDibujo(pnlPrincipal.getGraphics(), pnlPrincipal.getBounds(), tejido).getContentPane());     
+    }
    
     /**
      * This method is called from within the constructor to initialize the form.
@@ -153,7 +174,8 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
 
         jMenu3.setText("Archivo");
 
-        itemNuevoTejido.setText("Nuevo tejido");
+        itemNuevoTejido.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+        itemNuevoTejido.setText("Nueva Poblacion");
         itemNuevoTejido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 itemNuevoTejidoActionPerformed(evt);
@@ -161,7 +183,8 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
         });
         jMenu3.add(itemNuevoTejido);
 
-        itemEditarTejido.setText("Editar tejido");
+        itemEditarTejido.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
+        itemEditarTejido.setText("Abrir Población");
         itemEditarTejido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 itemEditarTejidoActionPerformed(evt);
@@ -169,6 +192,7 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
         });
         jMenu3.add(itemEditarTejido);
 
+        itemGuardarTejido.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
         itemGuardarTejido.setText("Guardar tejido");
         itemGuardarTejido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -178,6 +202,7 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
         jMenu3.add(itemGuardarTejido);
         jMenu3.add(jSeparator1);
 
+        itemCerrar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
         itemCerrar.setText("Cerrar");
         itemCerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -186,6 +211,7 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
         });
         jMenu3.add(itemCerrar);
 
+        itemSalir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
         itemSalir.setText("Salir");
         itemSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -234,7 +260,7 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
 
         jMenu2.setText("Tareas en Progreso");
 
-        menuVisualizacionTejido.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, 0));
+        menuVisualizacionTejido.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_MASK));
         menuVisualizacionTejido.setText("Visualizacion Tejido");
         menuVisualizacionTejido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -243,7 +269,7 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
         });
         jMenu2.add(menuVisualizacionTejido);
 
-        menuTriangularizacion.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, 0));
+        menuTriangularizacion.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
         menuTriangularizacion.setText("Triangularizacion");
         menuTriangularizacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -252,7 +278,7 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
         });
         jMenu2.add(menuTriangularizacion);
 
-        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, 0));
+        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem5.setText("Graficos de barras");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -294,7 +320,8 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
 
     private void itemNuevoTejidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNuevoTejidoActionPerformed
         //aqui se llama al controlador para crear el nuevo tejido
-        
+        tejido = new Tejido(1, "tejido 1", new Celula(0,5,5), 50);
+        generarTejido(tejido);
     }//GEN-LAST:event_itemNuevoTejidoActionPerformed
 
     private void itemEditarTejidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEditarTejidoActionPerformed
@@ -347,6 +374,10 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
         //jPanel1.visualizar(this.getGraphics(), new Celula(23,4));
     }
     
+    public Dimension getTamanioPnlPrincipal(){
+        return getPnlPrincipal().getBounds().getSize();
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem itemCerrar;
     private javax.swing.JMenuItem itemEditarTejido;
@@ -366,6 +397,167 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
     private javax.swing.JMenuItem menuTriangularizacion;
     private javax.swing.JMenuItem menuVisualizacionTejido;
     private javax.swing.JPanel pnlHerramientas;
-    private javax.swing.JPanel pnlPrincipal;
+    private static javax.swing.JPanel pnlPrincipal;
     // End of variables declaration//GEN-END:variables
+
+
+    public JMenuItem getItemCerrar() {
+        return itemCerrar;
+    }
+
+    public void setItemCerrar(JMenuItem itemCerrar) {
+        this.itemCerrar = itemCerrar;
+    }
+
+    public JMenuItem getItemEditarTejido() {
+        return itemEditarTejido;
+    }
+
+    public void setItemEditarTejido(JMenuItem itemEditarTejido) {
+        this.itemEditarTejido = itemEditarTejido;
+    }
+
+    public JMenuItem getItemGuardarTejido() {
+        return itemGuardarTejido;
+    }
+
+    public void setItemGuardarTejido(JMenuItem itemGuardarTejido) {
+        this.itemGuardarTejido = itemGuardarTejido;
+    }
+
+    public JMenuItem getItemNuevoTejido() {
+        return itemNuevoTejido;
+    }
+
+    public void setItemNuevoTejido(JMenuItem itemNuevoTejido) {
+        this.itemNuevoTejido = itemNuevoTejido;
+    }
+
+    public JMenuItem getItemSalir() {
+        return itemSalir;
+    }
+
+    public void setItemSalir(JMenuItem itemSalir) {
+        this.itemSalir = itemSalir;
+    }
+
+    public JMenu getjMenu1() {
+        return jMenu1;
+    }
+
+    public void setjMenu1(JMenu jMenu1) {
+        this.jMenu1 = jMenu1;
+    }
+
+    public JMenu getjMenu2() {
+        return jMenu2;
+    }
+
+    public void setjMenu2(JMenu jMenu2) {
+        this.jMenu2 = jMenu2;
+    }
+
+    public JMenu getjMenu3() {
+        return jMenu3;
+    }
+
+    public void setjMenu3(JMenu jMenu3) {
+        this.jMenu3 = jMenu3;
+    }
+
+    public JMenuBar getjMenuBar2() {
+        return jMenuBar2;
+    }
+
+    public void setjMenuBar2(JMenuBar jMenuBar2) {
+        this.jMenuBar2 = jMenuBar2;
+    }
+
+    public JMenuItem getjMenuItem1() {
+        return jMenuItem1;
+    }
+
+    public void setjMenuItem1(JMenuItem jMenuItem1) {
+        this.jMenuItem1 = jMenuItem1;
+    }
+
+    public JMenuItem getjMenuItem2() {
+        return jMenuItem2;
+    }
+
+    public void setjMenuItem2(JMenuItem jMenuItem2) {
+        this.jMenuItem2 = jMenuItem2;
+    }
+
+    public JMenuItem getjMenuItem3() {
+        return jMenuItem3;
+    }
+
+    public void setjMenuItem3(JMenuItem jMenuItem3) {
+        this.jMenuItem3 = jMenuItem3;
+    }
+
+    public JMenuItem getjMenuItem4() {
+        return jMenuItem4;
+    }
+
+    public void setjMenuItem4(JMenuItem jMenuItem4) {
+        this.jMenuItem4 = jMenuItem4;
+    }
+
+    public JMenuItem getjMenuItem5() {
+        return jMenuItem5;
+    }
+
+    public void setjMenuItem5(JMenuItem jMenuItem5) {
+        this.jMenuItem5 = jMenuItem5;
+    }
+
+    public Separator getjSeparator1() {
+        return jSeparator1;
+    }
+
+    public void setjSeparator1(Separator jSeparator1) {
+        this.jSeparator1 = jSeparator1;
+    }
+
+    public JMenuItem getMenuTriangularizacion() {
+        return menuTriangularizacion;
+    }
+
+    public void setMenuTriangularizacion(JMenuItem menuTriangularizacion) {
+        this.menuTriangularizacion = menuTriangularizacion;
+    }
+
+    public JMenuItem getMenuVisualizacionTejido() {
+        return menuVisualizacionTejido;
+    }
+
+    public void setMenuVisualizacionTejido(JMenuItem menuVisualizacionTejido) {
+        this.menuVisualizacionTejido = menuVisualizacionTejido;
+    }
+
+    public JPanel getPnlHerramientas() {
+        return pnlHerramientas;
+    }
+
+    public void setPnlHerramientas(JPanel pnlHerramientas) {
+        this.pnlHerramientas = pnlHerramientas;
+    }
+
+    public JPanel getPnlPrincipal() {
+        return pnlPrincipal;
+    }
+
+    public void setPnlPrincipal(JPanel pnlPrincipal) {
+        this.pnlPrincipal = pnlPrincipal;
+    }
+   
+    public Graphics getGraficos(){
+        return getGraphics();
+    }
+
+    Tejido getTejido() {
+        return tejido;
+    }
 }
