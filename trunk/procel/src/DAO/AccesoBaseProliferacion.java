@@ -4,8 +4,8 @@
  */
 package DAO;
 
-import Modelo.Tejido;
 import Modelo.Celula;
+import Modelo.Tejido;
 import java.sql.*;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -23,7 +23,7 @@ public class AccesoBaseProliferacion {
             + "IDTEJIDO INTEGER REFERENCES TEJIDO(IDTEJIDO))";
     public static String crearTejido =
             "CREATE TABLE IF NOT EXISTS TEJIDO("
-            + "IDTEJIDO INTEGER PRYMARY KEY, "
+            + "IDTEJIDO INTEGER PRIMARY KEY, "
             + "NOMBRE VARCHAR(15))";
     public static String crearLado =
             "CREATE TABLE IF NOT EXISTS LADO( "
