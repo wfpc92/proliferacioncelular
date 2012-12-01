@@ -44,6 +44,7 @@ public class Grafo<T> {
 
     public void AgregarArco(long vi, long vj, int costo) {
         Arco obj_arco = new Arco(vi, vj, costo);
+        System.out.println("crea arco desde: "+vi+"hasta: "+vj);
         if (this.BuscarVertice(vi) && this.BuscarVertice(vj)) {
             this.listaArcos.add(obj_arco);
         } else {
@@ -97,20 +98,16 @@ public class Grafo<T> {
         }
     }
 
-    public int posicionArcoCompleto(int vi, int vj) {
+    public int posicionArcoCompleto(long vi, long vj) {
         for (int i = 0; i < this.listaArcos.size(); i++) {
-            if (this.listaArcos.get(i).getVi() == vi && this.listaArcos.get(i).getVj() == vj) {
+            if ((this.listaArcos.get(i).getVi() == vi && this.listaArcos.get(i).getVj() == vj)||this.listaArcos.get(i).getVj() == vj && this.listaArcos.get(i).getVi()==vi) {
                 return i;
-
             }
         }
         return -1;
     }
 
     public int CostoArco(int vi, int vj) {
-
-
-
         if (!this.listaArcos.isEmpty()) {
             int posicion = this.posicionArcoCompleto(vi, vj);
             if (posicion != -1) {
@@ -118,6 +115,15 @@ public class Grafo<T> {
             }
         }
         return -1;
+    }
+    public boolean existeArco(long vi, long vj) {
+        if (!this.listaArcos.isEmpty()) {
+            int posicion = this.posicionArcoCompleto(vi, vj);
+            if (posicion != -1) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public T InfoVertice(int subIndice) {
