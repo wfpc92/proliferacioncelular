@@ -7,7 +7,6 @@ package Vista;
 import Modelo.Celula;
 import Modelo.Tejido;
 import Modelo.Vertice;
-import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Rectangle;

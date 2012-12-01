@@ -10,21 +10,22 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu.Separator;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
-
-public class ProliferacionCelular extends javax.swing.JFrame implements ActionListener{
+public class ProliferacionCelular extends javax.swing.JFrame implements ActionListener {
 
     Tejido<Celula> tejido = null;
     //integracion activa
-        
+
     /**
      * @param args the command line arguments
      */
@@ -37,42 +38,35 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
             }
         });
     }
-    
-    
     /**
      * Creates new form ProliferacionCelular
      */
     private static ProliferacionCelular procel;
-    
+
     private ProliferacionCelular() {
         super("Proliferacion Celular");
         setTemaSistemaOperativoActual();
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
     }
-    
-    public static ProliferacionCelular getInstance(){
-        if(procel == null) {
+
+    public static ProliferacionCelular getInstance() {
+        if (procel == null) {
             procel = new ProliferacionCelular();
         }
         return procel;
     }
-    
-    private void limpiarPanelPrincipal(){
+
+    private void limpiarPanelPrincipal() {
         pnlPrincipal.removeAll();
         pnlPrincipal.repaint();
     }
-    
-    private void limpiarPanelHerramientas(){
-        pnlHerramientas.removeAll();
-        pnlHerramientas.repaint();
-    }
-    
-    public void mostrarTablaBaseDatos(DefaultTableModel modelo){
+
+    public void mostrarTablaBaseDatos(DefaultTableModel modelo) {
         limpiarPanelPrincipal();
-        pnlPrincipal.add((new TablaBaseDatos(modelo)).getContentPane());
+        pnlPrincipal.add((new TablaBaseDatos(modelo,pnlPrincipal.getBounds())).getContentPane() );
     }
-    
+
     private void setTemaSistemaOperativoActual() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -97,33 +91,37 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
         limpiarPanelPrincipal();
         ShellSQLITE vista = new ShellSQLITE();
         pnlPrincipal.add(vista.getContentPane());
-        
+
     }
 
     private void visualizarTejido() {
         limpiarPanelPrincipal();
         PanelDibujo panelDibujo = new PanelDibujo(pnlPrincipal.getGraphics(), pnlPrincipal.getBounds(), tejido);
-        this.pnlPrincipal.add(panelDibujo.getContentPane());
+        ProliferacionCelular.pnlPrincipal.add(panelDibujo.getContentPane());
     }
 
-    private void triangularizacion() {
-       limpiarPanelPrincipal();
-    }
-    
     private void graficaEstadistica() {
-        if(tejido!=null){
-            limpiarPanelPrincipal();
-            GraficoBarras  graficoBarras = new GraficoBarras(pnlPrincipal.getGraphics(), pnlPrincipal.getBounds(), tejido);
-            pnlPrincipal.add(graficoBarras.getContentPane());            
+        limpiarPanelPrincipal();
+        if (tejido != null) {
+            GraficoBarras graficoBarras = new GraficoBarras(pnlPrincipal.getGraphics(), pnlPrincipal.getBounds(), tejido);
+            ProliferacionCelular.pnlPrincipal.add(graficoBarras.getContentPane());
+        }
+        else{
+            JOptionPane.showMessageDialog(new JFrame(), "No hay un tejido abierto.");
         }
     }
-    
-    private void generarTejido(Tejido tejido){
-        tejido.triangularizacion();
+
+    private void generarTejido(Tejido tejido) {
         limpiarPanelPrincipal();
-        this.pnlPrincipal.add(new PanelDibujo(pnlPrincipal.getGraphics(), pnlPrincipal.getBounds(), tejido).getContentPane());     
+        tejido.triangularizacion();
+        this.pnlPrincipal.add(new PanelDibujo(pnlPrincipal.getGraphics(), pnlPrincipal.getBounds(), tejido).getContentPane());
     }
-   
+    
+    private void abrirTejido(){
+        limpiarPanelPrincipal();
+        mostrarTablaBaseDatos(AccesoBaseProliferacion.getAccesoDatos().seleccionarRegistro(new Tejido()));
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -305,12 +303,13 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
 
     private void itemNuevoTejidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNuevoTejidoActionPerformed
         //aqui se llama al controlador para crear el nuevo tejido
-        tejido = new Tejido(1, "tejido 1", new Celula(0,5,5), 50);
+        tejido = new Tejido(1, "tejido 1", new Celula(0, 5, 5), 50);
         generarTejido(tejido);
     }//GEN-LAST:event_itemNuevoTejidoActionPerformed
 
     private void itemEditarTejidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEditarTejidoActionPerformed
         // aqui se carga un tejido y se muestra luego
+        abrirTejido();
     }//GEN-LAST:event_itemEditarTejidoActionPerformed
 
     private void itemGuardarTejidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemGuardarTejidoActionPerformed
@@ -332,7 +331,7 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         try {
-            mostrarTablaBaseDatos((DefaultTableModel)AccesoBaseProliferacion.getAccesoDatos().ejecutar("select * from lado"));
+            mostrarTablaBaseDatos((DefaultTableModel) AccesoBaseProliferacion.getAccesoDatos().ejecutar("select * from lado"));
         } catch (SQLException ex) {
             Logger.getLogger(ProliferacionCelular.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -345,16 +344,15 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         graficaEstadistica();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
-    
+
     public void actionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         //jPanel1.visualizar(this.getGraphics(), new Celula(23,4));
     }
-    
-    public Dimension getTamanioPnlPrincipal(){
+
+    public Dimension getTamanioPnlPrincipal() {
         return getPnlPrincipal().getBounds().getSize();
     }
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem itemCerrar;
     private javax.swing.JMenuItem itemEditarTejido;
@@ -374,7 +372,6 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
     private javax.swing.JPanel pnlHerramientas;
     private static javax.swing.JPanel pnlPrincipal;
     // End of variables declaration//GEN-END:variables
-
 
     public JMenuItem getItemCerrar() {
         return itemCerrar;
@@ -511,8 +508,8 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
     public void setPnlPrincipal(JPanel pnlPrincipal) {
         this.pnlPrincipal = pnlPrincipal;
     }
-   
-    public Graphics getGraficos(){
+
+    public Graphics getGraficos() {
         return getGraphics();
     }
 
