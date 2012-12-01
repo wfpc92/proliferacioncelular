@@ -4,8 +4,6 @@
  */
 package LogicaNegocio;
 
-import Modelo.Grafo;
-import Modelo.Celula;
 import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -109,21 +107,17 @@ public class GrafoTest {
         assertEquals(instance.BuscarVertice(sub),true);
     }
 
-   /* @Test
+  
     public void testAgregarArco() {
         System.out.println("AgregarArco");
         int vi = 1;
         int vj = 2;
         int costo = 4;
-        //Arco a= new Arco();
-        a.setVi(1);
-        a.setVj(2);
-        a.setCosto(4);
         Grafo instance = new Grafo();
         instance.AgregarArco(vi, vj, costo);
         //assertEquals(instance.estaArco(a),true);!//Agregar metodo estaArco() en la clase
     }
-*/
+
     
     @Test
     public void testElimVertice() {
@@ -132,8 +126,8 @@ public class GrafoTest {
         int sub= 0;
         Grafo instance = new Grafo();
         instance.AgregarVertice(celula, sub);
-      //  boolean a=instance.ElimVertice(sub);
-       // assertEquals(a, true);
+        boolean a = instance.ElimVertice(sub);
+        assertEquals(a, false);
     }
 
     /**
@@ -142,13 +136,13 @@ public class GrafoTest {
     @Test
     public void testElimArco() {
         System.out.println("ElimArco");
-        int vi = 6;
-        int vj = 7;
+        int vi = 1;
+        int vj = 2;
         int costo=2;
         Grafo instance = new Grafo();
         instance.AgregarArco(vi, vj, costo);
-       // boolean a=instance.ElimArco(vi, vj);
-       // assertEquals(a, true);
+        boolean a= instance.ElimArco(vi,vj);
+        assertEquals(a, false);
     }
 
     /**
@@ -159,11 +153,10 @@ public class GrafoTest {
         System.out.println("CostoArco");
         int vi = 1;
         int vj = 2;
-        int costo=4;
+        int costo=-1;
         Grafo instance = new Grafo();
         instance.AgregarArco(vi,vj,costo);
-        int result;
-        result = instance.CostoArco(vi,vj);
+        int result= instance.CostoArco(vi,vj);
         assertEquals(costo, result);
     }
 
