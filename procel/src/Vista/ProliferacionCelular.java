@@ -2,6 +2,7 @@ package Vista;
 
 import DAO.AccesoBaseProliferacion;
 import Modelo.Celula;
+import Modelo.Celula;
 import Modelo.Tejido;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -110,7 +111,7 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
     
     private void graficaEstadistica() {
         limpiarPanelPrincipal();
-        pnlPrincipal.add(new GraficoBarras(pnlPrincipal.getGraphics(), pnlPrincipal.getBounds()).getContentPane());
+        pnlPrincipal.add(new GraficoBarras(pnlPrincipal.getGraphics(), pnlPrincipal.getBounds(), tejido).getContentPane());
     }
     
     private void generarTejido(Tejido tejido){
@@ -144,8 +145,6 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        menuVisualizacionTejido = new javax.swing.JMenuItem();
-        menuTriangularizacion = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -258,25 +257,7 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
 
         jMenuBar2.add(jMenu1);
 
-        jMenu2.setText("Tareas en Progreso");
-
-        menuVisualizacionTejido.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_MASK));
-        menuVisualizacionTejido.setText("Visualizacion Tejido");
-        menuVisualizacionTejido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuVisualizacionTejidoActionPerformed(evt);
-            }
-        });
-        jMenu2.add(menuVisualizacionTejido);
-
-        menuTriangularizacion.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
-        menuTriangularizacion.setText("Triangularizacion");
-        menuTriangularizacion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuTriangularizacionActionPerformed(evt);
-            }
-        });
-        jMenu2.add(menuTriangularizacion);
+        jMenu2.setText("Estadisticas");
 
         jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem5.setText("Graficos de barras");
@@ -357,14 +338,6 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
         mostrarShell();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
-    private void menuVisualizacionTejidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuVisualizacionTejidoActionPerformed
-        visualizarTejido();
-    }//GEN-LAST:event_menuVisualizacionTejidoActionPerformed
-
-    private void menuTriangularizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTriangularizacionActionPerformed
-        triangularizacion();
-    }//GEN-LAST:event_menuTriangularizacionActionPerformed
-
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         graficaEstadistica();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
@@ -394,8 +367,6 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JMenuItem menuTriangularizacion;
-    private javax.swing.JMenuItem menuVisualizacionTejido;
     private javax.swing.JPanel pnlHerramientas;
     private static javax.swing.JPanel pnlPrincipal;
     // End of variables declaration//GEN-END:variables
@@ -519,22 +490,6 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
 
     public void setjSeparator1(Separator jSeparator1) {
         this.jSeparator1 = jSeparator1;
-    }
-
-    public JMenuItem getMenuTriangularizacion() {
-        return menuTriangularizacion;
-    }
-
-    public void setMenuTriangularizacion(JMenuItem menuTriangularizacion) {
-        this.menuTriangularizacion = menuTriangularizacion;
-    }
-
-    public JMenuItem getMenuVisualizacionTejido() {
-        return menuVisualizacionTejido;
-    }
-
-    public void setMenuVisualizacionTejido(JMenuItem menuVisualizacionTejido) {
-        this.menuVisualizacionTejido = menuVisualizacionTejido;
     }
 
     public JPanel getPnlHerramientas() {

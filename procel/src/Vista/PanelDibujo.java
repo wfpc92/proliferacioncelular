@@ -4,12 +4,13 @@
  */
 package Vista;
 
-import LogicaNegocio.Arco;
-import LogicaNegocio.Celula;
-import LogicaNegocio.Grafo;
-import LogicaNegocio.Tejido;
-import LogicaNegocio.Vertice;
+import Modelo.Arco;
+import Modelo.Celula;
+import Modelo.Grafo;
+import Modelo.Tejido;
+import Modelo.Vertice;
 import java.awt.Color;
+import java.awt.Event;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -35,12 +36,14 @@ public class PanelDibujo extends javax.swing.JFrame {
 
     Graphics g = null;
     Rectangle r = null;
+    Tejido tejido = null;
     
     
-    public PanelDibujo(final Graphics g, final Rectangle r) {
+    public PanelDibujo(final Graphics g, final Rectangle r, Tejido tejido) {
         initComponents();
         this.r = r;
         this.g = g;
+        this.tejido = tejido;
         setSize(r.getSize());
         visualizar();
     }
@@ -59,12 +62,7 @@ public class PanelDibujo extends javax.swing.JFrame {
         
         //llamando a la funcion de Alexis
         
-        Grafo grafoTriang;
-        Celula obCel=new Celula(0,5,5);
-        grafoTriang = new Grafo();
-        Tejido obTejido=new Tejido(1,"tejido1",obCel,50);
-        obTejido.triangularizacion();
-        grafoTriang=obTejido.getTejidoG();
+        Grafo grafoTriang = tejido.getTejidoG();
         
         
         ArrayList<Arco> listaArcos=new ArrayList<Arco>();

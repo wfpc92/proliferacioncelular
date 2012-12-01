@@ -4,7 +4,8 @@
  */
 package DAO;
 
-import LogicaNegocio.*;
+import Modelo.Tejido;
+import Modelo.Celula;
 import java.sql.*;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;

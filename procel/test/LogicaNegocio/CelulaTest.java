@@ -4,6 +4,7 @@
  */
 package LogicaNegocio;
 
+import Modelo.Celula;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
