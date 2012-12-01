@@ -4,28 +4,21 @@
  */
 package Vista;
 
+import Modelo.Celula;
 import Modelo.Tejido;
+import Modelo.Vertice;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartFrame;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.general.Dataset;
-import org.jfree.data.general.DatasetGroup;
-import org.jfree.data.general.Series;
-import org.jfree.data.statistics.DefaultStatisticalCategoryDataset;
-import org.jfree.data.xy.AbstractXYDataset;
-import org.jfree.data.xy.CategoryTableXYDataset;
-import org.jfree.data.xy.DefaultXYDataset;
-import org.jfree.data.xy.XYBarDataset;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYIntervalSeriesCollection;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
 
 /**
  *
@@ -36,8 +29,8 @@ public class GraficoBarras extends javax.swing.JFrame {
     private BufferedImage grafica = null;
     private final Graphics g;
     private final Rectangle r;
-    private Tejido tejido = null;
-
+    private Tejido<Celula> tejido = null;
+    private ArrayList<String[]> listaResultados = null;
     /**
      * Creates new form GraficoBarras
      */
@@ -50,53 +43,45 @@ public class GraficoBarras extends javax.swing.JFrame {
     }
 
     public BufferedImage creaImagen() {
-        BufferedImage imagen = null;
-        final String series1 = "First";
-         final String series2 = "Second";
-         final String series3 = "Third";
-
+        DefaultCategoryDataset modelo = new DefaultCategoryDataset();
          // column keys...
-         final String category1 = "Category 1";
-         final String category2 = "Category 2";
-         final String category3 = "Category 3";
-         final String category4 = "Category 4";
-         final String category5 = "Category 5";
+        int[] numeroCelulas = new int[20];
+        for(int i = 0; i < numeroCelulas.length; i++){
+            numeroCelulas[i] = 0;
+        }
+        ArrayList<Vertice<Celula>> lista = tejido.getTejidoG().getLista_vertices();
+        for(int i = 0; i < tejido.getTejidoG().getLista_vertices().size(); i++){
+            numeroCelulas[lista.get(i).getInfo().getNumLado()]++;
+            System.out.println(i+". "+lista.get(i).getInfo().getId()+" "+lista.get(i).getInfo().getNumLado());
+        }
         
-         DefaultCategoryDataset modelo = new DefaultCategoryDataset();
-         modelo.addValue(1.0, series1, category1);
-         modelo.addValue(4.0, series1, category2);
-         modelo.addValue(3.0, series1, category3);
-         modelo.addValue(5.0, series1, category4);
-         modelo.addValue(5.0, series1, category5);
-
-         modelo.addValue(5.0, series2, category1);
-         modelo.addValue(7.0, series2, category2);
-         modelo.addValue(6.0, series2, category3);
-         modelo.addValue(8.0, series2, category4);
-         modelo.addValue(4.0, series2, category5);
-
-         modelo.addValue(4.0, series3, category1);
-         modelo.addValue(3.0, series3, category2);
-         modelo.addValue(2.0, series3, category3);
-         modelo.addValue(3.0, series3, category4);
-         modelo.addValue(6.0, series3, category5);
-                 
-         
+        listaResultados = new ArrayList<>();
+        
+        for(int i = 0; i < numeroCelulas.length; i++){
+            if(numeroCelulas[i] != 0){
+                String[] valores = new String[2];
+                valores[0] = i+"";
+                valores[1] = numeroCelulas[i]+"";
+                listaResultados.add(valores);
+                modelo.addValue(numeroCelulas[i], tejido.getNombre(), i + " lados");
+            }
+        }
+        
+        
+        
         boolean legend = true;
         boolean tooltips = true;
         boolean urls = false;
         JFreeChart chart = ChartFactory.createBarChart(
-                "Titulo del grafico",
-                "categoryAxisLabel",
-                "valueAxisLabel",
+                "Celulas por numero de lados",
+                "Numero de Lados",
+                "Cantidad de celulas",
                 modelo,
                 PlotOrientation.VERTICAL,
                 legend,
                 tooltips,
                 urls);
-                
-       
-        return chart.createBufferedImage(400, 400);
+        return chart.createBufferedImage(r.getSize().width-400, r.getSize().height-100);
     }
 
     public void paint(java.awt.Graphics g) {
@@ -104,7 +89,24 @@ public class GraficoBarras extends javax.swing.JFrame {
         if (grafica == null) {
             grafica = this.creaImagen();
         }
-        g.drawImage(grafica, 30, 30, null);
+        g.drawImage(grafica, 30, 30, null); 
+        JLabel[] lbl = imprimirResultados();
+            for(int i = 0; i < lbl.length; i++){
+                g.drawString(lbl[i].getText(), 950, 30 + 20*i);
+            }
+    }
+    
+    public JLabel[] imprimirResultados(){
+        JLabel[] lstLabel = new JLabel[listaResultados.size()];
+        
+        JPanel panel = ProliferacionCelular.getInstance().getPnlHerramientas();
+        panel.setLayout(new FlowLayout( ));
+        
+        for(int i = 0; i < listaResultados.size(); i++){
+            lstLabel[i] = new JLabel("Numero de celulas de "+listaResultados.get(i)[0] +" lados: "+listaResultados.get(i)[1]);
+            panel.add(lstLabel[i]);
+        }
+        return lstLabel;
     }
 
     /**
@@ -133,13 +135,13 @@ public class GraficoBarras extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jButton1)
-                .addGap(0, 335, Short.MAX_VALUE))
+                .addGap(0, 515, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jButton1)
-                .addGap(0, 277, Short.MAX_VALUE))
+                .addGap(0, 371, Short.MAX_VALUE))
         );
 
         pack();
