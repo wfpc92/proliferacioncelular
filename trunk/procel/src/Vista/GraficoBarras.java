@@ -4,6 +4,7 @@
  */
 package Vista;
 
+import Modelo.Tejido;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -35,14 +36,16 @@ public class GraficoBarras extends javax.swing.JFrame {
     private BufferedImage grafica = null;
     private final Graphics g;
     private final Rectangle r;
+    private Tejido tejido = null;
 
     /**
      * Creates new form GraficoBarras
      */
-    public GraficoBarras(Graphics g, Rectangle r) {
+    public GraficoBarras(Graphics g, Rectangle r, Tejido tejido) {
         initComponents();
         this.g = g;
         this.r = r;
+        this.tejido = tejido;
         setSize(r.getSize());
     }
 

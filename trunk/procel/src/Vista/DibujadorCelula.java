@@ -8,7 +8,7 @@ import java.awt.Graphics;
 import java.awt.Polygon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import LogicaNegocio.Celula;
+import Modelo.Celula;
 /**
  *
  * @author ingesis
