@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -21,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class ProliferacionCelular extends javax.swing.JFrame implements ActionListener{
 
-    Tejido tejido = null;
+    Tejido<Celula> tejido = null;
     //integracion activa
         
     /**
@@ -110,8 +111,11 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
     }
     
     private void graficaEstadistica() {
-        limpiarPanelPrincipal();
-        pnlPrincipal.add(new GraficoBarras(pnlPrincipal.getGraphics(), pnlPrincipal.getBounds(), tejido).getContentPane());
+        if(tejido!=null){
+            limpiarPanelPrincipal();
+            GraficoBarras  graficoBarras = new GraficoBarras(pnlPrincipal.getGraphics(), pnlPrincipal.getBounds(), tejido);
+            pnlPrincipal.add(graficoBarras.getContentPane());            
+        }
     }
     
     private void generarTejido(Tejido tejido){
