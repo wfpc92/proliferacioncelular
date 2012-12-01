@@ -78,13 +78,15 @@ public class Tejido<T> {
     }
  
     public void abrirTejido() {
-        ArrayList<T> lstAux=new ArrayList<>();
+        ArrayList<T> lstAux=new ArrayList<T>();
        for(int i=0;i<this.celulasIncompletas.size();i++)
        {
-           while(!this.esCompleto(this.celulasIncompletas.get(i))&& this.TejidoG.getLista_vertices().size()<this.tamMuestra)
+           System.out.println("al rededor de"+((Celula)this.celulasIncompletas.get(i)).getId());
+           while(!this.esCompleto(this.celulasIncompletas.get(i))&& this.TejidoG.getLista_vertices().size()<=this.tamMuestra)
            {
                this.con++;
                Celula cel=new Celula(con,10,GenerarNumeroLados());
+               System.out.println("se crea la celula:"+cel.getId());
                lstAux.add((T)cel);
                this.TejidoG.AgregarVertice((T)cel,con);
                this.TejidoG.AgregarArco(((Celula)this.celulasIncompletas.get(i)).getId(),((Celula)cel).getId(),10);
@@ -100,6 +102,7 @@ public class Tejido<T> {
                 contadorLados++;
             }
         }
+        System.out.println("el Numero de lados de :"+((Celula)cel).getId()+" es: "+contadorLados);
         if(contadorLados<((Celula)cel).getNumLado()){
             return false;
         }
@@ -111,16 +114,26 @@ public class Tejido<T> {
         int newLado=0;
         do{
              newLado=ran.nextInt(9);
-        }while(newLado<=4);
+        }while(newLado<4);
         return newLado;
+    }
+    public void imprimirIncompletas(){
+        System.out.println("Lista de celulas Incompletas: ");
+            for(int i=0;i<this.celulasIncompletas.size();i++)
+                System.out.println(" "+((Celula)(this.celulasIncompletas.get(i))).getId());
     }
     public void cerrarTejido(){
         int j;
+        imprimirIncompletas();
         for(j=0;j< (celulasIncompletas.size())-1;j++){
             this.TejidoG.AgregarArco(((Celula)celulasIncompletas.get(j)).getId(), ((Celula)celulasIncompletas.get(j+1)).getId(),10);   
         }
         //conectando el ultimo con el primero
-        this.TejidoG.AgregarArco(((Celula)celulasIncompletas.get(j)).getId(),((Celula)celulasIncompletas.get(0)).getId() ,10);
+       }
+    public void completarTejido(Celula cel){
+        if(this.TejidoG.existeArco(cel.getId(),((Celula)this.celulasIncompletas.get(this.celulasIncompletas.size()-1)).getId())){
+             this.TejidoG.AgregarArco(((Celula)celulasIncompletas.get(this.celulasIncompletas.size()-1)).getId(), ((Celula)celulasIncompletas.get(0)).getId(),10);   
+        }
     }
     public void imprimirTejido()
     {
@@ -132,8 +145,10 @@ public class Tejido<T> {
     }
     public void triangularizacion() {
        while(this.TejidoG.getLista_vertices().size()<this.tamMuestra){
+            Celula cel=(Celula)this.celulasIncompletas.get(this.celulasIncompletas.size()-1);
             this.abrirTejido();
             this.cerrarTejido();
+            this.completarTejido(cel);
        }
        this.imprimirTejido();
     }
