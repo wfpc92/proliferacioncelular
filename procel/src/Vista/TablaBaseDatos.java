@@ -1,6 +1,7 @@
 
 package Vista;
 
+import java.awt.Rectangle;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -9,9 +10,10 @@ public class TablaBaseDatos extends javax.swing.JFrame {
     /**
      * Creates new form TablaBaseDatos
      */
-    public TablaBaseDatos(DefaultTableModel modelo) {
+    public TablaBaseDatos(DefaultTableModel modelo, Rectangle r) {
         initComponents();
         tblTablaBaseDatos.setModel(modelo);
+        setSize(r.getSize());
     }
 
     /**

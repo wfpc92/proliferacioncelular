@@ -69,7 +69,6 @@ public class AccesoBaseProliferacion {
                     stmt.execute(crearTejido);
                     stmt.execute(crearCelula);
                     stmt.execute(crearLado);
-                    conn.commit();
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(new JFrame(), "No se pudo ejecutar el ldd.");
                 } finally {
@@ -84,7 +83,6 @@ public class AccesoBaseProliferacion {
     public final boolean conectar() {
         try {
             conn = DriverManager.getConnection(cadenaConexionDDBB);
-            conn.setAutoCommit(false);
         } catch (SQLException e) {
             return false;
         }
