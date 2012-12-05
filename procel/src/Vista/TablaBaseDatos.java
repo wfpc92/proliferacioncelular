@@ -1,15 +1,22 @@
-
 package Vista;
 
+import DAO.AccesoBaseProliferacion;
+import Modelo.Celula;
+import Modelo.Tejido;
 import java.awt.Rectangle;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-
 public class TablaBaseDatos extends javax.swing.JFrame {
+
+    String sql = "";
 
     /**
      * Creates new form TablaBaseDatos
      */
+    public TablaBaseDatos(){
+        
+    }
     public TablaBaseDatos(DefaultTableModel modelo, Rectangle r) {
         initComponents();
         tblTablaBaseDatos.setModel(modelo);
@@ -41,6 +48,11 @@ public class TablaBaseDatos extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblTablaBaseDatos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblTablaBaseDatosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblTablaBaseDatos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -57,9 +69,69 @@ public class TablaBaseDatos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+    private void tblTablaBaseDatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTablaBaseDatosMouseClicked
+        generarSql();
+    }//GEN-LAST:event_tblTablaBaseDatosMouseClicked
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTable tblTablaBaseDatos;
     // End of variables declaration//GEN-END:variables
+
+    public void generarSql() {
+        int idTejido;
+        String nombre;
+        idTejido = (int) tblTablaBaseDatos.getValueAt(tblTablaBaseDatos.getSelectedRow(), 0);
+        nombre = (String) tblTablaBaseDatos.getValueAt(tblTablaBaseDatos.getSelectedRow(), 1);
+
+        sql = "select celula.idcelula "
+                + "from celula,tejido "
+                + "where celula.idtejido =tejido.idtejido and "
+                + "tejido.idtejido= " + idTejido;
+
+        DefaultTableModel modeloCelulas = (DefaultTableModel) AccesoBaseProliferacion.getAccesoDatos().ejecutar(sql);
+        JTable tablaCelulas = new JTable();
+        tablaCelulas.setModel(modeloCelulas);
+        int idCelula, numCelPadre, numCelVecinas;
+
+        Tejido tejido = new Tejido(idTejido, nombre, new Celula(0, 5, 5), tablaCelulas.getRowCount());
+
+        for (int i = 1; i < tablaCelulas.getRowCount(); i++) {
+            idCelula = (int) tablaCelulas.getValueAt(i, 0) - (idTejido * 1000);
+            sql = "select count(lado.idcelula) "
+                    + "from celula,lado "
+                    + "where celula.idcelula =lado.idcelula and "
+                    + "celula.idcelula= " + tablaCelulas.getValueAt(i, 0);
+            DefaultTableModel modeloPadre = (DefaultTableModel) AccesoBaseProliferacion.getAccesoDatos().ejecutar(sql);
+            JTable tablaPadre = new JTable();
+            tablaPadre.setModel(modeloPadre);
+            numCelPadre = (int) tablaPadre.getValueAt(0, 0);
+            sql = "select count(lado.idcelulavecino) "
+                    + "from celula,lado "
+                    + "where celula.idcelula =lado.idcelulavecino and "
+                    + "celula.idcelula= " + tablaCelulas.getValueAt(i, 0);
+            DefaultTableModel modeloVecino = (DefaultTableModel) AccesoBaseProliferacion.getAccesoDatos().ejecutar(sql);
+            JTable tablaVecino = new JTable();
+            tablaVecino.setModel(modeloVecino);
+            numCelVecinas = (int) tablaVecino.getValueAt(0, 0);
+            int total= numCelPadre+numCelVecinas;
+            tejido.getTejidoG().AgregarVertice(new Celula(idCelula, 0,total),idCelula);        
+        }
+        
+        sql = "select celula.idcelula, lado.idcelulavecino "
+                + "from celula, lado, tejido "
+                + "where celula.idtejido = tejido.idtejido and "
+                + "tejido.idtejido = " + idTejido + " and "
+                + "celula.idcelula = lado.idcelula";
+
+        DefaultTableModel modeloArcos = (DefaultTableModel) AccesoBaseProliferacion.getAccesoDatos().ejecutar(sql);
+        JTable tablaArcos = new JTable();
+        tablaArcos.setModel(modeloArcos);
+        
+        for(int j = 0; j < tablaArcos.getRowCount();j++){
+            int idCelVi,idCelVj;
+            idCelVi=(int) tablaArcos.getValueAt(j, 0) - (idTejido * 1000);
+            idCelVj=(int) tablaArcos.getValueAt(j, 1) - (idTejido * 1000);
+            tejido.getTejidoG().AgregarArco(idCelVi, idCelVj, 0);
+        }
+    }
 }
