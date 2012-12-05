@@ -24,7 +24,7 @@ public class Tejido<T> {
         this.TejidoG = new Grafo<>();
         this.con=0;
         this.celulasIncompletas=new ArrayList<>();
-        this.tamMuestra=tamanio;
+        this.tamMuestra=500;
         this.celulasIncompletas.add(celIni);
         this.TejidoG.AgregarVertice(celIni, con);
     }
@@ -143,6 +143,12 @@ public class Tejido<T> {
             arcos.get(i).imprimir();
         }
     }
+   /* public void cerrarCuatro(){
+        this.celulasIncompletas
+                for(int i=0;i<this.celulasIncompletas.size();i++){
+                    
+                }
+    }*/
     public void triangularizacion() {
        while(this.TejidoG.getLista_vertices().size()<this.tamMuestra){
             Celula cel=(Celula)this.celulasIncompletas.get(this.celulasIncompletas.size()-1);
@@ -151,5 +157,8 @@ public class Tejido<T> {
             this.completarTejido(cel);
        }
        this.imprimirTejido();
+    }
+    public void triagularizacionMejorada(){
+        
     }
 }
