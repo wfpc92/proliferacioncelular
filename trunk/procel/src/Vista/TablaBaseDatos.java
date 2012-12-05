@@ -4,6 +4,7 @@ import DAO.AccesoBaseProliferacion;
 import Modelo.Celula;
 import Modelo.Tejido;
 import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -59,25 +60,33 @@ public class TablaBaseDatos extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 874, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblTablaBaseDatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTablaBaseDatosMouseClicked
-        generarSql();
+        try {
+            generarSql(evt);
+        } catch (Exception ex) {
+           
+        }
     }//GEN-LAST:event_tblTablaBaseDatosMouseClicked
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTable tblTablaBaseDatos;
     // End of variables declaration//GEN-END:variables
 
-    public void generarSql() {
+    public void generarSql(MouseEvent evt) throws Exception {
         int idTejido;
         String nombre;
         idTejido = (int) tblTablaBaseDatos.getValueAt(tblTablaBaseDatos.getSelectedRow(), 0);
@@ -133,5 +142,6 @@ public class TablaBaseDatos extends javax.swing.JFrame {
             idCelVj=(int) tablaArcos.getValueAt(j, 1) - (idTejido * 1000);
             tejido.getTejidoG().AgregarArco(idCelVi, idCelVj, 0);
         }
+        ProliferacionCelular.getInstance().tejido=tejido;
     }
 }

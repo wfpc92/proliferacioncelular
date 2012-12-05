@@ -295,8 +295,7 @@ public class AccesoBaseProliferacion {
         return modelo;
     }
 
-    public Object ejecutar(String sql)
-            throws SQLException {
+    public Object ejecutar(String sql){
         try {
             // Hacer la conexion con la base de datos
             if (this.conectar()) {
@@ -313,7 +312,7 @@ public class AccesoBaseProliferacion {
                 throw new SQLException("NO SE PUDO ABRIR BASE DE DATOS");
             }
         } catch (SQLException se) {
-            throw se;
         }
+        return null;
     }
 }

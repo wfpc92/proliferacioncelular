@@ -2,16 +2,13 @@
 package Vista;
 
 import Modelo.Arco;
-import Modelo.Celula;
 import Modelo.Grafo;
 import Modelo.Tejido;
 import Modelo.Vertice;
 import java.awt.Color;
-import java.awt.Event;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 import java.util.Vector;
 import javax.swing.JTextField;
@@ -19,7 +16,7 @@ import javax.swing.JTextField;
 
 public class PanelDibujo extends javax.swing.JFrame {
 
-    int MAXCELULAS = 500;
+    int MAXCELULAS = 50;
     int x = 150;
     int y = 150;
     int ancho = 4;
@@ -102,13 +99,28 @@ public class PanelDibujo extends javax.swing.JFrame {
             g.setColor(Color.BLACK);
             g.drawString("" + i, xvs.get(i), yvs.get(i) + alto - 5);
             
-            g.setColor(Color.green);
+           // g.setColor(Color.green);
             dibujados++;
         }
         int j = 1;
         angulo=180;
         radio=40;
-        while (j < 500) { //Cambiar tamaño  xvs.size()
+        
+        if(j==4){
+               radio=100; 
+            }
+           if(j==5){
+               radio=150;
+               angulo=25;
+           }
+           if(j==7){
+               angulo=43;
+           }
+           if(j==12){
+               radio=93;
+               angulo=90;
+           }
+        while (j < 50) { //Cambiar tamaño  xvs.size()
             angulo=100;
             int i = 0;
             int a = 0;
@@ -128,7 +140,7 @@ public class PanelDibujo extends javax.swing.JFrame {
                                 (int)(xvs.get((int)l.get(m).getVj()) + 2),
                                 (int)(yvs.get((int)l.get(m).getVj()) + 2));
                         getContentPane().setBackground(Color.white);
-                        g.setColor(Color.green);
+                        //g.setColor(Color.green);
                     }
                 }
                 m++;
@@ -166,7 +178,7 @@ public class PanelDibujo extends javax.swing.JFrame {
                 g.drawOval(xvs.get(k), yvs.get(k), ancho, alto);
                 g.setColor(Color.BLACK);
                 g.drawString("" + k, xvs.get(k), yvs.get(k) + alto - 5);
-                g.setColor(Color.GREEN);
+               // g.setColor(Color.GREEN);
                 it++;
                 
 

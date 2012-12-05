@@ -5,8 +5,11 @@ import Modelo.Celula;
 import Modelo.Celula;
 import Modelo.Tejido;
 import java.awt.Dimension;
+import java.awt.Event;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,7 +26,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class ProliferacionCelular extends javax.swing.JFrame implements ActionListener {
 
-    Tejido<Celula> tejido = null;
+    Tejido<Celula> tejido =null;
     //integracion activa
 
     /**
@@ -103,14 +106,13 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
     private void graficaEstadistica() {
         limpiarPanelPrincipal();
         if (tejido != null) {
-            GraficoBarras graficoBarras = new GraficoBarras(pnlPrincipal.getGraphics(), pnlPrincipal.getBounds(), tejido);
-            ProliferacionCelular.pnlPrincipal.add(graficoBarras.getContentPane());
+            GraficoBarras graficoBarras = new GraficoBarras(tejido);
         } else {
             JOptionPane.showMessageDialog(new JFrame(), "No hay un tejido abierto.");
         }
     }
 
-    private void generarTejido(Tejido tejido) {
+    public void generarTejido(Tejido tejido) {
         limpiarPanelPrincipal();
         tejido.triangularizacion();
         this.pnlPrincipal.add(new PanelDibujo(pnlPrincipal.getGraphics(), pnlPrincipal.getBounds(), tejido).getContentPane());
@@ -173,14 +175,11 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
     private void initComponents() {
 
         pnlPrincipal = new javax.swing.JPanel();
-        pnlHerramientas = new javax.swing.JPanel();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         itemNuevoTejido = new javax.swing.JMenuItem();
-        itemEditarTejido = new javax.swing.JMenuItem();
         itemGuardarTejido = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        itemCerrar = new javax.swing.JMenuItem();
         itemSalir = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -196,21 +195,10 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
         pnlPrincipal.setLayout(pnlPrincipalLayout);
         pnlPrincipalLayout.setHorizontalGroup(
             pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1304, Short.MAX_VALUE)
+            .addGap(0, 1507, Short.MAX_VALUE)
         );
         pnlPrincipalLayout.setVerticalGroup(
             pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 530, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout pnlHerramientasLayout = new javax.swing.GroupLayout(pnlHerramientas);
-        pnlHerramientas.setLayout(pnlHerramientasLayout);
-        pnlHerramientasLayout.setHorizontalGroup(
-            pnlHerramientasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 166, Short.MAX_VALUE)
-        );
-        pnlHerramientasLayout.setVerticalGroup(
-            pnlHerramientasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 530, Short.MAX_VALUE)
         );
 
@@ -225,15 +213,6 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
         });
         jMenu3.add(itemNuevoTejido);
 
-        itemEditarTejido.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
-        itemEditarTejido.setText("Abrir Población");
-        itemEditarTejido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemEditarTejidoActionPerformed(evt);
-            }
-        });
-        jMenu3.add(itemEditarTejido);
-
         itemGuardarTejido.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
         itemGuardarTejido.setText("Guardar tejido");
         itemGuardarTejido.addActionListener(new java.awt.event.ActionListener() {
@@ -243,15 +222,6 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
         });
         jMenu3.add(itemGuardarTejido);
         jMenu3.add(jSeparator1);
-
-        itemCerrar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
-        itemCerrar.setText("Cerrar");
-        itemCerrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemCerrarActionPerformed(evt);
-            }
-        });
-        jMenu3.add(itemCerrar);
 
         itemSalir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
         itemSalir.setText("Salir");
@@ -320,15 +290,11 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pnlHerramientas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(pnlPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlHerramientas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(pnlPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -340,28 +306,19 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
     private void itemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSalirActionPerformed
         //verifica que no haya un tejido abierto y confirma si desea guardar 
         //luego lo cierra y sale del sistema.
+        System.exit(0);
     }//GEN-LAST:event_itemSalirActionPerformed
 
     private void itemNuevoTejidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNuevoTejidoActionPerformed
         //aqui se llama al controlador para crear el nuevo tejido
-        tejido = new Tejido(Math.abs(((int) System.nanoTime() % 34678)), "", new Celula(0, 5, 5), 500);
+        tejido = new Tejido(Math.abs(((int) System.nanoTime() % 34678)), "", new Celula(0, 5, 5), 49);
         generarTejido(tejido);
     }//GEN-LAST:event_itemNuevoTejidoActionPerformed
-
-    private void itemEditarTejidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEditarTejidoActionPerformed
-        // aqui se carga un tejido y se muestra luego
-        abrirTejido();
-    }//GEN-LAST:event_itemEditarTejidoActionPerformed
 
     private void itemGuardarTejidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemGuardarTejidoActionPerformed
         //aqui se guarda el tejido en la base de datos
         guardarTejido();
     }//GEN-LAST:event_itemGuardarTejidoActionPerformed
-
-    private void itemCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCerrarActionPerformed
-        //se cierra y se pregunta si debe guardar o no un tejido abierto, solo
-        //esta activo el menu si y solo si hay un tejido abierto
-    }//GEN-LAST:event_itemCerrarActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         mostrarTablaBaseDatos(AccesoBaseProliferacion.getAccesoDatos().seleccionarRegistro(new Tejido()));
@@ -389,15 +346,14 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
         // TODO add your handling code here:
         //jPanel1.visualizar(this.getGraphics(), new Celula(23,4));
     }
+    
 
     public Dimension getTamanioPnlPrincipal() {
         return getPnlPrincipal().getBounds().getSize();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem itemCerrar;
-    private javax.swing.JMenuItem itemEditarTejido;
     private javax.swing.JMenuItem itemGuardarTejido;
-    private javax.swing.JMenuItem itemNuevoTejido;
+    public javax.swing.JMenuItem itemNuevoTejido;
     private javax.swing.JMenuItem itemSalir;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -409,26 +365,10 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JPanel pnlHerramientas;
     private static javax.swing.JPanel pnlPrincipal;
     // End of variables declaration//GEN-END:variables
 
-    public JMenuItem getItemCerrar() {
-        return itemCerrar;
-    }
-
-    public void setItemCerrar(JMenuItem itemCerrar) {
-        this.itemCerrar = itemCerrar;
-    }
-
-    public JMenuItem getItemEditarTejido() {
-        return itemEditarTejido;
-    }
-
-    public void setItemEditarTejido(JMenuItem itemEditarTejido) {
-        this.itemEditarTejido = itemEditarTejido;
-    }
-
+   
     public JMenuItem getItemGuardarTejido() {
         return itemGuardarTejido;
     }
@@ -532,15 +472,6 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
     public void setjSeparator1(Separator jSeparator1) {
         this.jSeparator1 = jSeparator1;
     }
-
-    public JPanel getPnlHerramientas() {
-        return pnlHerramientas;
-    }
-
-    public void setPnlHerramientas(JPanel pnlHerramientas) {
-        this.pnlHerramientas = pnlHerramientas;
-    }
-
     public JPanel getPnlPrincipal() {
         return pnlPrincipal;
     }
