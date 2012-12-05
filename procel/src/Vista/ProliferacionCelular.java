@@ -43,7 +43,7 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
      */
     private static ProliferacionCelular procel;
 
-    private ProliferacionCelular() {
+    public ProliferacionCelular() {
         super("Proliferacion Celular");
         setTemaSistemaOperativoActual();
         initComponents();
@@ -64,7 +64,7 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
 
     public void mostrarTablaBaseDatos(DefaultTableModel modelo) {
         limpiarPanelPrincipal();
-        pnlPrincipal.add((new TablaBaseDatos(modelo,pnlPrincipal.getBounds())).getContentPane() );
+        pnlPrincipal.add((new TablaBaseDatos(modelo, pnlPrincipal.getBounds())).getContentPane());
     }
 
     private void setTemaSistemaOperativoActual() {
@@ -105,8 +105,7 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
         if (tejido != null) {
             GraficoBarras graficoBarras = new GraficoBarras(pnlPrincipal.getGraphics(), pnlPrincipal.getBounds(), tejido);
             ProliferacionCelular.pnlPrincipal.add(graficoBarras.getContentPane());
-        }
-        else{
+        } else {
             JOptionPane.showMessageDialog(new JFrame(), "No hay un tejido abierto.");
         }
     }
@@ -116,10 +115,52 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
         tejido.triangularizacion();
         this.pnlPrincipal.add(new PanelDibujo(pnlPrincipal.getGraphics(), pnlPrincipal.getBounds(), tejido).getContentPane());
     }
-    
-    private void abrirTejido(){
+
+    private void abrirTejido() {
         limpiarPanelPrincipal();
-        mostrarTablaBaseDatos(AccesoBaseProliferacion.getAccesoDatos().seleccionarRegistro(new Tejido()));
+        DefaultTableModel modelo = AccesoBaseProliferacion.getAccesoDatos().seleccionarRegistro(new Tejido());
+        mostrarTablaBaseDatos(modelo);
+    }
+
+    private void guardarTejido() {
+        if (tejido != null) {
+            String nombre = JOptionPane.showInputDialog("Digite Nombre de Tejido");
+            if (nombre == null || "".equals(nombre)) {
+                //volver a preguntar
+            } 
+            else {
+                tejido.setNombre(nombre);
+                String sqlTejido = "insert into tejido values ("
+                                   + "" + tejido.getId() + ","
+                                   + "'" + tejido.getNombre() + "')";
+                AccesoBaseProliferacion.getAccesoDatos().ejecutar(sqlTejido);
+                  
+                 for (int i = 0; i < tejido.getTejidoG().getLista_vertices().size(); i++) {
+                    String sqlCelula="";
+                    int idCelula;
+                    idCelula=(tejido.getId()*1000)+i;
+                    sqlCelula = "insert into celula(idcelula, idtejido) values("
+                                + idCelula + ","+ tejido.getId() + ")";
+                    AccesoBaseProliferacion.getAccesoDatos().ejecutar(sqlCelula);
+                 }    
+                    
+                 for (int j = 0; j < tejido.getTejidoG().getListaArcos().size(); j++){
+                     String sqlLado="";  
+                     int idLado;
+                     idLado=(tejido.getId()*1000)+j;
+                     int idCelulaVecino;
+                     idCelulaVecino = (int)((tejido.getId()*1000)+tejido.getTejidoG().getListaArcos().get(j).getVj());
+                     int idCelula;
+                     idCelula=(int)((tejido.getId()*1000)+tejido.getTejidoG().getListaArcos().get(j).getVi());
+                     sqlLado = "insert into lado(idcelulavecino,idlado,longitud,idcelula)values("
+                                + idCelulaVecino + ","+ idLado + "," + 0 + "," + idCelula + ")";
+                     AccesoBaseProliferacion.getAccesoDatos().ejecutar(sqlLado);            
+                 }  
+            }
+        } 
+        else {
+            JOptionPane.showMessageDialog(new JFrame(), "Abra primero un Tejido.");
+        }
     }
 
     /**
@@ -303,7 +344,7 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
 
     private void itemNuevoTejidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNuevoTejidoActionPerformed
         //aqui se llama al controlador para crear el nuevo tejido
-        tejido = new Tejido(1, "tejido 1", new Celula(0, 5, 5), 50);
+        tejido = new Tejido(Math.abs(((int) System.nanoTime() % 34678)), "", new Celula(0, 5, 5), 50);
         generarTejido(tejido);
     }//GEN-LAST:event_itemNuevoTejidoActionPerformed
 
@@ -314,6 +355,7 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
 
     private void itemGuardarTejidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemGuardarTejidoActionPerformed
         //aqui se guarda el tejido en la base de datos
+        guardarTejido();
     }//GEN-LAST:event_itemGuardarTejidoActionPerformed
 
     private void itemCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCerrarActionPerformed
@@ -330,11 +372,9 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        try {
+       
             mostrarTablaBaseDatos((DefaultTableModel) AccesoBaseProliferacion.getAccesoDatos().ejecutar("select * from lado"));
-        } catch (SQLException ex) {
-            Logger.getLogger(ProliferacionCelular.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
