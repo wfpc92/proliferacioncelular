@@ -344,7 +344,7 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
 
     private void itemNuevoTejidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNuevoTejidoActionPerformed
         //aqui se llama al controlador para crear el nuevo tejido
-        tejido = new Tejido(Math.abs(((int) System.nanoTime() % 34678)), "", new Celula(0, 5, 5), 50);
+        tejido = new Tejido(Math.abs(((int) System.nanoTime() % 34678)), "", new Celula(0, 5, 5), 500);
         generarTejido(tejido);
     }//GEN-LAST:event_itemNuevoTejidoActionPerformed
 
