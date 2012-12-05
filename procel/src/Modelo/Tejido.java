@@ -24,7 +24,7 @@ public class Tejido<T> {
         this.TejidoG = new Grafo<>();
         this.con=0;
         this.celulasIncompletas=new ArrayList<>();
-        this.tamMuestra=500;
+        this.tamMuestra=tamanio;
         this.celulasIncompletas.add(celIni);
         this.TejidoG.AgregarVertice(celIni, con);
     }

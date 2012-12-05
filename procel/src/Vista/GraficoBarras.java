@@ -26,19 +26,17 @@ import org.jfree.data.category.DefaultCategoryDataset;
 public class GraficoBarras extends javax.swing.JFrame {
 
     private BufferedImage grafica = null;
-    private final Graphics g;
-    private final Rectangle r;
     private Tejido<Celula> tejido = null;
     private ArrayList<String[]> listaResultados = null;
     /**
      * Creates new form GraficoBarras
      */
-    public GraficoBarras(Graphics g, Rectangle r, Tejido tejido) {
+    public GraficoBarras(Tejido tejido) {
+        super("Grafico Estadistico.");
         initComponents();
-        this.g = g;
-        this.r = r;
         this.tejido = tejido;
-        setSize(r.getSize());
+        setExtendedState(MAXIMIZED_BOTH);
+        setVisible(true);       
     }
 
     public BufferedImage creaImagen() {
@@ -80,7 +78,7 @@ public class GraficoBarras extends javax.swing.JFrame {
                 legend,
                 tooltips,
                 urls);
-        return chart.createBufferedImage(r.getSize().width-400, r.getSize().height-100);
+        return chart.createBufferedImage(getSize().width-400, getSize().height-100);
     }
 
     public void paint(java.awt.Graphics g) {
@@ -91,19 +89,17 @@ public class GraficoBarras extends javax.swing.JFrame {
         g.drawImage(grafica, 30, 30, null); 
         JLabel[] lbl = imprimirResultados();
             for(int i = 0; i < lbl.length; i++){
-                g.drawString(lbl[i].getText(), 950, 30 + 20*i);
+                g.drawString(lbl[i].getText(), 950, 200 + 20*i);
             }
     }
     
     public JLabel[] imprimirResultados(){
         JLabel[] lstLabel = new JLabel[listaResultados.size()];
         
-        JPanel panel = ProliferacionCelular.getInstance().getPnlHerramientas();
-        panel.setLayout(new FlowLayout( ));
         
         for(int i = 0; i < listaResultados.size(); i++){
             lstLabel[i] = new JLabel("Numero de celulas de "+listaResultados.get(i)[0] +" lados: "+listaResultados.get(i)[1]);
-            panel.add(lstLabel[i]);
+   
         }
         return lstLabel;
     }
@@ -117,39 +113,22 @@ public class GraficoBarras extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jButton1.setText("grafico");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jButton1)
-                .addGap(0, 515, Short.MAX_VALUE))
+            .addGap(0, 580, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jButton1)
-                .addGap(0, 371, Short.MAX_VALUE))
+            .addGap(0, 394, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        paint(g);
-    }//GEN-LAST:event_jButton1ActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 }
