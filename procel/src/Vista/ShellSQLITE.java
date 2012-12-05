@@ -134,12 +134,10 @@ public class ShellSQLITE extends javax.swing.JFrame {
     private void btnSentenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSentenciaActionPerformed
         DefaultTableModel modelo = null;
         SQLException exception = null;
-        try{
+       
             modelo = (DefaultTableModel)AccesoBaseProliferacion.getAccesoDatos().ejecutar(getTxtSentencia().getText());
             getTblResultado().setModel(modelo);
-        }catch(SQLException se){
-            exception = se;
-        }
+       
         
         getTxtError().setText((exception != null ? exception.getMessage() : "No hay errores"));
         
