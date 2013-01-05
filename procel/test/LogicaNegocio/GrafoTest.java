@@ -147,20 +147,7 @@ public class GrafoTest {
         //assertEquals(a, false);
     }
 
-    /**
-     * Test of CostoArco method, of class Grafo.
-     */
-    @Test
-    public void testCostoArco() {
-        System.out.println("CostoArco");
-        int vi = 1;
-        int vj = 2;
-        int costo=-1;
-        Grafo instance = new Grafo();
-        instance.AgregarArco(vi,vj,costo);
-        int result= instance.CostoArco(vi,vj);
-        assertEquals(costo, result);
-    }
+    
 
     /**
      * Test of InfoVertice method, of class Grafo.

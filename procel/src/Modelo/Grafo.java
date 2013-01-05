@@ -6,13 +6,22 @@ public class Grafo<T> {
 
     private ArrayList<Vertice<T>> listaVertices = new ArrayList<Vertice<T>>();
     private ArrayList<Arco> listaArcos = new ArrayList<Arco>();
-    //public int costo1;
 
+    /**
+     * se inicializa una lista de vertices y una lista de arcos.
+     */
     public Grafo() {
         this.listaVertices = new ArrayList<Vertice<T>>();
         this.listaArcos = new ArrayList<Arco>();
     }
 
+    /**
+     * se inicializa una lista de vertices y arcos, tomando los valores de los
+     * argumentos
+     *
+     * @param listaVertices
+     * @param listaArcos
+     */
     public Grafo(ArrayList<Vertice<T>> listaVertices,
             ArrayList<Arco> listaArcos) {
         this.listaVertices = listaVertices;
@@ -35,6 +44,12 @@ public class Grafo<T> {
         this.listaArcos = listaArcos;
     }
 
+    /**
+     * con este metodo se adiciona un nuevo vertice al grafo
+     *
+     * @param celula
+     * @param sub
+     */
     public void AgregarVertice(T celula, long sub) {
         Vertice<T> obj = new Vertice<T>();
         obj.setInfo(celula);
@@ -42,9 +57,16 @@ public class Grafo<T> {
         listaVertices.add(obj);
     }
 
+    /**
+     * con este metodo se adiciona un arco al grafo.
+     *
+     * @param vi
+     * @param vj
+     * @param costo
+     */
     public void AgregarArco(long vi, long vj, int costo) {
         Arco obj_arco = new Arco(vi, vj, costo);
-        System.out.println("crea arco desde: "+vi+"hasta: "+vj);
+        System.out.println("crea arco desde: " + vi + "hasta: " + vj);
         if (this.BuscarVertice(vi) && this.BuscarVertice(vj)) {
             this.listaArcos.add(obj_arco);
         } else {
@@ -52,6 +74,13 @@ public class Grafo<T> {
         }
     }
 
+    /**
+     * este metodo permite buscar un determinado vertice dentro del grafo.
+     *
+     * @param subindice
+     * @return retona verdadero si halla el vertice, de lo contrario retorna
+     * falso
+     */
     public boolean BuscarVertice(long subindice) {
         if (this.listaVertices.isEmpty()) {
             return false;
@@ -65,6 +94,11 @@ public class Grafo<T> {
         }
     }
 
+    /**
+     * elimina un determinado vertice del grafo.
+     *
+     * @param subIndice
+     */
     public void ElimVertice(int subIndice) {
         int posicion;
 
@@ -75,17 +109,18 @@ public class Grafo<T> {
                         listaArcos.remove(i);
                     }
                 }
-                //aqui hay algo raro verificar posteriormente
-			/*posicion=listaVertices.PosicionVertice(subindice, listaVertices);
-                 listaVertices.Primero();
-                 listaVertices.posLista(listaVertices, posicion, 0);
-                 listaVertices.ElimLista();*/
             } else {
                 System.out.println("EL VERTICE NO EXISTE");
             }
         }
     }
 
+    /**
+     * elimina un determinado arco del grafo.
+     *
+     * @param vi
+     * @param vj
+     */
     public void ElimArco(int vi, int vj) {
 
         int posicion;
@@ -98,27 +133,34 @@ public class Grafo<T> {
         }
     }
 
+    /**
+     * busca la posicion de un arco dentro del grafo.
+     *
+     * @param vi
+     * @param vj
+     * @return retorna la posicion del arco que se esta buscando, de lo
+     * contrario retorna -1.
+     */
     public int posicionArcoCompleto(long vi, long vj) {
         for (int i = 0; i < this.listaArcos.size(); i++) {
-            if ((this.listaArcos.get(i).getVerticeInicial() == vi && 
-                    this.listaArcos.get(i).getVerticeFinal() == vj)||
-                    this.listaArcos.get(i).getVerticeFinal() == vj && 
-                    this.listaArcos.get(i).getVerticeInicial()==vi) {
+            if ((this.listaArcos.get(i).getVerticeInicial() == vi
+                    && this.listaArcos.get(i).getVerticeFinal() == vj)
+                    || this.listaArcos.get(i).getVerticeFinal() == vi
+                    && this.listaArcos.get(i).getVerticeInicial() == vj) {
                 return i;
             }
         }
         return -1;
     }
 
-    public int CostoArco(int vi, int vj) {
-        if (!this.listaArcos.isEmpty()) {
-            int posicion = this.posicionArcoCompleto(vi, vj);
-            if (posicion != -1) {
-                return this.listaArcos.get(posicion).getCosto();
-            }
-        }
-        return -1;
-    }
+    /**
+     * busca una conexion entre vi y vj.
+     *
+     * @param vi
+     * @param vj
+     * @return retorna verdadero en caso de que exista dicha conexion de lo
+     * contrario retorna falso.
+     */
     public boolean existeArco(long vi, long vj) {
         if (!this.listaArcos.isEmpty()) {
             int posicion = this.posicionArcoCompleto(vi, vj);
@@ -129,24 +171,20 @@ public class Grafo<T> {
         return false;
     }
 
-    public T InfoVertice(int subIndice) {
-        if (!this.listaVertices.isEmpty()) {
-            for (int i = 0; i < this.listaVertices.size(); i++) {
-                if (this.listaVertices.get(i).getSubindice() == subIndice) {
-                    return this.listaVertices.get(i).getInfo();
-                }
-            }
-
-        }
-        return null;
-
-
-    }
-
+    /**
+     * Averigia el numero de vertices que tiene el grafo.
+     *
+     * @return retorna el numero de vertices que tiene el grafo
+     */
     public int ordenGrafo() {
         return this.listaVertices.size();
     }
 
+    /**
+     * busca vertice en la posicion subindice y lo marca.
+     *
+     * @param subIndice
+     */
     public void MarcarVertice(int subIndice) {
         for (int i = 0; i < this.listaVertices.size(); i++) {
             if (this.listaVertices.get(i).getSubindice() == subIndice) {
@@ -156,6 +194,12 @@ public class Grafo<T> {
         }
     }
 
+    /**
+     * busca vertice en la posicion subindice y lo desmarca.
+     *
+     * @param g
+     * @param subIndice
+     */
     public void DesmarcarVertice(Grafo<T> g, int subIndice) {
         for (int i = 0; i < this.listaVertices.size(); i++) {
             if (this.listaVertices.get(i).getSubindice() == subIndice) {
@@ -165,6 +209,14 @@ public class Grafo<T> {
         }
     }
 
+    /**
+     * averigua si el vertice esta marcado.
+     *
+     * @param g
+     * @param subIndice
+     * @return retorna verdadero si el vertice esta marcado, en caso contrario
+     * retorna falso.
+     */
     public boolean MarcadoVertice(Grafo<T> g, int subIndice) {
         for (int i = 0; i < this.listaVertices.size(); i++) {
             if (this.listaVertices.get(i).getSubindice() == subIndice) {
