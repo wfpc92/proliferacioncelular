@@ -38,51 +38,51 @@ public class ArcoTest {
     }
 
     /**
-     * Test of getVi method, of class Arco.
+     * Test of getVerticeInicial method, of class Arco.
      */
     @Test
     public void testGetVi() {
-        System.out.println("getVi");
+        System.out.println("getVerticeInicial");
         Arco instance = new Arco(1,2,3);
         int expResult = 1;
-        long result = instance.getVi();
+        long result = instance.getVerticeInicial();
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of setVi method, of class Arco.
+     * Test of setVerticeInicial method, of class Arco.
      */
     @Test
     public void testSetVi() {
-        System.out.println("setVi");
+        System.out.println("setVerticeInicial");
         int vi = 5;
         Arco instance = new Arco(1,2,3);
-        instance.setVi(vi);
-        assertEquals(vi,instance.getVi());
+        instance.setVerticeInicial(vi);
+        assertEquals(vi,instance.getVerticeInicial());
 }
 
     /**
-     * Test of getVj method, of class Arco.
+     * Test of getVerticeFinal method, of class Arco.
      */
     @Test
     public void testGetVj() {
-        System.out.println("getVj");
+        System.out.println("getVerticeFinal");
         Arco instance = new Arco(6,7,9);
         int expResult = 7;
-        long result = instance.getVj();
+        long result = instance.getVerticeFinal();
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of setVj method, of class Arco.
+     * Test of setVerticeFinal method, of class Arco.
      */
     @Test
     public void testSetVj() {
-        System.out.println("setVj");
+        System.out.println("setVerticeFinal");
         int vj = 5;
         Arco instance =new Arco(9,8,7) ;
-        instance.setVj(vj);
-        assertEquals(vj,instance.getVj());
+        instance.setVerticeFinal(vj);
+        assertEquals(vj,instance.getVerticeFinal());
     }
 
     /**
