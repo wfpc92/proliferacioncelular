@@ -71,7 +71,7 @@ public class Grafo<T> {
         if (this.BuscarVertice(subIndice)) {
             if (!listaArcos.isEmpty()) {
                 for (int i = 0; i < listaArcos.size(); i++) {
-                    if (listaArcos.get(i).getVi() == subIndice || listaArcos.get(i).getVj() == subIndice) {
+                    if (listaArcos.get(i).getVerticeInicial() == subIndice || listaArcos.get(i).getVerticeFinal() == subIndice) {
                         listaArcos.remove(i);
                     }
                 }
@@ -100,7 +100,10 @@ public class Grafo<T> {
 
     public int posicionArcoCompleto(long vi, long vj) {
         for (int i = 0; i < this.listaArcos.size(); i++) {
-            if ((this.listaArcos.get(i).getVi() == vi && this.listaArcos.get(i).getVj() == vj)||this.listaArcos.get(i).getVj() == vj && this.listaArcos.get(i).getVi()==vi) {
+            if ((this.listaArcos.get(i).getVerticeInicial() == vi && 
+                    this.listaArcos.get(i).getVerticeFinal() == vj)||
+                    this.listaArcos.get(i).getVerticeFinal() == vj && 
+                    this.listaArcos.get(i).getVerticeInicial()==vi) {
                 return i;
             }
         }

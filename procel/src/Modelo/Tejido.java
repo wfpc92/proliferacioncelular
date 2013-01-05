@@ -98,7 +98,7 @@ public class Tejido<T> {
         int contadorLados=0;
         ArrayList<Arco> arcos=this.TejidoG.getListaArcos();
         for(int i=0;i<arcos.size() && contadorLados<((Celula)cel).getNumLado();i++){
-            if(arcos.get(i).getVi()==((Celula)cel).getId()||arcos.get(i).getVj()==((Celula)cel).getId()){
+            if(arcos.get(i).getVerticeInicial()==((Celula)cel).getId()||arcos.get(i).getVerticeFinal()==((Celula)cel).getId()){
                 contadorLados++;
             }
         }
@@ -135,14 +135,6 @@ public class Tejido<T> {
              this.TejidoG.AgregarArco(((Celula)celulasIncompletas.get(this.celulasIncompletas.size()-1)).getId(), ((Celula)celulasIncompletas.get(0)).getId(),10);   
         }
     }
-    public void imprimirTejido()
-    {
-        ArrayList<Arco> arcos=this.TejidoG.getListaArcos();
-        for(int i=0;i<this.TejidoG.getListaArcos().size();i++)
-        {
-            arcos.get(i).imprimir();
-        }
-    }
    /* public void cerrarCuatro(){
         this.celulasIncompletas
                 for(int i=0;i<this.celulasIncompletas.size();i++){
@@ -156,7 +148,6 @@ public class Tejido<T> {
             this.cerrarTejido();
             this.completarTejido(cel);
        }
-       this.imprimirTejido();
     }
     public void triagularizacionMejorada(){
         

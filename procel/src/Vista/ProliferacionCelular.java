@@ -1,20 +1,13 @@
 package Vista;
 
+import Abstracto.Vista;
 import DAO.AccesoBaseProliferacion;
-import Modelo.Celula;
 import Modelo.Celula;
 import Modelo.Tejido;
 import java.awt.Dimension;
-import java.awt.Event;
 import java.awt.Graphics;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -24,35 +17,32 @@ import javax.swing.JPopupMenu.Separator;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
-public class ProliferacionCelular extends javax.swing.JFrame implements ActionListener {
+/**
+ *
+ * @author equipo scrum
+ */
+public class ProliferacionCelular extends javax.swing.JFrame 
+    implements ActionListener, Vista 
+{
 
-    Tejido<Celula> tejido =null;
-    //integracion activa
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) throws InterruptedException {
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new ProliferacionCelular().setVisible(true);
-            }
-        });
-    }
-    /**
-     * Creates new form ProliferacionCelular
-     */
+    Tejido<Celula> tejido =null;    
     private static ProliferacionCelular procel;
 
-    public ProliferacionCelular() {
+    private ProliferacionCelular() {
         super("Proliferacion Celular");
         setTemaSistemaOperativoActual();
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
     }
-
+    
+    /**
+     *Retorna una unica instancia (SINGLETON).
+     * Valida si la instancia de clase esta vacia, sino devuelve una
+     * instancia no vacia.
+     * 
+     * @param  
+     * @return Instancia de ProliferacionCelular
+     */
     public static ProliferacionCelular getInstance() {
         if (procel == null) {
             procel = new ProliferacionCelular();
@@ -60,6 +50,15 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
         return procel;
     }
 
+    /**
+     *Limpia la pantalla Retorna una unica instancia (SINGLETON).
+     * Valida si la instancia de clase esta vacia, sino devuelve una
+     * instancia no vacia.
+     * 
+     * @param  
+     * @return Instancia de ProliferacionCelular
+     */
+    
     private void limpiarPanelPrincipal() {
         pnlPrincipal.removeAll();
         pnlPrincipal.repaint();
@@ -151,9 +150,9 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
                      int idLado;
                      idLado=(tejido.getId()*1000)+j;
                      int idCelulaVecino;
-                     idCelulaVecino = (int)((tejido.getId()*1000)+tejido.getTejidoG().getListaArcos().get(j).getVj());
+                     idCelulaVecino = (int)((tejido.getId()*1000)+tejido.getTejidoG().getListaArcos().get(j).getVerticeFinal());
                      int idCelula;
-                     idCelula=(int)((tejido.getId()*1000)+tejido.getTejidoG().getListaArcos().get(j).getVi());
+                     idCelula=(int)((tejido.getId()*1000)+tejido.getTejidoG().getListaArcos().get(j).getVerticeInicial());
                      sqlLado = "insert into lado(idcelulavecino,idlado,longitud,idcelula)values("
                                 + idCelulaVecino + ","+ idLado + "," + 0 + "," + idCelula + ")";
                      AccesoBaseProliferacion.getAccesoDatos().ejecutar(sqlLado);            
@@ -486,5 +485,15 @@ public class ProliferacionCelular extends javax.swing.JFrame implements ActionLi
 
     Tejido getTejido() {
         return tejido;
+    }
+
+    @Override
+    public void arranca() {
+        this.setVisible(true);
+    }
+
+    @Override
+    public void termina() {
+        System.exit(0);
     }
 }

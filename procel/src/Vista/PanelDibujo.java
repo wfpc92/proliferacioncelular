@@ -69,7 +69,7 @@ public class PanelDibujo extends javax.swing.JFrame {
             gr.AgregarVertice(listaVertice.get(i).getInfo(),listaVertice.get(i).getSubindice());
         }
         for(int i=0;i<listaArcos.size();i++){
-            gr.AgregarArco(listaArcos.get(i).getVi(), listaArcos.get(i).getVj(),0);
+            gr.AgregarArco(listaArcos.get(i).getVerticeInicial(), listaArcos.get(i).getVerticeFinal(),0);
         }
        
         
@@ -132,13 +132,13 @@ public class PanelDibujo extends javax.swing.JFrame {
             int m = 0;
             ArrayList<Arco> l = gr.getListaArcos();
             while (m < l.size()) {
-                if (l.get(m).getVi() == j) {
-                    if (l.get(m).getVj() < xvs.size()) {
-                        System.out.println("Vi: "+l.get(m).getVi()+" Vj: "+l.get(m).getVj());
+                if (l.get(m).getVerticeInicial() == j) {
+                    if (l.get(m).getVerticeFinal() < xvs.size()) {
+                        System.out.println("Vi: "+l.get(m).getVerticeInicial()+" Vj: "+l.get(m).getVerticeFinal());
                         g.drawLine((int)(xvs.get(j) + 2), 
                                 (int)(yvs.get(j) + 2), 
-                                (int)(xvs.get((int)l.get(m).getVj()) + 2),
-                                (int)(yvs.get((int)l.get(m).getVj()) + 2));
+                                (int)(xvs.get((int)l.get(m).getVerticeFinal()) + 2),
+                                (int)(yvs.get((int)l.get(m).getVerticeFinal()) + 2));
                         getContentPane().setBackground(Color.white);
                         //g.setColor(Color.green);
                     }
@@ -194,7 +194,7 @@ public class PanelDibujo extends javax.swing.JFrame {
         ArrayList<Arco> l = gr.getListaArcos();
         int j = 0;
         while (j < l.size()) {
-            if (l.get(j).getVi() == vert || l.get(j).getVj() == vert) {
+            if (l.get(j).getVerticeInicial() == vert || l.get(j).getVerticeFinal() == vert) {
                 contador++;
             }
             j++;
@@ -235,13 +235,13 @@ public class PanelDibujo extends javax.swing.JFrame {
         
         ArrayList<Arco> l = gr.getListaArcos();
         while (k < l.size()) {
-            if (l.get(k).getVi() == j) {
-                if (l.get(k).getVj() < xvs.size()) {
+            if (l.get(k).getVerticeInicial() == j) {
+                if (l.get(k).getVerticeFinal() < xvs.size()) {
                     contador++;
                 }
             }
-            if (l.get(k).getVj() == j) {
-                if (l.get(k).getVi() < j) {
+            if (l.get(k).getVerticeFinal() == j) {
+                if (l.get(k).getVerticeInicial() < j) {
                     contador++;
                 }
             }
