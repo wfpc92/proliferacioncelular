@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package DAO;
 
 import Modelo.Celula;
@@ -16,6 +12,7 @@ public class AccesoBaseProliferacion {
     public static final String cadenaConexionDDBB = "jdbc:sqlite:mydatabase.sqlite";
     private static AccesoBaseProliferacion accesoDatos;
     private static Connection conn;
+   
     //<editor-fold defaultstate="collapsed" desc=" DDL de la base de datos ">
     public static String crearCelula =
             "CREATE TABLE IF NOT EXISTS CELULA("
@@ -37,17 +34,18 @@ public class AccesoBaseProliferacion {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc=" Implementacion Patron Singleton ">
+    /**
+     * se crea una nueva instancia si accesoDatos no es nulo
+     */
     private synchronized static void createInstance() {
         if (accesoDatos == null) {
             accesoDatos = new AccesoBaseProliferacion();
         }
     }
-
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        throw new CloneNotSupportedException();
-    }
-
+    /**
+     * permite acceder una solo instancia a accesoBaseProliferacion.
+     * @return retorna accesoDatos
+     */
     public static AccesoBaseProliferacion getAccesoDatos() {
         createInstance();
         return accesoDatos;
@@ -79,7 +77,10 @@ public class AccesoBaseProliferacion {
     }
     //</editor-fold>
 
-    //hace la conexion con una base de datos
+    /**
+     * hace la conexion con una base de datos.
+     * @return retorna verdadero si hizo la conexion con exito
+     */
     public final boolean conectar() {
         try {
             conn = DriverManager.getConnection(cadenaConexionDDBB);
@@ -89,7 +90,9 @@ public class AccesoBaseProliferacion {
         return true;
     }
 
-    //Desconecta la base de datos.
+    /**
+     * Desconecta la base de datos.
+     */
     public final void desconectar() {
         if (conn != null) {
             try {
@@ -100,28 +103,21 @@ public class AccesoBaseProliferacion {
         }
     }
 
-    //Funciones que realizan funciones del lenguaje de definicion de datos.
-    public boolean insertarRegistro(Object... o) {
-        Object retorno = intentarEjecutarSentenciaSQL("INSERT", o);
-        return retorno != null ? (boolean) retorno : false;
-    }
-
+    /**
+     * 
+     * @param o
+     * @return retorna una estructura de la tabla de tipo object
+     */
     public DefaultTableModel seleccionarRegistro(Object... o) {
         return (DefaultTableModel) intentarEjecutarSentenciaSQL("SELECT", o);
     }
 
-    public boolean eliminarRegistro(Object... o) {
-        Object retorno = intentarEjecutarSentenciaSQL("DELETE", o);
-        return retorno != null ? (boolean) retorno : false;
-    }
-
-    public boolean modificarRegistro(Object... o) {
-        Object retorno = intentarEjecutarSentenciaSQL("UPDATE", o);
-        return retorno != null ? (boolean) retorno : false;
-    }
-
-    //intenta realizar una sentencia SQL, sino la ejecuta retorna un objecto
-    //segun el tipo de sentencia.
+    /**
+     * intenta realizar una sentencia SQL, sino la ejecuta retorna un objecto segun el tipo de sentencia.
+     * @param strTipo
+     * @param o
+     * @return 
+     */
     public Object intentarEjecutarSentenciaSQL(String strTipo, Object... o) {
         Object resultado = null;
         try {
@@ -146,7 +142,14 @@ public class AccesoBaseProliferacion {
         return resultado;
     }
 
-    //ejecuta una sentencia SQL segun el tipo de instruccion DML
+    /**
+     *ejecuta una sentencia SQL segun el tipo de instruccion DML
+     * @param strTipo
+     * @param stmt
+     * @param o
+     * @return
+     * @throws SQLException 
+     */
     private Object ejecutarSentenciaSQL(String strTipo, Statement stmt, Object... o)
             throws SQLException {
         String sql = armarSentenciaSQL(strTipo, o);
@@ -178,8 +181,13 @@ public class AccesoBaseProliferacion {
         return null;
     }
 
-    //Determina a que tabla va la consulta y el tipo de consulta
-    //extrae datos y retorna una cadena-consulta-SQL
+    /**
+     *determina a que tabla va la consulta y el tipo de consulta extrae datos y retorna una cadena-consulta-SQL
+     * @param strTipo
+     * @param o
+     * @return
+     * @throws SQLException 
+     */
     private String armarSentenciaSQL(String strTipo, Object[] o)
             throws SQLException {
         String strTabla = null;
@@ -275,7 +283,12 @@ public class AccesoBaseProliferacion {
         }
         return null;
     }
-
+    /**
+     * 
+     * @param rs
+     * @return retorna un modelo segun el objeto ResultSet
+     * @throws SQLException 
+     */
     public DefaultTableModel generarTabla(ResultSet rs) throws SQLException {
         DefaultTableModel modelo = new DefaultTableModel();
         ResultSetMetaData rsMd = rs.getMetaData();
@@ -294,7 +307,11 @@ public class AccesoBaseProliferacion {
         }
         return modelo;
     }
-
+    /**
+     * ejecuta una sentencia sql
+     * @param sql
+     * @return 
+     */
     public Object ejecutar(String sql){
         try {
             // Hacer la conexion con la base de datos
