@@ -51,7 +51,8 @@ public class TejidoTest {
         listaPruebaV.add(1);
         listaPruebaA.add(2);
         Grafo TejidoG= new Grafo(listaPruebaV,listaPruebaA);
-        Tejido instance = new Tejido(1,"Tejido 1",new Celula(), 12);
+        Tejido instance = new Tejido(1,"Tejido 1");
+        instance.setTamMuestra(12);
         int expResult = 1;
         int result = instance.getId();
         assertEquals(expResult, result);
@@ -71,7 +72,8 @@ public class TejidoTest {
         listaPruebaA.add(2);
         Grafo TejidoG= new Grafo(listaPruebaV,listaPruebaA);
         int id = 2;
-        Tejido instance = new Tejido(1,"Tejido 1",new Celula(), 12);
+        Tejido instance = new Tejido(1,"Tejido 1");
+        instance.setTamMuestra(12);
         instance.setId(id);
         assertEquals(id,instance.getId());        
         // TODO review the generated test code and remove the default call to fail.
@@ -89,7 +91,8 @@ public class TejidoTest {
         listaPruebaV.add(1);
         listaPruebaA.add(2);
         Grafo TejidoG= new Grafo(listaPruebaV,listaPruebaA);
-        Tejido instance = new Tejido(1,"Tejido 1",new Celula(), 12);
+        Tejido instance = new Tejido(1,"Tejido 1");
+        instance.setTamMuestra(12);
         String expResult = "Tejido 1";
         String result = instance.getNombre();
         assertEquals(expResult, result);
@@ -109,7 +112,8 @@ public class TejidoTest {
         listaPruebaA.add(2);
         Grafo TejidoG= new Grafo(listaPruebaV,listaPruebaA);
         String nombre = "Tejido1.1";
-        Tejido instance = new Tejido(1,"Tejido 1",new Celula(), 12);
+        Tejido instance = new Tejido(1,"Tejido 1");
+        instance.setTamMuestra(12);
         instance.setNombre(nombre);
         assertEquals(nombre,instance.getNombre());
         // TODO review the generated test code and remove the default call to fail.
@@ -127,7 +131,8 @@ public class TejidoTest {
         listaPruebaV.add(1);
         listaPruebaA.add(2);
         Grafo TejidoG= new Grafo(listaPruebaV,listaPruebaA);
-        Tejido instance = new Tejido(1,"Tejido 1",new Celula(), 12);
+        Tejido instance = new Tejido(1,"Tejido 1");
+        instance.setTamMuestra(12);
         Grafo expResult = new Grafo(listaPruebaV,listaPruebaA);
         Grafo result = instance.getTejidoG();
         assertEquals(expResult, result);
@@ -146,7 +151,8 @@ public class TejidoTest {
         listaPruebaV.add(1);
         listaPruebaA.add(2);
         Grafo TejidoG= new Grafo(listaPruebaV,listaPruebaA);
-        Tejido instance = new Tejido(1,"Tejido 1",new Celula(), 12);
+        Tejido instance = new Tejido(1,"Tejido 1");
+        instance.setTamMuestra(12);
         ArrayList listaPruebaV1 = new ArrayList();
         ArrayList listaPruebaA1= new ArrayList();
         listaPruebaV.add(3);

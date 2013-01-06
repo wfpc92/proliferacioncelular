@@ -332,4 +332,45 @@ public class AccesoBaseProliferacion {
         }
         return null;
     }
+
+    public void guardarTejido(Tejido<Celula> tejido) {
+        String sqlTejido = "insert into tejido values ("
+                                   + "" + tejido.getId() + ","
+                                   + "'" + tejido.getNombre() + "')";
+        AccesoBaseProliferacion.getAccesoDatos().ejecutar(sqlTejido);
+
+        for (int i = 0; i < tejido.getTejidoG().getLista_vertices().size(); i++) {
+           String sqlCelula="";
+           int idCelula;
+           idCelula=(tejido.getId()*1000)+i;
+           sqlCelula = "insert into celula(idcelula, idtejido) values("
+                       + idCelula + ","+ tejido.getId() + ")";
+           AccesoBaseProliferacion.getAccesoDatos().ejecutar(sqlCelula);
+        }    
+
+        for (int j = 0; j < tejido.getTejidoG().getListaArcos().size(); j++){
+            String sqlLado="";  
+            int idLado;
+            idLado=(tejido.getId()*1000)+j;
+            int idCelulaVecino;
+            idCelulaVecino = (int)((tejido.getId()*1000)+tejido.getTejidoG().getListaArcos().get(j).getVerticeFinal());
+            int idCelula;
+            idCelula=(int)((tejido.getId()*1000)+tejido.getTejidoG().getListaArcos().get(j).getVerticeInicial());
+            sqlLado = "insert into lado(idcelulavecino,idlado,longitud,idcelula)values("
+                       + idCelulaVecino + ","+ idLado + "," + 0 + "," + idCelula + ")";
+            AccesoBaseProliferacion.getAccesoDatos().ejecutar(sqlLado);            
+        }
+    }
+
+    public String getSentenciaTejido() {
+        return "SELECT * FROM TEJIDO";
+    }
+
+    public String getSentenciaCelula() {
+        return "SELECT * FROM CELULA";
+    }
+
+    public String getSentenciaLado() {
+        return "SELECT * FROM LADO";
+    }    
 }

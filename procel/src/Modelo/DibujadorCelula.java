@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Vista;
+package Modelo;
 
 import java.awt.Graphics;
 import java.awt.Polygon;

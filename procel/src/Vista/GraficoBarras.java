@@ -4,6 +4,7 @@
  */
 package Vista;
 
+import Abstracto.Vista;
 import Modelo.Celula;
 import Modelo.Tejido;
 import Modelo.Vertice;
@@ -23,7 +24,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
  *
  * @author JHONATAN
  */
-public class GraficoBarras extends javax.swing.JFrame {
+public class GraficoBarras extends javax.swing.JFrame implements Vista{
 
     private BufferedImage grafica = null;
     private Tejido<Celula> tejido = null;
@@ -35,8 +36,7 @@ public class GraficoBarras extends javax.swing.JFrame {
         super("Grafico Estadistico.");
         initComponents();
         this.tejido = tejido;
-        setExtendedState(MAXIMIZED_BOTH);
-        setVisible(true);       
+        setExtendedState(MAXIMIZED_BOTH);     
     }
 
     public BufferedImage creaImagen() {
@@ -82,15 +82,15 @@ public class GraficoBarras extends javax.swing.JFrame {
     }
 
     public void paint(java.awt.Graphics g) {
-        //super.paint(g);
-        if (grafica == null) {
+        if (grafica == null  && tejido != null) {
             grafica = this.creaImagen();
-        }
+        
         g.drawImage(grafica, 30, 30, null); 
         JLabel[] lbl = imprimirResultados();
             for(int i = 0; i < lbl.length; i++){
                 g.drawString(lbl[i].getText(), 950, 200 + 20*i);
             }
+        }
     }
     
     public JLabel[] imprimirResultados(){
@@ -131,4 +131,24 @@ public class GraficoBarras extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void alistar() {
+        
+    }
+
+    @Override
+    public void arranca() {
+        this.setVisible(true);
+    }
+
+    @Override
+    public void termina() {
+        this.dispose();
+    }
+
+    @Override
+    public void mostrar() {
+        
+    }
 }
