@@ -1,8 +1,9 @@
-package Vista;
+package Modelo;
 
 import DAO.AccesoBaseProliferacion;
 import Modelo.Celula;
 import Modelo.Tejido;
+import Vista.ProliferacionCelular;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import javax.swing.JTable;
@@ -102,8 +103,9 @@ public class TablaBaseDatos extends javax.swing.JFrame {
         tablaCelulas.setModel(modeloCelulas);
         int idCelula, numCelPadre, numCelVecinas;
 
-        Tejido tejido = new Tejido(idTejido, nombre, new Celula(0, 5, 5), tablaCelulas.getRowCount());
-
+        Tejido tejido = new Tejido(idTejido, nombre);
+        tejido.setTamMuestra(tablaCelulas.getRowCount());
+        
         for (int i = 1; i < tablaCelulas.getRowCount(); i++) {
             idCelula = (int) tablaCelulas.getValueAt(i, 0) - (idTejido * 1000);
             sql = "select count(lado.idcelula) "
@@ -142,6 +144,5 @@ public class TablaBaseDatos extends javax.swing.JFrame {
             idCelVj=(int) tablaArcos.getValueAt(j, 1) - (idTejido * 1000);
             tejido.getTejidoG().AgregarArco(idCelVi, idCelVj, 0);
         }
-        ProliferacionCelular.getInstance().tejido=tejido;
     }
 }

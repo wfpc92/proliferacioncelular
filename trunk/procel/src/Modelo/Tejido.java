@@ -1,8 +1,11 @@
 package Modelo;
 
 import Abstracto.Observado;
+import java.awt.HeadlessException;
 import java.util.ArrayList;
 import java.util.Random;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class Tejido<T> extends Observado {
 
@@ -21,15 +24,15 @@ public class Tejido<T> extends Observado {
         this.celulasIncompletas = new ArrayList<>();
     }
 
-    public Tejido(int id, String nombre, T celIni, long tamanio) {
+    public Tejido(int id, String nombre) {
+        Celula celIni = new Celula(0, 5, 5);
         this.id = id;
         this.nombre = nombre;
         this.TejidoG = new Grafo<>();
         this.con = 0;
         this.celulasIncompletas = new ArrayList<>();
-        this.tamMuestra = tamanio;
-        this.celulasIncompletas.add(celIni);
-        this.TejidoG.AgregarVertice(celIni, con);
+        this.celulasIncompletas.add((T)celIni);
+        this.TejidoG.AgregarVertice((T)celIni, con);
     }
 
     public long getCon() {
@@ -174,5 +177,30 @@ public class Tejido<T> extends Observado {
             this.cerrarTejido();
             this.completarTejido(cel);
         }
+    }
+
+    public void fijarPoblacion() {
+        String poblacionStr = "cadena";
+        int poblacionInt = 5000;
+        do{
+            try{
+                poblacionInt = Integer.parseInt(poblacionStr = JOptionPane.showInputDialog("Digite tamaño de la poblacion"));
+                
+            }
+            catch(HeadlessException | NumberFormatException e){
+                poblacionStr = "cadena";
+                poblacionInt = 50000;
+            }
+        } while(poblacionInt > 5000 || poblacionInt<6);
+        setTamMuestra(poblacionInt-1);
+        
+    }
+
+    public void fijarNombre() {
+        String nombre = "";
+        do{
+            nombre = JOptionPane.showInputDialog("Digite Nombre de Tejido ");
+        }while("".equals(nombre));
+        setNombre(nombre);
     }
 }

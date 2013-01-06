@@ -1,6 +1,7 @@
 
-package Vista;
+package Modelo;
 
+import Abstracto.Vista;
 import Modelo.Arco;
 import Modelo.Grafo;
 import Modelo.Tejido;
@@ -298,4 +299,5 @@ public class PanelDibujo extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
+
 }
