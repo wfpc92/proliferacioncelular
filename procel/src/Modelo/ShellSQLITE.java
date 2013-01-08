@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Modelo;
 
 import DAO.AccesoBaseProliferacion;
@@ -13,10 +9,6 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author REYES
- */
 public class ShellSQLITE extends javax.swing.JFrame {
 
     /**
@@ -133,15 +125,11 @@ public class ShellSQLITE extends javax.swing.JFrame {
     private void btnSentenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSentenciaActionPerformed
         DefaultTableModel modelo = null;
         SQLException exception = null;
-       
-            modelo = (DefaultTableModel)AccesoBaseProliferacion.getAccesoDatos().ejecutar(getTxtSentencia().getText());
-            getTblResultado().setModel(modelo);
-       
-        
+        modelo = (DefaultTableModel) AccesoBaseProliferacion.getAccesoDatos().ejecutar(getTxtSentencia().getText());
+        getTblResultado().setModel(modelo);
         getTxtError().setText((exception != null ? exception.getMessage() : "No hay errores"));
-        
-    }//GEN-LAST:event_btnSentenciaActionPerformed
 
+    }//GEN-LAST:event_btnSentenciaActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSentencia;
     private javax.swing.JScrollPane jScrollPane1;

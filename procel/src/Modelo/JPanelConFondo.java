@@ -13,13 +13,13 @@ public class JPanelConFondo extends JPanel {
         this.str = str;
     }
     @Override
-    public void paint(Graphics g) {
+    public void paintComponent(Graphics g) {
         g.drawImage(imagen, 0, 0,getWidth()-200, getHeight(),null); 
         for(int i = 0; i < str.length; i++){
                 g.drawString(str[i], 950, 200 + 20*i);
             }
         setOpaque(false);
-        super.paint(g);
+        super.paintComponent(g);
     }
  
 }

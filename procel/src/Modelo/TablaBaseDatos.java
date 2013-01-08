@@ -13,9 +13,9 @@ public class TablaBaseDatos extends javax.swing.JFrame {
     /**
      * Creates new form TablaBaseDatos
      */
-    public TablaBaseDatos(){
-        
+    public TablaBaseDatos() {
     }
+
     public TablaBaseDatos(DefaultTableModel modelo, Rectangle r) {
         initComponents();
         tblTablaBaseDatos.setModel(modelo);
@@ -76,7 +76,6 @@ public class TablaBaseDatos extends javax.swing.JFrame {
         try {
             generarSql(evt);
         } catch (Exception ex) {
-           
         }
     }//GEN-LAST:event_tblTablaBaseDatosMouseClicked
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -102,7 +101,7 @@ public class TablaBaseDatos extends javax.swing.JFrame {
 
         Tejido tejido = new Tejido(idTejido, nombre);
         tejido.setTamMuestra(tablaCelulas.getRowCount());
-        
+
         for (int i = 1; i < tablaCelulas.getRowCount(); i++) {
             idCelula = (int) tablaCelulas.getValueAt(i, 0) - (idTejido * 1000);
             sql = "select count(lado.idcelula) "
@@ -121,10 +120,10 @@ public class TablaBaseDatos extends javax.swing.JFrame {
             JTable tablaVecino = new JTable();
             tablaVecino.setModel(modeloVecino);
             numCelVecinas = (int) tablaVecino.getValueAt(0, 0);
-            int total= numCelPadre+numCelVecinas;
-            tejido.getTejidoG().AgregarVertice(new Celula(idCelula, 0,total),idCelula);        
+            int total = numCelPadre + numCelVecinas;
+            tejido.getTejidoG().AgregarVertice(new Celula(idCelula, 0, total), idCelula);
         }
-        
+
         sql = "select celula.idcelula, lado.idcelulavecino "
                 + "from celula, lado, tejido "
                 + "where celula.idtejido = tejido.idtejido and "
@@ -134,11 +133,11 @@ public class TablaBaseDatos extends javax.swing.JFrame {
         DefaultTableModel modeloArcos = (DefaultTableModel) AccesoBaseProliferacion.getAccesoDatos().ejecutar(sql);
         JTable tablaArcos = new JTable();
         tablaArcos.setModel(modeloArcos);
-        
-        for(int j = 0; j < tablaArcos.getRowCount();j++){
-            int idCelVi,idCelVj;
-            idCelVi=(int) tablaArcos.getValueAt(j, 0) - (idTejido * 1000);
-            idCelVj=(int) tablaArcos.getValueAt(j, 1) - (idTejido * 1000);
+
+        for (int j = 0; j < tablaArcos.getRowCount(); j++) {
+            int idCelVi, idCelVj;
+            idCelVi = (int) tablaArcos.getValueAt(j, 0) - (idTejido * 1000);
+            idCelVj = (int) tablaArcos.getValueAt(j, 1) - (idTejido * 1000);
             tejido.getTejidoG().AgregarArco(idCelVi, idCelVj, 0);
         }
     }
