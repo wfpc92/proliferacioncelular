@@ -1,18 +1,14 @@
 package Vista;
 
-import Modelo.JPanelConFondo;
 import Abstracto.Observado;
 import Abstracto.Vista;
 import Modelo.Celula;
+import Modelo.JPanelConFondo;
 import Modelo.Tejido;
 import Modelo.Vertice;
-import java.awt.Canvas;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
@@ -79,7 +75,7 @@ public class GraficoBarras extends Vista {
             grafica = this.creaImagen();
             interfaz.setIconImage(grafica);
             JPanelConFondo contenedor = new JPanelConFondo(grafica, imprimirResultados());
-            interfaz.setContentPane(contenedor);            
+            interfaz.setContentPane(contenedor); 
         }
     }
 
