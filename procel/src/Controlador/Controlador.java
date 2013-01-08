@@ -33,8 +33,7 @@ public class Controlador implements Observador{
     public void nuevoTejido() {
         PanelDibujo simulacionTejido;
         tejido = new Tejido(Math.abs(((int) System.nanoTime() % 34678)), "");
-        //tejido.fijarPoblacion();
-        tejido.setTamMuestra(35);
+        tejido.fijarPoblacion();
         tejido.triangularizacion();
         simulacionTejido = new PanelDibujo(
                 ((ProliferacionCelular)principal).getPnlPrincipal().getGraphics(), 

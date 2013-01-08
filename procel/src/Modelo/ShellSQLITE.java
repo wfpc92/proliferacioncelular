@@ -123,12 +123,7 @@ public class ShellSQLITE extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSentenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSentenciaActionPerformed
-        DefaultTableModel modelo = null;
-        SQLException exception = null;
-        modelo = (DefaultTableModel) AccesoBaseProliferacion.getAccesoDatos().ejecutar(getTxtSentencia().getText());
-        getTblResultado().setModel(modelo);
-        getTxtError().setText((exception != null ? exception.getMessage() : "No hay errores"));
-
+        mostrarShell();
     }//GEN-LAST:event_btnSentenciaActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSentencia;
@@ -221,5 +216,23 @@ public class ShellSQLITE extends javax.swing.JFrame {
 
     public void setTxtSentencia(JTextArea txtSentencia) {
         this.txtSentencia = txtSentencia;
+    }
+
+    private void mostrarShell() {
+        DefaultTableModel modelo = null;
+        SQLException exception = null;
+        try {
+            Object resultado = AccesoBaseProliferacion.getAccesoDatos().ejecutar(getTxtSentencia().getText());
+            try {
+                modelo = DefaultTableModel.class.cast(resultado);
+            } catch (Exception e) {
+                throw (Exception) resultado;
+            }
+            getTblResultado().setModel(modelo);
+            getTxtError().setText((exception != null ? exception.getMessage() : "Sentencia SQL ejecutada sin inconvenientes."));
+        } catch (Exception e) {
+            getTxtError().setText((e != null ? e.getMessage() : "No hay errores"));
+        }
+
     }
 }

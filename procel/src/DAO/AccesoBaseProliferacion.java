@@ -149,8 +149,8 @@ public class AccesoBaseProliferacion {
                 throw new SQLException("NO SE PUDO ABRIR BASE DE DATOS");
             }
         } catch (SQLException se) {
+            return se;
         }
-        return null;
     }
 
     /**
