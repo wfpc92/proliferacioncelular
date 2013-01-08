@@ -135,7 +135,7 @@ public class PanelDibujo extends javax.swing.JFrame {
             while (m < l.size()) {
                 if (l.get(m).getVerticeInicial() == j) {
                     if (l.get(m).getVerticeFinal() < xvs.size()) {
-                        System.out.println("Vi: "+l.get(m).getVerticeInicial()+" Vj: "+l.get(m).getVerticeFinal());
+                        //System.out.println("Vi: "+l.get(m).getVerticeInicial()+" Vj: "+l.get(m).getVerticeFinal());
                         g.drawLine((int)(xvs.get(j) + 2), 
                                 (int)(yvs.get(j) + 2), 
                                 (int)(xvs.get((int)l.get(m).getVerticeFinal()) + 2),
@@ -171,7 +171,7 @@ public class PanelDibujo extends javax.swing.JFrame {
             int k;
             int it = 0;
             for (k = dibujados; k < xvs.size(); k++) {
-                System.out.println("Vi: "+j+" Vj: "+k);
+               // System.out.println("Vi: "+j+" Vj: "+k);
                 g.drawLine(xvs.get(j) + 2, yvs.get(j) + 2, xvs.get(k) + 2, yvs.get(k) + 2);
                 g.setColor(Color.BLACK);
                 g.fillOval(xvs.get(k), yvs.get(k), ancho, alto);
@@ -186,7 +186,7 @@ public class PanelDibujo extends javax.swing.JFrame {
             }
             dibujados = dibujados + it;
             j++;
-            System.out.println("este es j: "+j);
+            //System.out.println("este es j: "+j);
         }
     }
 

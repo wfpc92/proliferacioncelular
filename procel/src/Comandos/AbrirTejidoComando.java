@@ -1,20 +1,18 @@
 
 package Comandos;
 
-import Abstracto.Icomando;
+import Abstracto.Comando;
 import Controlador.Controlador;
 
-public class AbrirTejidoComando implements Icomando{
+public class AbrirTejidoComando extends Comando{
 
-    Controlador controlador;
-    
     public AbrirTejidoComando(Controlador controlador){
-        this.controlador = controlador;
+        this.receptor = controlador;
     }
     
     @Override
     public void ejecutar() {
-        controlador.abrirTejido();
+        receptor.abrirTejido();
     }
     
 }

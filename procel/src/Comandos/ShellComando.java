@@ -1,21 +1,19 @@
 
 package Comandos;
 
-import Abstracto.Icomando;
+import Abstracto.Comando;
 import Controlador.Controlador;
 
 
-public class ShellComando  implements Icomando {
+public class ShellComando  extends Comando {
 
-    Controlador controlador;
-    
     public ShellComando(Controlador controlador) {
-        this.controlador = controlador;
+        this.receptor = controlador;
     }
 
     @Override
     public void ejecutar() {
-        controlador.iniciarShell();
+        receptor.iniciarShell();
     }
     
 }

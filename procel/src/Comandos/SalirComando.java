@@ -1,21 +1,19 @@
 
 package Comandos;
 
-import Abstracto.Icomando;
+import Abstracto.Comando;
 import Controlador.Controlador;
 
 
-public class SalirComando implements Icomando {
+public class SalirComando extends Comando {
 
-    Controlador controlador;
-    
     public SalirComando(Controlador controlador){
-        this.controlador = controlador;
+        this.receptor = controlador;
     }
     
     @Override
     public void ejecutar() {
-        controlador.salir();
+        receptor.salir();
     }
     
 }

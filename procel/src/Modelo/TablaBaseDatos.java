@@ -1,9 +1,6 @@
 package Modelo;
 
 import DAO.AccesoBaseProliferacion;
-import Modelo.Celula;
-import Modelo.Tejido;
-import Vista.ProliferacionCelular;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import javax.swing.JTable;

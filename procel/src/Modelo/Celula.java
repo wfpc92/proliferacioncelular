@@ -15,7 +15,7 @@ public class Celula {
         this.id = id;
         this.longLado = longLado;
         this.numLado = numLado;
-        System.out.println("se creo la cel:" + id + "numero de Lados: " + numLado);
+        //System.out.println("se creo la cel:" + id + "numero de Lados: " + numLado);
     }
 
     public double getLongLado() {

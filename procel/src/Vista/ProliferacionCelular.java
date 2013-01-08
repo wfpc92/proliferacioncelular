@@ -1,14 +1,16 @@
 package Vista;
 
-import Abstracto.Icomando;
+import Abstracto.Comando;
+import Abstracto.Observado;
 import Abstracto.Vista;
 import Comandos.*;
 import Controlador.Controlador;
-import DAO.AccesoBaseProliferacion;
+import Modelo.Arco;
+import Modelo.Celula;
+import Modelo.Tejido;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.event.ActionListener;
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -16,50 +18,18 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu.Separator;
 
 
-public class ProliferacionCelular extends javax.swing.JFrame
-        implements ActionListener, Vista {
+public class ProliferacionCelular extends Vista {
 
-    private static ProliferacionCelular procel;
-    
-    Icomando nuevoTejido;
-    Icomando guardarTejido;
-    Icomando salirAplicacion;
-    Icomando estadisticasTejido;
-    Icomando shell;
-    Icomando sqlTejido;
-    Icomando sqlCelula;
-    Icomando sqlLado;
+    Comando nuevoTejido;
+    Comando guardarTejido;
+    Comando salirAplicacion;
+    Comando estadisticasTejido;
+    Comando shell;
+    Comando sqlTejido;
+    Comando sqlCelula;
+    Comando sqlLado;
 
-    private ProliferacionCelular() {
-        super("Proliferacion Celular");
-        initComponents();
-        setExtendedState(MAXIMIZED_BOTH);
-
-        Controlador controlador = new Controlador(this);
-        nuevoTejido = new NuevoTejidoComando(controlador);
-        guardarTejido = new GuardarTejidoComando(controlador);
-        salirAplicacion = new SalirComando(controlador);
-        estadisticasTejido = new EstadisticasComando(controlador);
-        shell = new ShellComando(controlador);
-        sqlTejido = new SQLComando(controlador, AccesoBaseProliferacion.getAccesoDatos().getSentenciaTejido());
-        sqlCelula = new SQLComando(controlador, AccesoBaseProliferacion.getAccesoDatos().getSentenciaCelula());
-        sqlLado = new SQLComando(controlador, AccesoBaseProliferacion.getAccesoDatos().getSentenciaLado());
-
-    }
-
-    /**
-     * Retorna una unica instancia (SINGLETON). Valida si la instancia de clase
-     * esta vacia, sino devuelve una instancia no vacia.
-     *
-     * @param
-     * @return Instancia de ProliferacionCelular
-     */
-    public static ProliferacionCelular getInstance() {
-        if (procel == null) {
-            procel = new ProliferacionCelular();
-        }
-        return procel;
-    }
+    public ProliferacionCelular() {}   
 
     /**
      * Limpia la pantalla Retorna una unica instancia (SINGLETON). Valida si la
@@ -84,7 +54,24 @@ public class ProliferacionCelular extends javax.swing.JFrame
 
     @Override
     public void arranca() {
-        this.setVisible(true);
+        interfaz = new JFrame("Proliferacion Celular.");
+        initComponents();
+        interfaz.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        Controlador controlador = new Controlador(this);
+        nuevoTejido = new NuevoTejidoComando(controlador);
+        guardarTejido = new GuardarTejidoComando(controlador);
+        salirAplicacion = new SalirComando(controlador);
+        estadisticasTejido = new EstadisticasComando(controlador);
+        shell = new ShellComando(controlador);
+        sqlTejido = new SQLComando(controlador);
+        sqlCelula = new SQLComando(controlador);
+        sqlLado = new SQLComando(controlador);
+        ((SQLComando)sqlTejido).setTabla(Tejido.class.getName());
+        ((SQLComando)sqlCelula).setTabla(Celula.class.getName());
+        ((SQLComando)sqlLado).setTabla(Arco.class.getName());
+        
+        interfaz.setVisible(true);
     }
 
     @Override
@@ -92,8 +79,10 @@ public class ProliferacionCelular extends javax.swing.JFrame
         System.exit(0);
     }
 
+
     @Override
-    public void mostrar() {
+    public void update(Observado o) {
+        
     }
 
     @Override
@@ -125,7 +114,7 @@ public class ProliferacionCelular extends javax.swing.JFrame
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        interfaz.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         javax.swing.GroupLayout pnlPrincipalLayout = new javax.swing.GroupLayout(pnlPrincipal);
         pnlPrincipal.setLayout(pnlPrincipalLayout);
@@ -219,10 +208,10 @@ public class ProliferacionCelular extends javax.swing.JFrame
 
         jMenuBar2.add(jMenu2);
 
-        setJMenuBar(jMenuBar2);
+        interfaz.setJMenuBar(jMenuBar2);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(interfaz.getContentPane());
+        interfaz.getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -234,9 +223,9 @@ public class ProliferacionCelular extends javax.swing.JFrame
             .addComponent(pnlPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        getAccessibleContext().setAccessibleDescription("");
+        interfaz.getAccessibleContext().setAccessibleDescription("");
 
-        pack();
+        interfaz.pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void itemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSalirActionPerformed
@@ -409,10 +398,6 @@ public class ProliferacionCelular extends javax.swing.JFrame
 
     public void setPnlPrincipal(JPanel pnlPrincipal) {
         ProliferacionCelular.pnlPrincipal = pnlPrincipal;
-    }
-
-    public Graphics getGraficos() {
-        return getGraphics();
     }
 
 }

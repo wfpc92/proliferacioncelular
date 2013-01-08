@@ -4,9 +4,11 @@
  */
 package LogicaNegocio;
 
+import Modelo.Arco;
 import Modelo.Grafo;
 import Modelo.Tejido;
 import Modelo.Celula;
+import Modelo.Vertice;
 import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -126,15 +128,17 @@ public class TejidoTest {
     @Test
     public void testGetTejidoG() {
         System.out.println("getTejidoG");
-        ArrayList listaPruebaV = new ArrayList();
-        ArrayList listaPruebaA = new ArrayList();
-        listaPruebaV.add(1);
-        listaPruebaA.add(2);
-        Grafo TejidoG= new Grafo(listaPruebaV,listaPruebaA);
+        Celula celula = new Celula(254, 3256.3, 5);
+        Arco arco = new Arco(1, 1, 0);
+        ArrayList<Vertice<Celula>> listaPruebaV = new ArrayList<Vertice<Celula>>();
+        ArrayList<Arco> listaPruebaA = new ArrayList<Arco>();
+        listaPruebaV.add(new Vertice<Celula>(celula));
+        listaPruebaA.add(arco);
         Tejido instance = new Tejido(1,"Tejido 1");
         instance.setTamMuestra(12);
-        Grafo expResult = new Grafo(listaPruebaV,listaPruebaA);
-        Grafo result = instance.getTejidoG();
+        Grafo<Celula> expResult = new Grafo<Celula>(listaPruebaV,listaPruebaA);
+        instance.setTejidoG(expResult);
+        Grafo<Celula> result = instance.getTejidoG();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");

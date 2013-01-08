@@ -10,7 +10,7 @@ public class Vertice<T> {
         this.marca = false;
         this.subindice = 0;
     }
-
+    
     public Vertice(T x) {
         info = x;
         marca = false;

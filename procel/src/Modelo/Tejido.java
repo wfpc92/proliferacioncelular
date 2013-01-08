@@ -4,7 +4,6 @@ import Abstracto.Observado;
 import java.awt.HeadlessException;
 import java.util.ArrayList;
 import java.util.Random;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class Tejido<T> extends Observado {
@@ -92,11 +91,11 @@ public class Tejido<T> extends Observado {
     public void abrirTejido() {
         ArrayList<T> lstAux = new ArrayList<T>();
         for (int i = 0; i < this.celulasIncompletas.size(); i++) {
-            System.out.println("al rededor de" + ((Celula) this.celulasIncompletas.get(i)).getId());
+            //System.out.println("al rededor de" + ((Celula) this.celulasIncompletas.get(i)).getId());
             while (!this.esCompleto(this.celulasIncompletas.get(i)) && this.TejidoG.getLista_vertices().size() <= this.tamMuestra) {
                 this.con++;
                 Celula cel = new Celula(con, 10, GenerarNumeroLados());
-                System.out.println("se crea la celula:" + cel.getId());
+                //System.out.println("se crea la celula:" + cel.getId());
                 lstAux.add((T) cel);
                 this.TejidoG.AgregarVertice((T) cel, con);
                 this.TejidoG.AgregarArco(((Celula) this.celulasIncompletas.get(i)).getId(), ((Celula) cel).getId(), 10);
@@ -121,7 +120,7 @@ public class Tejido<T> extends Observado {
                 contadorLados++;
             }
         }
-        System.out.println("el Numero de lados de :" + ((Celula) cel).getId() + " es: " + contadorLados);
+        //System.out.println("el Numero de lados de :" + ((Celula) cel).getId() + " es: " + contadorLados);
         if (contadorLados < ((Celula) cel).getNumLado()) {
             return false;
         }
