@@ -6,7 +6,6 @@ package Modelo;
 
 import DAO.AccesoBaseProliferacion;
 import java.sql.SQLException;
-import java.sql.Statement;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;

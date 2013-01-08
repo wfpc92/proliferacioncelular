@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Controlador;
 
 import Abstracto.Observado;
@@ -21,8 +18,8 @@ import javax.swing.table.DefaultTableModel;
 
 public class Controlador implements Observador{
 
-    Vista principal;
-    Tejido<Celula> tejido;
+    private Vista principal;
+    private Tejido<Celula> tejido;
     
     public Controlador(Vista principal){
         this.principal = principal;
@@ -30,14 +27,14 @@ public class Controlador implements Observador{
     
     @Override
     public void update(Observado o) {
-       Vista v = (Vista)o;
-       v.mostrar();
+       
     }
 
     public void nuevoTejido() {
         PanelDibujo simulacionTejido;
         tejido = new Tejido(Math.abs(((int) System.nanoTime() % 34678)), "");
-        tejido.fijarPoblacion();
+        //tejido.fijarPoblacion();
+        tejido.setTamMuestra(35);
         tejido.triangularizacion();
         simulacionTejido = new PanelDibujo(
                 ((ProliferacionCelular)principal).getPnlPrincipal().getGraphics(), 

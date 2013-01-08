@@ -1,25 +1,14 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Vista;
 
 import javax.swing.UIManager;
 
-/**
- *
- * @author eruano
- */
-public class Main {
 
-    /**
-     * @param args the command line arguments
-     */
+public class Main {
+    
     public static void main(String[] args) {
-        // TODO code application logic here
         setTemaSistemaOperativoActual();
-        ProliferacionCelular.getInstance().arranca();
-        
+        new ProliferacionCelular().arranca();
     }
     
     private static void setTemaSistemaOperativoActual() {

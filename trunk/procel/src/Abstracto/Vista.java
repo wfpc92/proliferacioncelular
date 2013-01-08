@@ -1,12 +1,23 @@
 
 package Abstracto;
 
-import java.awt.Container;
+import Modelo.Celula;
+import Modelo.Tejido;
+import javax.swing.JFrame;
 
 
-public interface Vista {
-    public void alistar();
-    public void arranca();
-    public void termina();
-    public void mostrar();
+
+public abstract class Vista extends Observado implements Observador {
+    protected JFrame interfaz = null;
+    protected Tejido<Celula> tejido = null;
+    public abstract void alistar();
+    public abstract void arranca();
+    public abstract void termina();
+    
+    /**
+     * Actualizar observado.
+     * @param o
+     */
+    @Override
+    public abstract void update(Observado o);
 }

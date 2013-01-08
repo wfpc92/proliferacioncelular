@@ -66,11 +66,11 @@ public class Grafo<T> {
      */
     public void AgregarArco(long vi, long vj, int costo) {
         Arco obj_arco = new Arco(vi, vj, costo);
-        System.out.println("crea arco desde: " + vi + "hasta: " + vj);
+        //System.out.println("crea arco desde: " + vi + "hasta: " + vj);
         if (this.BuscarVertice(vi) && this.BuscarVertice(vj)) {
             this.listaArcos.add(obj_arco);
         } else {
-            System.out.println("NO ES POSIBLE AGREGAR EL ARCO ");
+            //System.out.println("NO ES POSIBLE AGREGAR EL ARCO ");
         }
     }
 
@@ -110,7 +110,7 @@ public class Grafo<T> {
                     }
                 }
             } else {
-                System.out.println("EL VERTICE NO EXISTE");
+               // System.out.println("EL VERTICE NO EXISTE");
             }
         }
     }
@@ -129,7 +129,7 @@ public class Grafo<T> {
         if (posicion != -1) {
             this.listaArcos.remove(posicion);
         } else {
-            System.out.println("EL ARCO NO EXISTE");
+            //System.out.println("EL ARCO NO EXISTE");
         }
     }
 
@@ -200,7 +200,7 @@ public class Grafo<T> {
      * @param g
      * @param subIndice
      */
-    public void DesmarcarVertice(Grafo<T> g, int subIndice) {
+    public void DesmarcarVertice(int subIndice) {
         for (int i = 0; i < this.listaVertices.size(); i++) {
             if (this.listaVertices.get(i).getSubindice() == subIndice) {
                 this.listaVertices.get(i).setMarca(false);
@@ -217,13 +217,13 @@ public class Grafo<T> {
      * @return retorna verdadero si el vertice esta marcado, en caso contrario
      * retorna falso.
      */
-    public boolean MarcadoVertice(Grafo<T> g, int subIndice) {
+    public boolean MarcadoVertice(int subIndice) {
         for (int i = 0; i < this.listaVertices.size(); i++) {
             if (this.listaVertices.get(i).getSubindice() == subIndice) {
                 return this.listaVertices.get(i).getMarca();
             }
         }
-        System.out.println("La marca del vertice no ha sido encontrada");
+       // System.out.println("La marca del vertice no ha sido encontrada");
         return false;
     }
 }

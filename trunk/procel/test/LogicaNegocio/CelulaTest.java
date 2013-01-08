@@ -59,7 +59,7 @@ public class CelulaTest {
         double longLado = 5.7;
         Celula instance = new Celula(123,3.4,4);
         instance.setLongLado(longLado);
-         Assert.assertEquals(longLado, instance.getLongLado());
+        assertEquals(longLado == instance.getLongLado(), true);
     }
 
     /**

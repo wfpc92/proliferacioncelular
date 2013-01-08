@@ -1,18 +1,16 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Vista;
 
+import Modelo.JPanelConFondo;
+import Abstracto.Observado;
 import Abstracto.Vista;
 import Modelo.Celula;
 import Modelo.Tejido;
 import Modelo.Vertice;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Rectangle;
+import java.awt.Canvas;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
@@ -20,52 +18,47 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-/**
- *
- * @author JHONATAN
- */
-public class GraficoBarras extends javax.swing.JFrame implements Vista{
+public class GraficoBarras extends Vista {
 
     private BufferedImage grafica = null;
-    private Tejido<Celula> tejido = null;
     private ArrayList<String[]> listaResultados = null;
+
     /**
-     * Creates new form GraficoBarras
+     * Creates new form GraficoBarras.
      */
     public GraficoBarras(Tejido tejido) {
-        super("Grafico Estadistico.");
+        interfaz = new JFrame("Estadisticas Tejido.");
         initComponents();
+        interfaz.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.tejido = tejido;
-        setExtendedState(MAXIMIZED_BOTH);     
+        graficar();
     }
 
     public BufferedImage creaImagen() {
         DefaultCategoryDataset modelo = new DefaultCategoryDataset();
-         // column keys...
+        // column keys...
         int[] numeroCelulas = new int[20];
-        for(int i = 0; i < numeroCelulas.length; i++){
+        for (int i = 0; i < numeroCelulas.length; i++) {
             numeroCelulas[i] = 0;
         }
         ArrayList<Vertice<Celula>> lista = tejido.getTejidoG().getLista_vertices();
-        for(int i = 0; i < tejido.getTejidoG().getLista_vertices().size(); i++){
+        for (int i = 0; i < tejido.getTejidoG().getLista_vertices().size(); i++) {
             numeroCelulas[lista.get(i).getInfo().getNumLado()]++;
-            System.out.println(i+". "+lista.get(i).getInfo().getId()+" "+lista.get(i).getInfo().getNumLado());
+            //System.out.println(i + ". " + lista.get(i).getInfo().getId() + " " + lista.get(i).getInfo().getNumLado());
         }
-        
+
         listaResultados = new ArrayList<>();
-        
-        for(int i = 0; i < numeroCelulas.length; i++){
-            if(numeroCelulas[i] != 0){
+
+        for (int i = 0; i < numeroCelulas.length; i++) {
+            if (numeroCelulas[i] != 0) {
                 String[] valores = new String[2];
-                valores[0] = i+"";
-                valores[1] = numeroCelulas[i]+"";
+                valores[0] = i + "";
+                valores[1] = numeroCelulas[i] + "";
                 listaResultados.add(valores);
                 modelo.addValue(numeroCelulas[i], tejido.getNombre(), i + " lados");
             }
         }
-        
-        
-        
+
         boolean legend = true;
         boolean tooltips = true;
         boolean urls = false;
@@ -78,30 +71,25 @@ public class GraficoBarras extends javax.swing.JFrame implements Vista{
                 legend,
                 tooltips,
                 urls);
-        return chart.createBufferedImage(getSize().width-400, getSize().height-100);
+        return chart.createBufferedImage(interfaz.getSize().width - 400, interfaz.getSize().height - 100);
     }
 
-    public void paint(java.awt.Graphics g) {
-        if (grafica == null  && tejido != null) {
+    private void graficar() {
+        if (grafica == null && tejido != null) {
             grafica = this.creaImagen();
-        
-        g.drawImage(grafica, 30, 30, null); 
-        JLabel[] lbl = imprimirResultados();
-            for(int i = 0; i < lbl.length; i++){
-                g.drawString(lbl[i].getText(), 950, 200 + 20*i);
-            }
+            interfaz.setIconImage(grafica);
+            JPanelConFondo contenedor = new JPanelConFondo(grafica, imprimirResultados());
+            interfaz.setContentPane(contenedor);            
         }
     }
-    
-    public JLabel[] imprimirResultados(){
-        JLabel[] lstLabel = new JLabel[listaResultados.size()];
-        
-        
-        for(int i = 0; i < listaResultados.size(); i++){
-            lstLabel[i] = new JLabel("Numero de celulas de "+listaResultados.get(i)[0] +" lados: "+listaResultados.get(i)[1]);
-   
+
+    public String[] imprimirResultados() {
+        String[] lst = new String[listaResultados.size()];
+        for (int i = 0; i < listaResultados.size(); i++) {
+            lst[i] = "Numero de celulas de " + listaResultados.get(i)[0] + " lados: " + listaResultados.get(i)[1];
+
         }
-        return lstLabel;
+        return lst;
     }
 
     /**
@@ -113,10 +101,10 @@ public class GraficoBarras extends javax.swing.JFrame implements Vista{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        interfaz.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(interfaz.getContentPane());
+        interfaz.getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 580, Short.MAX_VALUE)
@@ -126,29 +114,26 @@ public class GraficoBarras extends javax.swing.JFrame implements Vista{
             .addGap(0, 394, Short.MAX_VALUE)
         );
 
-        pack();
+        interfaz.pack();
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-
     @Override
     public void alistar() {
-        
     }
 
     @Override
     public void arranca() {
-        this.setVisible(true);
+        interfaz.setVisible(true);
     }
 
     @Override
     public void termina() {
-        this.dispose();
+        interfaz.dispose();
     }
 
     @Override
-    public void mostrar() {
-        
+    public void update(Observado o) {
     }
 }

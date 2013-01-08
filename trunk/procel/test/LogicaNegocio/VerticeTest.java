@@ -47,8 +47,6 @@ public class VerticeTest {
         Object expResult = null;
         Object result = instance.getInfo();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -60,8 +58,6 @@ public class VerticeTest {
         Object info = null;
         Vertice instance = new Vertice();
         instance.setInfo(info);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -74,8 +70,6 @@ public class VerticeTest {
         boolean expResult = false;
         boolean result = instance.getMarca();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -87,8 +81,6 @@ public class VerticeTest {
         boolean marca = false;
         Vertice instance = new Vertice();
         instance.setMarca(marca);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -101,8 +93,6 @@ public class VerticeTest {
         int expResult = 0;
         long result = instance.getSubindice();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -114,7 +104,5 @@ public class VerticeTest {
         int subindice = 0;
         Vertice instance = new Vertice();
         instance.setSubindice(subindice);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }

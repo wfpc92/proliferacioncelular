@@ -1,10 +1,6 @@
 
 package Modelo;
 
-/**
- *
- * @author equipo scrum
- */
 public class Arco {
 
     private long verticeInicial;

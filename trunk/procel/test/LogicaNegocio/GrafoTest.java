@@ -9,11 +9,10 @@ import Modelo.Grafo;
 import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Assert;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -205,7 +204,7 @@ public class GrafoTest {
         Grafo instance = new Grafo();
         Grafo g=new Grafo();
         int sub=1;
-        boolean result = instance.MarcadoVertice(g, sub);
+        boolean result = instance.MarcadoVertice(sub);
         assertEquals(false, result);
     }
 
