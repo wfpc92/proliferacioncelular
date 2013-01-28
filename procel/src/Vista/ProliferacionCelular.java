@@ -28,6 +28,9 @@ public class ProliferacionCelular extends Vista {
     Comando sqlTejido;
     Comando sqlCelula;
     Comando sqlLado;
+    Comando strategy;
+    Comando strategy2;
+    Comando strategy3;
 
     public ProliferacionCelular() {}   
 
@@ -67,6 +70,9 @@ public class ProliferacionCelular extends Vista {
         sqlTejido = new SQLComando(controlador);
         sqlCelula = new SQLComando(controlador);
         sqlLado = new SQLComando(controlador);
+        strategy = new StrategyComando(controlador);
+        strategy2 = new Strategy2Comando(controlador);
+        strategy3 = new Strategy3Comando(controlador);
         ((SQLComando)sqlTejido).setTabla(Tejido.class.getName());
         ((SQLComando)sqlCelula).setTabla(Celula.class.getName());
         ((SQLComando)sqlLado).setTabla(Arco.class.getName());
@@ -113,6 +119,10 @@ public class ProliferacionCelular extends Vista {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
 
         interfaz.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -208,6 +218,35 @@ public class ProliferacionCelular extends Vista {
 
         jMenuBar2.add(jMenu2);
 
+        jMenu4.setText("Division");
+
+        jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem6.setText("Division Esteril");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem6);
+
+        jMenuItem7.setText("Division 2");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem7);
+
+        jMenuItem8.setText("Division 3");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem8);
+
+        jMenuBar2.add(jMenu4);
+
         interfaz.setJMenuBar(jMenuBar2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(interfaz.getContentPane());
@@ -263,6 +302,19 @@ public class ProliferacionCelular extends Vista {
         estadisticasTejido.ejecutar();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        strategy.ejecutar();
+        
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        strategy2.ejecutar();        
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+       strategy3.ejecutar();
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
     public void actionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         //jPanel1.visualizar(this.getGraphics(), new Celula(23,4));
@@ -278,12 +330,16 @@ public class ProliferacionCelular extends Vista {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private static javax.swing.JPanel pnlPrincipal;
     // End of variables declaration//GEN-END:variables
