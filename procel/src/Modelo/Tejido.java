@@ -1,12 +1,13 @@
 package Modelo;
 
+import Abstracto.Componente;
 import Abstracto.Observado;
 import java.awt.HeadlessException;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JOptionPane;
 
-public class Tejido<T> extends Observado {
+public class Tejido<T> extends ElementosCompuestos{
 
     private int id;
     private String nombre;
@@ -162,7 +163,9 @@ public class Tejido<T> extends Observado {
      */
     public void completarTejido(Celula cel) {
         if (this.TejidoG.existeArco(cel.getId(), ((Celula) this.celulasIncompletas.get(this.celulasIncompletas.size() - 1)).getId())) {
-            this.TejidoG.AgregarArco(((Celula) celulasIncompletas.get(this.celulasIncompletas.size() - 1)).getId(), ((Celula) celulasIncompletas.get(0)).getId(), 10);
+            this.TejidoG.AgregarArco(((Celula) celulasIncompletas.get(
+                    this.celulasIncompletas.size() - 1)).getId(), 
+                    ((Celula) celulasIncompletas.get(0)).getId(), 10);
         }
     }
 
@@ -202,4 +205,21 @@ public class Tejido<T> extends Observado {
         }while("".equals(nombre));
         setNombre(nombre);
     }
+    
+    public Celula get(long vertice) {
+        for(int i = 0; i < TejidoG.getLista_vertices().size(); i++)
+            if(TejidoG.getLista_vertices().get(i).getSubindice() == vertice)
+                return (Celula) TejidoG.getLista_vertices().get(i).getInfo();
+        return null;
+    }
+
+
+    @Override
+    public void mostrar() {
+        //System.out.println(nombre + " nivel: " +profundidad );
+        for(int i=0;i<hijo.size();i++){
+            hijo.get(i).mostrar( );
+        }
+    }
+
 }
