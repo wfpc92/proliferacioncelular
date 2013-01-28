@@ -79,4 +79,16 @@ public class Controlador implements Observador{
     public void abrirTejido() {
         //aqui se abre el tejido, no esta implementado.
     }
+    
+    public void mostrarMensajeEsteril(){
+         JOptionPane.showMessageDialog(new JFrame(), "La division ha sido realizada");
+    }
+    
+    public void mostrarMensajeStrategy2(){
+        JOptionPane.showMessageDialog(new JFrame(), "Esta funcionalidad no esta disponible");
+    }
+    
+     public void mostrarMensajeStrategy3(){
+        JOptionPane.showMessageDialog(new JFrame(), "Esta funcionalidad no esta disponible");
+    }
 }
