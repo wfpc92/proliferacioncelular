@@ -6,9 +6,11 @@ import Abstracto.Observador;
 import Abstracto.Vista;
 import DAO.AccesoBaseProliferacion;
 import Modelo.Celula;
+import Modelo.FabricaAbstracta;
+import Modelo.FabricaConcreta;
 import Modelo.PanelDibujo;
 import Modelo.ShellSQLITE;
-import Modelo.TablaBaseDatos;
+import Modelo.TablaBaseDatosSQLite;
 import Modelo.Tejido;
 import Vista.GraficoBarras;
 import Vista.ProliferacionCelular;
@@ -20,9 +22,11 @@ public class Controlador implements Observador{
 
     private Vista principal;
     private Tejido<Celula> tejido;
+    private FabricaAbstracta fabrica;
     
     public Controlador(Vista principal){
         this.principal = principal;
+        fabrica = new FabricaConcreta();
     }
     
     @Override
@@ -31,11 +35,12 @@ public class Controlador implements Observador{
     }
 
     public void nuevoTejido() {
-        PanelDibujo simulacionTejido;
+        
+        JFrame simulacionTejido;
         tejido = new Tejido(Math.abs(((int) System.nanoTime() % 34678)), "");
         tejido.fijarPoblacion();
         tejido.triangularizacion();
-        simulacionTejido = new PanelDibujo(
+        simulacionTejido = (JFrame)fabrica.nuevoPanelDibujo(
                 ((ProliferacionCelular)principal).getPnlPrincipal().getGraphics(), 
                 ((ProliferacionCelular)principal).getPnlPrincipal().getBounds(), 
                 tejido);
@@ -57,25 +62,20 @@ public class Controlador implements Observador{
     }
 
     public void graficaEstadistica() {
-        GraficoBarras graficoBarras = new GraficoBarras(tejido);
-        graficoBarras.alistar();
-        if (this.tejido != null) {
-            graficoBarras.arranca();
-        } else {
-            JOptionPane.showMessageDialog(new JFrame(), "No hay un tejido abierto.");
-        }
+        if(fabrica != null)
+            fabrica.nuevoEstadistica(tejido);
     }
-
+    
     public void mostrarTabla(DefaultTableModel modelo) {
-        TablaBaseDatos tabla = new TablaBaseDatos(modelo, ((ProliferacionCelular)principal).getPnlPrincipal().getBounds());
+        JFrame tabla = (JFrame)fabrica.nuevoTablaBaseDatos(modelo, ((ProliferacionCelular)principal).getPnlPrincipal().getBounds());
         ((ProliferacionCelular)principal).establecerPanel(tabla.getContentPane());
     }
 
     public void iniciarShell() {
-        ShellSQLITE shell = new ShellSQLITE();
+        JFrame shell = (JFrame)fabrica.nuevoShell();
         ((ProliferacionCelular)principal).establecerPanel(shell.getContentPane());
     }
-
+    
     public void abrirTejido() {
         //aqui se abre el tejido, no esta implementado.
     }
