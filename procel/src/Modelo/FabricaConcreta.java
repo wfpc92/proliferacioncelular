@@ -4,6 +4,9 @@
  */
 package Modelo;
 
+import Vista.PanelDibujo;
+import Vista.ShellSQLITE;
+import Vista.TablaBaseDatosSQLite;
 import Vista.GraficoBarras;
 import java.awt.Graphics;
 import java.awt.Rectangle;
