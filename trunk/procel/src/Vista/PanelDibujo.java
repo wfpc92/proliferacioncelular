@@ -1,9 +1,14 @@
-package Modelo;
+package Vista;
 
 import Abstracto.Vista;
 import Modelo.Arco;
+import Modelo.Arco;
 import Modelo.Grafo;
+import Modelo.Grafo;
+import Modelo.PanelDibujoAbstracto;
 import Modelo.Tejido;
+import Modelo.Tejido;
+import Modelo.Vertice;
 import Modelo.Vertice;
 import java.awt.Color;
 import java.awt.Container;

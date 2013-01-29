@@ -3,6 +3,7 @@ package Vista;
 import Abstracto.Observado;
 import Abstracto.Vista;
 import Modelo.Celula;
+import Modelo.EstadisticaAbstracta;
 import Modelo.JPanelConFondo;
 import Modelo.Tejido;
 import Modelo.Vertice;
@@ -14,7 +15,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-public class GraficoBarras extends Vista {
+public class GraficoBarras extends Vista implements EstadisticaAbstracta{
 
     private BufferedImage grafica = null;
     private ArrayList<String[]> listaResultados = null;
@@ -70,12 +71,13 @@ public class GraficoBarras extends Vista {
         return chart.createBufferedImage(interfaz.getSize().width - 400, interfaz.getSize().height - 100);
     }
 
-    private void graficar() {
+    public void graficar() {
         if (grafica == null && tejido != null) {
             grafica = this.creaImagen();
             interfaz.setIconImage(grafica);
             JPanelConFondo contenedor = new JPanelConFondo(grafica, imprimirResultados());
             interfaz.setContentPane(contenedor); 
+            arranca();
         }
     }
 

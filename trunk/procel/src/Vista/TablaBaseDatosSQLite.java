@@ -1,6 +1,9 @@
-package Modelo;
+package Vista;
 
 import DAO.AccesoBaseProliferacion;
+import Modelo.Celula;
+import Modelo.TablaBaseDatosAbstracto;
+import Modelo.Tejido;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import javax.swing.JTable;
