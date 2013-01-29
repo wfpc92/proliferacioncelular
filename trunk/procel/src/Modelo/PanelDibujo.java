@@ -6,6 +6,7 @@ import Modelo.Grafo;
 import Modelo.Tejido;
 import Modelo.Vertice;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.Random;
 import java.util.Vector;
 import javax.swing.JTextField;
 
-public class PanelDibujo extends javax.swing.JFrame {
+public class PanelDibujo extends javax.swing.JFrame implements PanelDibujoAbstracto{
 
     int MAXCELULAS = 50;
     int x = 150;
@@ -40,8 +41,9 @@ public class PanelDibujo extends javax.swing.JFrame {
         setSize(r.getSize());
         visualizar();
     }
-
-    private void visualizar() {
+    
+    @Override
+    public void visualizar() {
         //getContentPane().setBackground(Color.MAGENTA);
 
         xvs = new Vector<Integer>();

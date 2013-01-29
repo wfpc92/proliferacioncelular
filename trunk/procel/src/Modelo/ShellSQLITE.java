@@ -9,7 +9,8 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 
-public class ShellSQLITE extends javax.swing.JFrame {
+public class ShellSQLITE extends javax.swing.JFrame implements ShellAbstracto
+{
 
     /**
      * Creates new form ShellSQLITE
@@ -218,7 +219,8 @@ public class ShellSQLITE extends javax.swing.JFrame {
         this.txtSentencia = txtSentencia;
     }
 
-    private void mostrarShell() {
+    @Override
+    public void mostrarShell() {
         DefaultTableModel modelo = null;
         SQLException exception = null;
         try {

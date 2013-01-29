@@ -6,17 +6,17 @@ import java.awt.event.MouseEvent;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class TablaBaseDatos extends javax.swing.JFrame {
+public class TablaBaseDatosSQLite extends javax.swing.JFrame implements TablaBaseDatosAbstracto {
 
     String sql = "";
 
     /**
-     * Creates new form TablaBaseDatos
+     * Creates new form TablaBaseDatosSQLite
      */
-    public TablaBaseDatos() {
+    public TablaBaseDatosSQLite() {
     }
 
-    public TablaBaseDatos(DefaultTableModel modelo, Rectangle r) {
+    public TablaBaseDatosSQLite(DefaultTableModel modelo, Rectangle r) {
         initComponents();
         tblTablaBaseDatos.setModel(modelo);
         setSize(r.getSize());
@@ -83,6 +83,7 @@ public class TablaBaseDatos extends javax.swing.JFrame {
     public javax.swing.JTable tblTablaBaseDatos;
     // End of variables declaration//GEN-END:variables
 
+    @Override
     public void generarSql(MouseEvent evt) throws Exception {
         int idTejido;
         String nombre;
