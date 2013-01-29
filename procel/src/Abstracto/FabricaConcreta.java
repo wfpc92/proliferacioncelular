@@ -2,8 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Modelo;
+package Abstracto;
 
+import Abstracto.FabricaAbstracta;
+import Modelo.Tejido;
 import Vista.PanelDibujo;
 import Vista.ShellSQLITE;
 import Vista.TablaBaseDatosSQLite;
