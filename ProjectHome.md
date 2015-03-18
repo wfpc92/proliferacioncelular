@@ -1,0 +1,1 @@
+Aplicación en java que simula la proliferación de un tejido celular.
